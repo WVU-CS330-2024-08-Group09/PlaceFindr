@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="C:\Users\Spuds\Desktop\PlaceFindr\styles (1).css">
+        <link rel="stylesheet" href="./styles.css">
 
         <!--map api links-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.1.0/ol.css">
@@ -62,7 +62,24 @@
         </div>
         <!--container for the preferences form--->
         <div id="pref">
+            <p><!--Row for the Temperature preferences-->
+              <label for="tempPref" class="prefLabel">Average Temperature:</label>
+              <input type="range" id="tempPref" class="slider" name="tempPref" min="1" max="20" step="1">
+            </p>
 
+            <p><!--Row for the precipitation preferences-->
+              <label for="precipPref" class="prefLabel">Average Precipitation:</label>
+              <input type="range" id="precipPref" class="slider" name="precipPref" min="1" max="20" step="1">
+            </p>
+            <p><!--Row for the humidity preferences-->
+              <label for="humidPref" class="prefLabel">Average Humididty:</label>
+              <input type="range" id="humidPref"" class="slider" name="humidPref" min="1" max="20" step="1">
+            </p>
+            
+            <p><!--Row for the submit Button-->
+              <label for="submitButton" class="prefLabel"></label>
+              <button type="submit" id="submitButton"><strong>Submit Preferences</strong></button>
+            </p>
         </div>
 
         <!--container for the output-->
