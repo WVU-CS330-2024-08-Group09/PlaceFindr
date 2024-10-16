@@ -9,24 +9,21 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.1.0/ol.css">
         <script src="https://cdn.jsdelivr.net/npm/ol@v10.1.0/dist/ol.js"></script>
     </head>
-    
-    <body>
+
     <main>
 
         <!--container for the header of the site-->
         <div id="header">
-            <h1>PlaceFindr.com</h1>
-            <button id="darkModeToggle">Toggle Dark Mode</button> <!-- Dark mode toggle button -->
-        </div>
+            <h1 style="color: #3498DB;">PlaceFindr.com</h1>
         </div>
         
         <!--container for the login button-->
         <div id="login" class="loginFlex">
-            <button style="border: none;">
-                <img src="https://static.vecteezy.com/system/resources/previews/019/879/186/original/user-icon-on-transparent-background-free-png.png" style="height:75%; width:75%;">
-                
+            <button style="background-color: #2C3E50; border: none;">
+                <img src="https://static.vecteezy.com/system/resources/previews/019/879/186/original/user-icon-on-transparent-background-free-png.png" style="height: 75%; width: 75%;">
             </button>
         </div>
+        
 
         <!--container for the map-->
         <div id="map">
@@ -73,7 +70,7 @@
             </p>
             <p><!--Row for the humidity preferences-->
               <label for="humidPref" class="prefLabel">Average Humididty:</label>
-              <input type="range" id="humidPref"" class="slider" name="humidPref" min="1" max="20" step="1">
+              <input type="range" id="humidPref" class="slider" name="humidPref" min="1" max="20" step="1">
             </p>
             
             <p><!--Row for the submit Button-->
@@ -89,11 +86,4 @@
 
     </main>
 
-    <script>
-      const darkToggle = document.getElementById('darkModeToggle');
-      darkToggle.addEventListener('click', () => {
-          document.body.classList.toggle('dark-mode');
-      });
-  </script>
-</body>
 </html>

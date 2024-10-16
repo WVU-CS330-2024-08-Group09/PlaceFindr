@@ -46,7 +46,8 @@ main
 }
 
 #pref {
-    background-color: lightgray; /*temp color, idk what this was before we broke it*/
+    /* background-color: #B0B0B0; Dark light grey */
+    background-color: #909090; /* Darker light grey */
     grid-area: 2 / 4 / 3 / 6;
 }
 
