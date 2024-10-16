@@ -28,35 +28,8 @@
 
         <!--container for the map-->
         <div id="map">
-            <!--map boilerplate do not touch-->
-            <script>
-                const key = 'AcGjSuPm8yaBVxuTpG3l';
-          
-                const attribution = new ol.control.Attribution({
-                  collapsible: false,
-                });
-          
-                const source = new ol.source.TileJSON({
-                  url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${key}`,
-                  tileSize: 512,
-                  crossOrigin: 'anonymous'
-                });
-          
-                const map = new ol.Map({
-                  layers: [
-                    new ol.layer.Tile({
-                      source: source
-                    })
-                  ],
-                  controls: ol.control.defaults.defaults({attribution: false}).extend([attribution]),
-                  target: 'map',
-                  view: new ol.View({
-                    constrainResolution: true,
-                    center: ol.proj.fromLonLat([16.62662018, 49.2125578]),
-                    zoom: 14
-                  })
-                });
-              </script>
+            <!--map script, can be commented out when not needed to reduce calls to the API-->
+            <script src="./map.js"></script>
         </div>
         <!--container for the preferences form--->
         <div id="pref">
