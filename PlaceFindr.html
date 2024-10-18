@@ -14,17 +14,13 @@
 
         <!--container for the header of the site-->
         <div id="header">
-            <h1 style="color: #3498DB;">PlaceFindr.com</h1>
+            <h1>PlaceFindr.com</h1>
             <button id="darkModeToggle">Toggle Dark Mode</button> <!-- Dark mode toggle button -->
+            <button id="accountBtn">Account</button>
         </div>
         
-        <!--container for the login button-->
-        <div id="login" class="loginFlex">
-            <button style="background-color: #2C3E50; border: none;">
-                <img src="https://static.vecteezy.com/system/resources/previews/019/879/186/original/user-icon-on-transparent-background-free-png.png" style="height: 75%; width: 75%;">
-            </button>
-        </div>
         
+        <!--<img src="https://static.vecteezy.com/system/resources/previews/019/879/186/original/user-icon-on-transparent-background-free-png.png" style="height: 75%; width: 75%;">-->
 
         <!--container for the map-->
         <div id="map">
@@ -33,23 +29,24 @@
         </div>
         <!--container for the preferences form--->
         <div id="pref">
+            <h2 id="prefHeader">Preferences</h2>
             <p><!--Row for the Temperature preferences-->
               <label for="tempPref" class="prefLabel">Average Temperature:</label>
-              <input type="range" id="tempPref" class="slider" name="tempPref" min="1" max="20" step="1">
+              <input type="range" id="tempPref" class="slider" name="tempPref" min="20" max="80" step="1">
             </p>
 
             <p><!--Row for the precipitation preferences-->
               <label for="precipPref" class="prefLabel">Average Precipitation:</label>
-              <input type="range" id="precipPref" class="slider" name="precipPref" min="1" max="20" step="1">
+              <input type="range" id="precipPref" class="slider" name="precipPref" min="10" max="60" step="1">
             </p>
             <p><!--Row for the humidity preferences-->
               <label for="humidPref" class="prefLabel">Average Humididty:</label>
-              <input type="range" id="humidPref" class="slider" name="humidPref" min="1" max="20" step="1">
+              <input type="range" id="humidPref" class="slider" name="humidPref" min="40" max="75" step="1">
             </p>
             
-            <p><!--Row for the submit Button-->
-              <label for="submitButton" class="prefLabel"></label>
-              <button type="submit" id="submitButton"><strong>Submit Preferences</strong></button>
+            <p id="buttonRow"><!--Row for the Search and Save Preferences-->
+              <button id="saveButton" class="prefButton"><strong>Save Preferences</strong></button>
+              <button id="searchButton" class="prefButton"><Strong>Search</Strong></button>
             </p>
         </div>
 
