@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./styles.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="./mainPageFunc.js"></script>
 
         <!--map api links-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.1.0/ol.css">
@@ -32,16 +34,19 @@
             <h2 id="prefHeader">Preferences</h2>
             <p><!--Row for the Temperature preferences-->
               <label for="tempPref" class="prefLabel">Average Temperature:</label>
-              <input type="range" id="tempPref" class="slider" name="tempPref" min="20" max="80" step="1">
+              <input type="range" id="tempPref" class="slider" name="tempPref" min="20" max="80" step="1" value="50">
+              <span id="tempValue">50</span>
             </p>
 
             <p><!--Row for the precipitation preferences-->
               <label for="precipPref" class="prefLabel">Average Precipitation:</label>
-              <input type="range" id="precipPref" class="slider" name="precipPref" min="10" max="60" step="1">
+              <input type="range" id="precipPref" class="slider" name="precipPref" min="10" max="60" step="1" value="35">
+              <span id="precipValue">35</span>
             </p>
             <p><!--Row for the humidity preferences-->
               <label for="humidPref" class="prefLabel">Average Humididty:</label>
               <input type="range" id="humidPref" class="slider" name="humidPref" min="40" max="75" step="1">
+              <span id="humidValue">60</span>
             </p>
             
             <p id="buttonRow"><!--Row for the Search and Save Preferences-->
@@ -56,12 +61,4 @@
         </div>
 
     </main>
-
-    <script>
-      const darkToggle = document.getElementById('darkModeToggle');
-      darkToggle.addEventListener('click', () => {
-          document.body.classList.toggle('dark-mode');
-      });
-    </script>
-
 </html>
