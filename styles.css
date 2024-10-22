@@ -199,4 +199,34 @@ h1{
     background-color: #333; /* Darker shade on hover in dark mode */
     color: #ddd; /* Lighter text on hover in dark mode */
 }
-
+ /* Alligns the login info */
+#loginContainer {
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+}
+/* Changes the sizing of login */
+#loginContainer input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+}
+/* Make the login btn look nicer for our website */
+#loginBtn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+/* Matching color website */
+#loginBtn:hover {
+    background-color: #007bff;
+}
+/* Matching color website */
+#registerBtn {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
