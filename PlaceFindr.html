@@ -13,7 +13,17 @@
     </head>
 
     <main>
-
+      <script>
+        document.body.classList.add('no-transition');
+    
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+        }
+    
+        setTimeout(() => {
+            document.body.classList.remove('no-transition');
+        }, 0); 
+    </script>
         <!--container for the header of the site-->
         <div id="header">
             <h1>PlaceFindr.com</h1>
