@@ -1,22 +1,38 @@
 $(document).ready(function() {
+    // Immediately add no-transition class to prevent initial transitions
+    document.body.classList.add('no-transition');
 
-    // Function for toggling Dark/Light Mode
-    const darkToggle = document.getElementById('darkModeToggle');
-
-    // Check localStorage for dark mode setting on page load
+    // Check for dark mode preference
     if (localStorage.getItem('darkMode') === 'enabled') {
         document.body.classList.add('dark-mode');
     }
 
-    darkToggle.addEventListener('click', () => {
+    // Remove no-transition class after a short timeout
+    setTimeout(() => {
+        document.body.classList.remove('no-transition');
+    }, 0);
+
+    // Function to toggle dark mode
+    $('#darkModeToggle').on('click', function() {
         document.body.classList.toggle('dark-mode');
-        
-        // Save dark mode preference in localStorage
         if (document.body.classList.contains('dark-mode')) {
             localStorage.setItem('darkMode', 'enabled');
         } else {
             localStorage.setItem('darkMode', 'disabled');
         }
+        // Allow transition for dark mode toggle
+        document.body.classList.remove('no-transition');
+    });
+
+    // Handle home button click without transition
+    $('#homeBtn').on('click', function() {
+        document.body.classList.add('no-transition'); // Prevent transition
+        window.location.href = "PlaceFindr.html"; // Navigate immediately
+    });
+
+    // Prevent transition when navigating away
+    $(window).on('beforeunload', function() {
+        document.body.classList.add('no-transition');
     });
 
     // Functions for changing each input for the Preference Sliders
@@ -29,25 +45,25 @@ $(document).ready(function() {
     const $humidInput = $('#humidPref');
     const $humidValue = $('#humidValue');
 
-    $tempInput.on('input', function() {
+    $tempInput.on('input', function(){
         $tempValue.text($(this).val());
     });
 
-    $precipInput.on('input', function() {
+    $precipInput.on('input', function(){
         $precipValue.text($(this).val());
     });
 
-    $humidInput.on('input', function() {
+    $humidInput.on('input', function(){
         $humidValue.text($(this).val());
     });
 
-    // Navigates to the account page
+    // Navigate to account page
     document.getElementById("accountBtn").addEventListener("click", function() {
         window.location.href = "Account.html"; 
     });
 
     // Form handling for Login and Register
-    $('#loginForm').on('submit', function(event) {
+    $('#loginForm').on('submit', function(event){
         event.preventDefault(); // Prevent default form submission
     
         // Handle login logic (you can integrate this with backend or display validation)
@@ -55,8 +71,9 @@ $(document).ready(function() {
         const password = $('#password').val();
         $('#loginMessage').text(`Logging in with ${email}...`);
     });
+    
 
-    $('#registerForm').on('submit', function(event) {
+    $('#registerForm').on('submit', function(event){
         event.preventDefault(); // Prevent default form submission
     
         const firstName = $('#firstName').val();
@@ -69,8 +86,8 @@ $(document).ready(function() {
             $('#registerMessage').text('Passwords do not match!');
         } else {
             $('#registerMessage').text(`Registering ${firstName} ${lastName}...`);
-            // Registration logic goes here (e.g., send data to server)
+            // Add registration logic here, such as sending data to the server
         }
     });
-
+    
 });

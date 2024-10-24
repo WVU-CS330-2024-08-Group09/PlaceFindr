@@ -24,22 +24,40 @@
             background-color: #007bff; /* Darker blue on hover */
         }
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check if dark mode is enabled in localStorage
-            const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
-            if (isDarkMode) {
-                document.body.classList.add('dark-mode');
-            }
-        });
-    </script>
 </head>
 
 <body>
-
+    <script>
+        document.body.classList.add('no-transition');
+    
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+        }
+    
+        setTimeout(() => {
+            document.body.classList.remove('no-transition');
+        }, 0); 
+    </script>
     <!-- Home button -->
     <a href="PlaceFindr.html" id="homeBtn">Home</a>
-
+    <script>
+        $(document).ready(function() {
+            $('#homeBtn').on('click', function(e) {
+                e.preventDefault(); // Prevent default anchor behavior
+                document.body.classList.add('no-transition'); // Prevent transition
+                window.location.href = "PlaceFindr.html"; // Navigate immediately
+            });
+    
+            // Existing dark mode handling
+            document.body.classList.add('no-transition');
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+            }
+            setTimeout(() => {
+                document.body.classList.remove('no-transition');
+            }, 0);
+        });
+    </script>
     <div id="loginContainer">
         <h2>Create an Account</h2>
         <form id="registerForm">

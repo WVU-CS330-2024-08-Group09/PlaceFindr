@@ -133,12 +133,19 @@ h1{
     margin:3px;
 }
 
+body {
+    transition: background-color 0.5s, color 0.5s; /* This applies the fade transition */
+}
 
-
+/* Dark mode styles */
 .dark-mode {
     background-color: rgb(46, 46, 46);
     color: white;
-    transition: background-color 0.5s, color 0.5s;
+}
+
+/* Prevent transition when loading */
+.no-transition {
+    transition: none !important;
 }
 
 .dark-mode #header {
