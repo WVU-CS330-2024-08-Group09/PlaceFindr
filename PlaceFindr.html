@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./styles.css">
+        <link rel="stylesheet" href="./prefCss.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="./mainPageFunc.js"></script>
 
@@ -30,24 +31,36 @@
             <script src="./map.js"></script>
         </div>
         <!--container for the preferences form--->
-        <div id="pref">
+        <div id="pref" class="pref">
             <h2 id="prefHeader">Preferences</h2>
-            <p><!--Row for the Temperature preferences-->
-              <label for="tempPref" class="prefLabel">Average Temperature:</label>
-              <input type="range" id="tempPref" class="slider" name="tempPref" min="20" max="80" step="1" value="50">
-              <span id="tempValue">50</span>
-            </p>
+            <div class="prefRow">
+              <label for="minTempPref" class="prefLabel">Average Temperature:</label>
+              <div class="doubleSlider-container">
+                <div class="doubleSlider-rangeBG" id="slider-rangeBackgound"></div>
+                <div class="doubleSlider-range" id="slider-range"></div>
+                <input type="range" id="minTempPref" class="doubleSlider" min="20" max="80" step="1" value="40">
+                <input type="range" id="maxTempPref" class="doubleSlider" min="20" max="80" step="1" value="60">
+              </div>
+              <div id="tempValueRange" class="value">
+                <span id="minTempValue">40</span>-<span id="maxTempValue">60</span>
+              </div>
+            </div>
 
-            <p><!--Row for the precipitation preferences-->
+            <div class="prefRow">
               <label for="precipPref" class="prefLabel">Average Precipitation:</label>
-              <input type="range" id="precipPref" class="slider" name="precipPref" min="10" max="60" step="1" value="35">
-              <span id="precipValue">35</span>
-            </p>
-            <p><!--Row for the humidity preferences-->
+              <div class="slider-container"><!--Row for the precipitation preferences-->
+                <input type="range" id="precipPref" class="singleSlider" name="precipPref" min="10" max="60" step="1" value="35">
+              </div>
+              <span id="precipValue" class="value">35</span>
+            </div>
+
+            <div class="prefRow">
               <label for="humidPref" class="prefLabel">Average Humididty:</label>
-              <input type="range" id="humidPref" class="slider" name="humidPref" min="40" max="75" step="1">
-              <span id="humidValue">60</span>
-            </p>
+              <div class="slider-container"><!--Row for the humidity preferences-->
+                <input type="range" id="humidPref" class="singleSlider" name="humidPref" min="40" max="75" step="1">
+              </div>
+              <span id="humidValue" class="value">60</span>
+            </div>
             
             <p id="buttonRow"><!--Row for the Search and Save Preferences-->
               <button id="saveButton" class="prefButton"><strong>Save Preferences</strong></button>
