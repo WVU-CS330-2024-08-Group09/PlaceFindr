@@ -65,64 +65,11 @@ h1{
 }
 
 #pref {
-    
+    position:relative;
     background-color: whitesmoke; 
     border:1px solid gray;
     border-radius: 5px;
     grid-area: 2 / 4 / 3 / 6;
-}
-#pref span{
-    border: 1.5px solid rgb(126, 175, 194);
-    border-radius: 2px;
-    background-color: white;
-    padding: 2px;
-}
-#prefHeader{
-    text-align:center;
-}
-.prefLabel
-{
-    width: 150px;
-    display: inline-block;
-    text-align: right;
-    margin-right: 8px;
-    padding: 5px;
-    height: 10px
-}
-.slider{
-    width: 50%;
-    accent-color: rgb(0, 81, 255);
-    height: 10px;
-    cursor: pointer;
-}
-.slider::-webkit-slider-thumb{
-    cursor: ew-resize;
-}
-.prefButton{
-    width: 200px;
-    cursor: pointer;
-    padding: 15px;
-    margin: 15px 5;
-    border-radius: 4px;
-    border:none;
-}
-#saveButton
-{
-    background-color: #09f;
-    width:40%;
-    margin:5%;
- }
- #saveButton:hover
- {
-    background-color: #07d;
- }
-#searchButton{
-    background-color:white;
-    width:40%;
-    
-}
-#searchButton:hover{
-    background-color: #07d;
 }
 
 #output {
