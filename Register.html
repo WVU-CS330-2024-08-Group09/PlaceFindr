@@ -5,8 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
     <title>Register for PlaceFindr</title>
+    <style>
+        /* Style the home button */
+        #homeBtn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #007bff; /* Blue background */
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none; /* Remove underline for link */
+            font-size: 16px;
+        }
+        #homeBtn:hover {
+            background-color: #007bff; /* Darker blue on hover */
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if dark mode is enabled in localStorage
+            const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+            }
+        });
+    </script>
 </head>
+
 <body>
+
+    <!-- Home button -->
+    <a href="PlaceFindr.html" id="homeBtn">Home</a>
 
     <div id="loginContainer">
         <h2>Create an Account</h2>
@@ -40,4 +72,9 @@
 
             <p class="loginText">Already have an account? <a href="Account.html">Login</a></p>
         </form>
-        <p id="registerMessage
+        <p id="registerMessage"></p>
+    </div>
+
+    <script src="./mainPageFunc.js"></script> 
+</body>
+</html>

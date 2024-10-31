@@ -1,9 +1,22 @@
-$(document).ready(function(){
+$(document).ready(function() {
 
     // Function for toggling Dark/Light Mode
     const darkToggle = document.getElementById('darkModeToggle');
+
+    // Check localStorage for dark mode setting on page load
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+    }
+
     darkToggle.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
+        
+        // Save dark mode preference in localStorage
+        if (document.body.classList.contains('dark-mode')) {
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            localStorage.setItem('darkMode', 'disabled');
+        }
     });
 
     // Functions for changing each input for the Preference Sliders
@@ -59,17 +72,17 @@ $(document).ready(function(){
         $precipValue.text($(this).val());
     });
 
-    $humidInput.on('input', function(){
+    $humidInput.on('input', function() {
         $humidValue.text($(this).val());
     });
 
-    // Navigate to account page
+    // Navigates to the account page
     document.getElementById("accountBtn").addEventListener("click", function() {
         window.location.href = "Account.html"; 
     });
 
     // Form handling for Login and Register
-    $('#loginForm').on('submit', function(event){
+    $('#loginForm').on('submit', function(event) {
         event.preventDefault(); // Prevent default form submission
     
         // Handle login logic (you can integrate this with backend or display validation)
@@ -77,9 +90,8 @@ $(document).ready(function(){
         const password = $('#password').val();
         $('#loginMessage').text(`Logging in with ${email}...`);
     });
-    
 
-    $('#registerForm').on('submit', function(event){
+    $('#registerForm').on('submit', function(event) {
         event.preventDefault(); // Prevent default form submission
     
         const firstName = $('#firstName').val();
@@ -92,8 +104,8 @@ $(document).ready(function(){
             $('#registerMessage').text('Passwords do not match!');
         } else {
             $('#registerMessage').text(`Registering ${firstName} ${lastName}...`);
-            // Add registration logic here, such as sending data to the server
+            // Registration logic goes here (e.g., send data to server)
         }
     });
-    
+
 });
