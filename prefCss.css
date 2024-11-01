@@ -1,6 +1,6 @@
 
 
-#prefHeader{
+#prefHeader{ 
     text-align:center;
 }
 .prefRow{
@@ -161,4 +161,17 @@ input[type="range"]:active::-webkit-slider-thumb{
 }
 #searchButton:hover{
     background-color: #07d;
+}
+#prefSettings{
+    border:1px solid gray;
+}
+.tab{
+    display:none;
+}
+.tabs button {
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #bdb8b8;
+    margin-right: 5px;
 }
