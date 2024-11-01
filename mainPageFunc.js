@@ -35,6 +35,7 @@ $(document).ready(function() {
 
     $precipInput.on('input', function() {
         $precipValue.text($(this).val());
+
     });
 
     $humidInput.on('input', function() {
@@ -73,4 +74,8 @@ $(document).ready(function() {
         }
     });
 
+    $('#searchButton').on('click', function(){
+        updateHeatmap();
+    })
 });
+
