@@ -72,6 +72,7 @@ $(document).ready(function() {
 
     const $humidInput = $('#humidPref'); 
     const $humidValue = $('#humidValue');
+
     let humidUnit = '%'
 
     $precipInput.on('input', updatePrecip);
@@ -106,6 +107,7 @@ $(document).ready(function() {
         maxSlide();
         updateHumid();
         updatePrecip();
+
     });
 
     // Navigates to the account page
@@ -140,6 +142,7 @@ $(document).ready(function() {
         }
     });
 
+
     const prefTab = $('#prefTab');
     const settingsTab = $('#prefSettings');
     const prefTabButton = $('#prefTabButton');
@@ -159,4 +162,10 @@ $(document).ready(function() {
             settingsTab.toggleClass('tab');
         }
     });
+
+    $('#searchButton').on('click', function(){
+        updateHeatmap();
+    })
+
 });
+
