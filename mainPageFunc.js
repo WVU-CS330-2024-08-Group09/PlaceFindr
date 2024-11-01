@@ -27,13 +27,16 @@ $(document).ready(function() {
     let $maxTempValue = $('#maxTempValue');
     let minGap = 1;
     const sliderRange = $('#slider-range');
-    const maxTemp = $maxTempPref.attr('max');
+    let maxTemp = $maxTempPref.attr('max');
+    let minTemp = $minTempPref.attr('min')
+    let tempUnit = '°F';
+
 
     function minSlide(){
         if(parseInt($maxTempPref.val())- parseInt($minTempPref.val()) <= minGap){
             $minTempPref.val(parseInt($maxTempPref.val()));
         }
-        $minTempValue.text($minTempPref.val());
+        $minTempValue.text($minTempPref.val() + tempUnit);
         fillColor();
     }
 
@@ -42,13 +45,13 @@ $(document).ready(function() {
         if(parseInt($maxTempPref.val())- parseInt($minTempPref.val()) <= minGap){
             $maxTempPref.val(parseInt($minTempPref.val()));
         }
-        $maxTempValue.text($maxTempPref.val());
+        $maxTempValue.text($maxTempPref.val() + tempUnit);
         fillColor();
     }
 
     function fillColor(){
-        const percentMin = (($minTempPref.val()-20) / (maxTemp-20)) *100;
-        const percentMax = (($maxTempPref.val()-20) / (maxTemp-20)) *100;
+        const percentMin = (($minTempPref.val()-minTemp) / (maxTemp-minTemp)) *100;
+        const percentMax = (($maxTempPref.val()-minTemp) / (maxTemp-minTemp)) *100;
         sliderRange.css({
             left: `${percentMin}%`,
             width:`${percentMax-percentMin}%`
@@ -61,20 +64,50 @@ $(document).ready(function() {
 
     $minTempPref.on('input',minSlide);
     $maxTempPref.on('input',maxSlide);
+    
 
     const $precipInput = $('#precipPref');
     const $precipValue = $('#precipValue');
+    let precipUnit = ' in'
 
-    const $humidInput = $('#humidPref');
+    const $humidInput = $('#humidPref'); 
     const $humidValue = $('#humidValue');
 
-    $precipInput.on('input', function(){
-        $precipValue.text($(this).val());
+    let humidUnit = '%'
 
-    });
+    $precipInput.on('input', updatePrecip);
+    function updatePrecip(){
+        $precipValue.text($($precipInput).val() + precipUnit);
+    };
 
-    $humidInput.on('input', function() {
-        $humidValue.text($(this).val());
+    $humidInput.on('input', updateHumid);
+    function updateHumid(){
+        $humidValue.text($($humidInput).val() + humidUnit);
+    };
+
+    $precipValue.text($($precipInput).val() + precipUnit);
+    $humidValue.text($($humidInput).val() + humidUnit);
+
+    const impUnitButton = $('#impUnitButton');
+    const metUnitButton = $('#metUnitButton');
+    const saveSettButton = $('#saveSettingButton')
+
+    saveSettButton.on('click',function(){
+        if(impUnitButton.is(':checked')){
+            tempUnit = '°F';
+            precipUnit = ' in';
+            $maxTempPref.attr('max') = 80;
+            $maxTempPref.attr('min') = 20;
+        }
+        else if(metUnitButton.is(':checked')){
+            tempUnit = '°C';
+            precipUnit = ' mm'
+        }
+        minSlide();
+        maxSlide();
+        updateHumid();
+        updatePrecip();
+
     });
 
     // Navigates to the account page
@@ -109,8 +142,30 @@ $(document).ready(function() {
         }
     });
 
+
+    const prefTab = $('#prefTab');
+    const settingsTab = $('#prefSettings');
+    const prefTabButton = $('#prefTabButton');
+    const settTabButton = $('#prefSettTabButton');
+
+
+    prefTabButton.on('click', function(){
+        if(prefTab.hasClass('tab')){
+            prefTab.toggleClass('tab');
+            settingsTab.toggleClass('tab');
+        }
+    });
+
+    settTabButton.on('click', function(){
+        if(settingsTab.hasClass('tab')){
+            prefTab.toggleClass('tab');
+            settingsTab.toggleClass('tab');
+        }
+    });
+
     $('#searchButton').on('click', function(){
         updateHeatmap();
     })
+
 });
 

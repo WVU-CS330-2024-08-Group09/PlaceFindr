@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="EN">
-    <head>
+    <head> 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./styles.css">
@@ -19,7 +19,7 @@
         <!--container for the header of the site-->
         <div id="header">
             <h1>PlaceFindr.com</h1>
-            <button id="darkModeToggle">Toggle Dark Mode</button> <!-- Dark mode toggle button -->
+            
             <button id="accountBtn">Account</button>
         </div>
         
@@ -33,6 +33,11 @@
         </div>
         <!--container for the preferences form--->
         <div id="pref" class="pref">
+          <h1 class="tabs">
+            <button id="prefTabButton" class="active">Preferences</button>
+            <button id="prefSettTabButton">Preferences Settings</button>
+          </h1>
+          <div id="prefTab">
             <h2 id="prefHeader">Preferences</h2>
             <div class="prefRow">
               <label for="minTempPref" class="prefLabel">Average Temperature:</label>
@@ -42,25 +47,25 @@
                 <input type="range" id="minTempPref" class="doubleSlider" min="20" max="80" step="1" value="40">
                 <input type="range" id="maxTempPref" class="doubleSlider" min="20" max="80" step="1" value="60">
               </div>
-              <div id="tempValueRange" class="value">
-                <span id="minTempValue">40</span>-<span id="maxTempValue">60</span>
+              <div id="tempValueRange" class="value ">
+                <span id="minTempValue"></span>&nbsp;-&nbsp;<span id="maxTempValue"></span>
               </div>
             </div>
 
             <div class="prefRow">
               <label for="precipPref" class="prefLabel">Average Precipitation:</label>
               <div class="slider-container"><!--Row for the precipitation preferences-->
-                <input type="range" id="precipPref" class="singleSlider" name="precipPref" min="10" max="60" step="1" value="35">
+                <input type="range" id="precipPref" class="singleSlider" name="precipPref" min="10" max="60" step="1" value="35" unit=" in">
               </div>
-              <span id="precipValue" class="value">35</span>
+              <span id="precipValue" class="value"></span>
             </div>
 
             <div class="prefRow">
               <label for="humidPref" class="prefLabel">Average Humididty:</label>
               <div class="slider-container"><!--Row for the humidity preferences-->
-                <input type="range" id="humidPref" class="singleSlider" name="humidPref" min="40" max="75" step="1">
+                <input type="range" id="humidPref" class="singleSlider" name="humidPref" min="40" max="75" step="1" value="60">
               </div>
-              <span id="humidValue" class="value">60</span>
+              <span id="humidValue" class="value"></span>
             </div>
             
             <p id="buttonRow"><!--Row for the Search and Save Preferences-->
@@ -69,9 +74,27 @@
             </p>
         </div>
 
+        <div id="prefSettings" class="tab">
+          <h2>Prefernce Settings</h2>
+
+          <fieldset>
+            <legend>Units:</legend>
+            <div>
+              <input type="radio" id="impUnitButton" value="impUnit" name="units" checked>
+              <label for="impUnitButton">Imperial</label>
+            </div>
+            <div>
+              <input type="radio" id="metUnitButton" value="metUnit" name="units">
+              <label for="metUnitButton">Metric</label>
+            </div>
+          </fieldset>
+          <button id="darkModeToggle">Toggle Dark Mode</button> <!-- Dark mode toggle button -->
+          <button id="saveSettingButton">Save Settings</button>
+        </div>
+
         <!--container for the output-->
         <div id="output">
-            
+            <h3>Locations:</h3>
         </div>
 
     </main>

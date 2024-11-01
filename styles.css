@@ -63,15 +63,12 @@ h1{
     border: 1px solid lightskyblue;
     border-radius: 5px;
 }
-
 #pref {
-    position:relative;
     background-color: whitesmoke; 
     border:1px solid gray;
     border-radius: 5px;
     grid-area: 2 / 4 / 3 / 6;
 }
-
 #output {
     background-color: white; 
     grid-area: 3 / 1 / 4 / 6;
