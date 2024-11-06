@@ -1,2 +1,0 @@
-#Don't push .env (database username, password, etc.)
-.env
