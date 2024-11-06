@@ -1,3 +1,7 @@
+//CAN'T IMPORT BECAUSE IT USES require WHICH ONLY WORKS THROUGH node.js
+//NEED TO FIGURE SOME SOLUTION OUT
+//import {emailStored, validLogin, newUser} from "./Account.js";
+
 $(document).ready(function() {
 
     // Function for toggling Dark/Light Mode
@@ -130,6 +134,18 @@ $(document).ready(function() {
         const email = $('#email').val();
         const password = $('#password').val();
         $('#loginMessage').text(`Logging in with ${email}...`);
+
+        //TODO: FIX BROKEN, SORRY
+        // //TODO: Add some form of encryption on the password before passing it to the validLogin function
+        // //Check if the login info is valid
+        // var validAndName = validLogin(email, password);
+        // if(validAndName[0]){
+        //     $('#loginMessage').text(`Valid email and password! Hello ${validAndName[1]}`);
+        //     // TODO: Add whatever else should happen after logging in, probably also return preferences somehow?
+        // }
+        // else{
+        //     $('#loginMessage').text(`No account exists with this email and password`);
+        // }
     });
 
     $('#registerForm').on('submit', function(event) {
@@ -146,6 +162,15 @@ $(document).ready(function() {
         } else {
             $('#registerMessage').text(`Registering ${firstName} ${lastName}...`);
             // Registration logic goes here (e.g., send data to server)
+            //TODO: FIX BROKEN, SORRY
+            // if(emailStored(email)){
+            //     $('#registerMessage').text('This email is already in use.');
+            // }
+            // else{
+            //     //TODO: Add some form of encryption on the password before passing it to the newUser function
+            //     newUser(firstName, lastName, email, password);
+            //     $('#registerMessage').text('Congratulations, your account has been registered! You can now login!');
+            // }
         }
     });
 
