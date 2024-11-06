@@ -130,7 +130,7 @@ input[type="range"]:active::-webkit-slider-thumb{
     border-radius: 2px;
     background-color: white;
     padding: 2px;
-    width: 10%;
+    width: 12%;
     justify-content: center;
     margin:5px;
     justify-self: center; /* Center horizontally */
@@ -162,12 +162,20 @@ input[type="range"]:active::-webkit-slider-thumb{
 #searchButton:hover{
     background-color: #07d;
 }
-#prefSettings{
-    border:1px solid gray;
+#prefSettings .active{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    margin: auto;
+    width: 90%;
+    height: 80%;
 }
 .tab{
     display:none;
 }
+
 .tabs button {
     padding: 10px;
     cursor: pointer;

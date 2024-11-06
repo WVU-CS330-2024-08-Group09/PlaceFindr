@@ -30,13 +30,15 @@ $(document).ready(function() {
     let maxTemp = $maxTempPref.attr('max');
     let minTemp = $minTempPref.attr('min')
     let tempUnit = '°F';
+    let tempMultiplier = 1;
+    let tempAdder = 0;
 
 
     function minSlide(){
         if(parseInt($maxTempPref.val())- parseInt($minTempPref.val()) <= minGap){
             $minTempPref.val(parseInt($maxTempPref.val()));
         }
-        $minTempValue.text($minTempPref.val() + tempUnit);
+        $minTempValue.text(Math.round(($minTempPref.val()-tempAdder)*tempMultiplier) + tempUnit);
         fillColor();
     }
 
@@ -45,7 +47,7 @@ $(document).ready(function() {
         if(parseInt($maxTempPref.val())- parseInt($minTempPref.val()) <= minGap){
             $maxTempPref.val(parseInt($minTempPref.val()));
         }
-        $maxTempValue.text($maxTempPref.val() + tempUnit);
+        $maxTempValue.text(Math.round(($maxTempPref.val()-tempAdder)*tempMultiplier) + tempUnit);
         fillColor();
     }
 
@@ -69,6 +71,7 @@ $(document).ready(function() {
     const $precipInput = $('#precipPref');
     const $precipValue = $('#precipValue');
     let precipUnit = ' in'
+    let precipMultiplier = 1;
 
     const $humidInput = $('#humidPref'); 
     const $humidValue = $('#humidValue');
@@ -77,7 +80,7 @@ $(document).ready(function() {
 
     $precipInput.on('input', updatePrecip);
     function updatePrecip(){
-        $precipValue.text($($precipInput).val() + precipUnit);
+        $precipValue.text(Math.round(($precipInput).val()*precipMultiplier) + precipUnit);
     };
 
     $humidInput.on('input', updateHumid);
@@ -96,12 +99,16 @@ $(document).ready(function() {
         if(impUnitButton.is(':checked')){
             tempUnit = '°F';
             precipUnit = ' in';
-            $maxTempPref.attr('max') = 80;
-            $maxTempPref.attr('min') = 20;
+            precipMultiplier = 1;
+            tempAdder = 0;
+            tempMultiplier = 1;
         }
         else if(metUnitButton.is(':checked')){
-            tempUnit = '°C';
+            tempUnit ='°C';
             precipUnit = ' mm'
+            precipMultiplier = 25.4;
+            tempAdder = 32;
+            tempMultiplier = 5/9;
         }
         minSlide();
         maxSlide();
@@ -151,15 +158,15 @@ $(document).ready(function() {
 
     prefTabButton.on('click', function(){
         if(prefTab.hasClass('tab')){
-            prefTab.toggleClass('tab');
-            settingsTab.toggleClass('tab');
+            prefTab.toggleClass('tab active');
+            settingsTab.toggleClass('tab active');
         }
     });
 
     settTabButton.on('click', function(){
         if(settingsTab.hasClass('tab')){
-            prefTab.toggleClass('tab');
-            settingsTab.toggleClass('tab');
+            prefTab.toggleClass('tab active');
+            settingsTab.toggleClass('tab active');
         }
     });
 

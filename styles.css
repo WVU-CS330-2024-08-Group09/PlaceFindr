@@ -13,8 +13,8 @@ main
     display: grid; 
     height: 100vh;
     width: 100vw;
-    grid-template-columns: 20% 20% 20% 20% 20%;
-    grid-template-rows: 15vh 60vh 25vh;
+    grid-template-columns: 20% 20% 15% 25% 20%;
+    grid-template-rows: 25vh 65vh 10vh;
     grid-column-gap: 1px;
     grid-row-gap: 1px;
 }
@@ -69,13 +69,7 @@ h1{
     border-radius: 5px;
     grid-area: 2 / 4 / 3 / 6;
 }
-#output {
-    background-color: white; 
-    grid-area: 3 / 1 / 4 / 6;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    margin:3px;
-}
+
 
 
 
@@ -109,7 +103,7 @@ h1{
     background-color: rgb(46, 46, 46); /* Keep this as is, or change if desired */
     transition: background-color 0.5s, color 0.5s;
 }
-.dark-mode #pref span{
+.dark-mode #pref .value{
     background-color: grey;
     transition: background-color 0.5s, color 0.5s;
     border-color: #555;
