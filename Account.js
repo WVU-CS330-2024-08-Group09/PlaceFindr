@@ -77,7 +77,7 @@ async function emailStored(email){
             WHERE [Email]='${email}'`
         );
 
-        const rowExists = resultSet.recordset.length !== 0;
+        const rowExists = await resultSet.recordset.length !== 0;
 
         //START DEBUGGING SECTION
         // console.log(`Row Exists? - ${rowExists}`);
@@ -125,7 +125,7 @@ async function validLogin(email,password){
 
         let fullName = "";
 
-        const rowExists = resultSet.recordset.length !== 0;
+        const rowExists = await resultSet.recordset.length !== 0;
 
         //START DEBUGGING SECTION, FULLNAME ASSIGNMENT NOT INCLUDED
         // console.log(`Row Exists? - ${rowExists}`);

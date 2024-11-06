@@ -1,3 +1,7 @@
+//CAN'T IMPORT BECAUSE IT USES require WHICH ONLY WORKS THROUGH node.js
+//NEED TO FIGURE SOME SOLUTION OUT
+//import {emailStored, validLogin, newUser} from "./Account.js";
+
 $(document).ready(function() {
 
     // Function for toggling Dark/Light Mode
