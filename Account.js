@@ -49,9 +49,10 @@ const config = {
 */
 
 
-//TESTING FUNCTIONS:
+//START TESTING FUNCTIONS:
 //devResetTable();
 
+//Old, removed variation of emailStored / validLogin
 //console.log("Starting userExists...");
 //userExists('test user', 35);
 
@@ -62,9 +63,56 @@ const config = {
 //deleteUser('test user', 9912);
 
 //console.log("All done!");
+//END TESTING FUNCTIONS
 
 
-async function userExists(email,password){
+async function emailStored(email){
+    try{
+        var poolConnection = await sql.connect(config);
+
+        console.log("Reading rows from the Table...");
+        var resultSet = await poolConnection.request().query(
+            `SELECT *
+            FROM [dbo].[Account]
+            WHERE [Email]='${email}'`
+        );
+
+        const rowExists = resultSet.recordset.length !== 0;
+
+        //START DEBUGGING SECTION
+        // console.log(`Row Exists? - ${rowExists}`);
+
+        // // output column headers
+        // var columns = "";
+        // for (var column in resultSet.recordset.columns) {
+        //     columns += column + ", ";
+        // }
+        // console.log("%s\t", columns.substring(0, columns.length - 2));
+
+        // // ouput row contents from default record set
+        // resultSet.recordset.forEach(row => {
+        //     console.log("%s, %s, %s, %s, %s, %s, %s, %s, %s", 
+        //         row.UserID, row.FirstName, row.LastName, row.Email, row.EncryptedPassword, 
+        //         row.MinTemp, row.MaxTemp, row.Precipitation, row.Humidity);
+        // });
+        //END DEBUGGING SECTION
+
+        // close connection only when we're certain application is finished
+        poolConnection.close();
+        console.log("Connection closed.");
+
+        //return true if at least one column matches the email
+        return rowExists;
+    }
+    catch(err){
+        //log error message and close connection
+        console.log(err.message);
+        poolConnection.close();
+        console.log("Connection closed.");
+    }
+}
+
+async function validLogin(email,password){
     try{
         var poolConnection = await sql.connect(config);
 
@@ -75,25 +123,35 @@ async function userExists(email,password){
             WHERE [Email]='${email}' AND [EncryptedPassword]=${password}`
         );
 
-        console.log(`Row Exists? - ${resultSet.recordset.length !== 0}`);
+        let fullName = "";
 
-        // output column headers
-        var columns = "";
-        for (var column in resultSet.recordset.columns) {
-            columns += column + ", ";
-        }
-        console.log("%s\t", columns.substring(0, columns.length - 2));
+        const rowExists = resultSet.recordset.length !== 0;
 
-        // ouput row contents from default record set
+        //START DEBUGGING SECTION, FULLNAME ASSIGNMENT NOT INCLUDED
+        // console.log(`Row Exists? - ${rowExists}`);
+
+        // // output column headers
+        // var columns = "";
+        // for (var column in resultSet.recordset.columns) {
+        //     columns += column + ", ";
+        // }
+        // console.log("%s\t", columns.substring(0, columns.length - 2));
+
+        // // output row contents from default record set and store the user's full name to return
         resultSet.recordset.forEach(row => {
-            console.log("%s, %s, %s, %s, %s, %s, %s, %s, %s", 
-                row.UserID, row.FirstName, row.LastName, row.Email, row.EncryptedPassword, 
-                row.MinTemp, row.MaxTemp, row.Precipitation, row.Humidity);
+            // console.log("%s, %s, %s, %s, %s, %s, %s, %s, %s", 
+            //     row.UserID, row.FirstName, row.LastName, row.Email, row.EncryptedPassword, 
+            //     row.MinTemp, row.MaxTemp, row.Precipitation, row.Humidity);
+            fullName = row.FirstName + " " + row.LastName
         });
+        //END DEBUGGING SECTION, FULLNAME LEFT IN REGARDLESS
 
         // close connection only when we're certain application is finished
         poolConnection.close();
         console.log("Connection closed.");
+
+        //return true if at least one column matches the email and password, and the user's name to use in the site
+        return [rowExists, fullName];
     }
     catch(err){
         //log error message and close connection
@@ -103,7 +161,7 @@ async function userExists(email,password){
     }
 }
 
-async function newUser(email,password){
+async function newUser(firstName,lastName,email,password){
     try{
         var poolConnection = await sql.connect(config);
 
@@ -111,8 +169,8 @@ async function newUser(email,password){
 
         //insert new user info to the Account table
         await poolConnection.request().query(
-            `INSERT INTO [dbo].[Account] (Email, EncryptedPassword)
-            VALUES ('${email}', ${password})`
+            `INSERT INTO [dbo].[Account] (FirstName, LastName, Email, EncryptedPassword)
+            VALUES ('${firstName}', '${lastName}', '${email}', ${password})`
         );
 
         // close connection only when we're certain application is finished
@@ -201,3 +259,5 @@ async function connectAndQuery() {
         console.error(err.message);
     }
 }
+
+export {emailStored, validLogin, newUser};
