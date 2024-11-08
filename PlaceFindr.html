@@ -37,10 +37,10 @@
         </div>
         <!--container for the preferences form--->
         <div id="pref" class="pref active">
-          <h1 class="tabs">
-            <button id="prefTabButton" class="active">Preferences</button>
-            <button id="prefSettTabButton">Preferences Settings</button>
-          </h1>
+          <div class="tabs">
+            <button id="prefTabButton" class="tabBtn on">Preferences</button>
+            <button id="prefSettTabButton" class="tabBtn">Settings</button>
+          </div>
           <div id="prefTab">
             <h2 id="prefHeader">Preferences</h2>
             <div class="prefRow">
@@ -79,7 +79,7 @@
         </div>
 
         <div id="prefSettings" class="tab">
-          <h2>Prefernce Settings</h2>
+          <h2 id="prefSettHeader">Prefernce Settings</h2>
 
           <fieldset>
             <legend>Units:</legend>
@@ -92,12 +92,10 @@
               <label for="metUnitButton">Metric</label>
             </div>
           </fieldset>
+          
           <button id="darkModeToggle">Toggle Dark Mode</button> <!-- Dark mode toggle button -->
           <button id="saveSettingButton">Save Settings</button>
         </div>
-
-        <!--container for the output-->
-        
 
     </main>
 </html>
