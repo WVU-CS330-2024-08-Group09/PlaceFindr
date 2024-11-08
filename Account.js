@@ -1,8 +1,13 @@
 //import to load environment variables from .env file
 require('dotenv').config();
 
+//bcrypt library for hashing passwords
+const bcrypt = require('bcrypt');
+
+//mssql for connecting with the database
 const sql = require('mssql');
 
+//configuring the database connection
 const config = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -16,48 +21,19 @@ const config = {
     }
 }
 
-//TODO: Create encryption function for password storage
 //TODO: Connect to the account/register HTML pages functionally
-
-//ignore this part
-/*
-    //Use Azure VM Managed Identity to connect to the SQL database
-    const config = {
-        server: process.env["db_server"],
-        port: process.env["db_port"],
-        database: process.env["db_database"],
-        authentication: {
-            type: 'azure-active-directory-msi-vm'
-        },
-        options: {
-            encrypt: true
-        }
-    }
-
-    //Use Azure App Service Managed Identity to connect to the SQL database
-    const config = {
-        server: process.env["db_server"],
-        port: process.env["db_port"],
-        database: process.env["db_database"],
-        authentication: {
-            type: 'azure-active-directory-msi-app-service'
-        },
-        options: {
-            encrypt: true
-        }
-    }
-*/
-
 
 //START TESTING FUNCTIONS:
 //devResetTable();
 
-//Old, removed variation of emailStored / validLogin
-//console.log("Starting userExists...");
-//userExists('test user', 35);
+// console.log("Starting emailStored...");
+// emailStored('test user again');
+
+console.log("Starting validLogin...");
+validLogin('test user again', '123456789012345678901234567890123456789012345678901234567890');
 
 //console.log("Starting newUser...");
-//newUser('test user after reset', 132);
+//newUser('first', 'last', 'test user again', '123456789012345678901234567890123456789012345678901234567890');
 
 //console.log("Starting deleteUser...");
 //deleteUser('test user', 9912);
@@ -68,41 +44,48 @@ const config = {
 
 async function emailStored(email){
     try{
+        console.log("Reading rows from the Table...");
+
         var poolConnection = await sql.connect(config);
 
-        console.log("Reading rows from the Table...");
-        var resultSet = await poolConnection.request().query(
-            `SELECT *
-            FROM [dbo].[Account]
-            WHERE [Email]='${email}'`
-        );
+        var sqlQuery = 'SELECT * FROM [dbo].[Account] WHERE [Email]=@email';
 
-        const rowExists = await resultSet.recordset.length !== 0;
+        const ps = new sql.PreparedStatement(poolConnection)
+        ps.input('email', sql.VarChar(255))
+        //create prepared statement
+        ps.prepare(sqlQuery, err => {
+            if(err){
+                console.log(err);
+                poolConnection.close();
+                console.log("Connection closed.");
+            }
 
-        //START DEBUGGING SECTION
-        // console.log(`Row Exists? - ${rowExists}`);
+            //execute prepared statement with values entered
+            ps.execute({email: email}, (err, result) => {
+                if(err){
+                    console.log(err);
+                    poolConnection.close();
+                    console.log("Connection closed.");
+                }
 
-        // // output column headers
-        // var columns = "";
-        // for (var column in resultSet.recordset.columns) {
-        //     columns += column + ", ";
-        // }
-        // console.log("%s\t", columns.substring(0, columns.length - 2));
+                queryResult = result;
+                console.log(result);
 
-        // // ouput row contents from default record set
-        // resultSet.recordset.forEach(row => {
-        //     console.log("%s, %s, %s, %s, %s, %s, %s, %s, %s", 
-        //         row.UserID, row.FirstName, row.LastName, row.Email, row.EncryptedPassword, 
-        //         row.MinTemp, row.MaxTemp, row.Precipitation, row.Humidity);
-        // });
-        //END DEBUGGING SECTION
+                // release the connection after queries are executed
+                ps.unprepare(err => {
+                    if(err){
+                        console.log(err);
+                    }
+                    poolConnection.close();
+                    console.log("Success. Connection closed.");
+                })
+            })
+        })
 
-        // close connection only when we're certain application is finished
-        poolConnection.close();
-        console.log("Connection closed.");
+        //const rowExists = await queryResult.recordset.length !== 0;
 
         //return true if at least one column matches the email
-        return rowExists;
+        return true//rowExists;
     }
     catch(err){
         //log error message and close connection
@@ -114,44 +97,75 @@ async function emailStored(email){
 
 async function validLogin(email,password){
     try{
-        var poolConnection = await sql.connect(config);
+        //hashing the password for security
+        const salt = await bcrypt.genSalt();
+        const encryptedPassword = await bcrypt.hash(password, salt);
 
         console.log("Reading rows from the Table...");
-        var resultSet = await poolConnection.request().query(
-            `SELECT *
-            FROM [dbo].[Account]
-            WHERE [Email]='${email}' AND [EncryptedPassword]=${password}`
-        );
+        let rowExists, fullName, storedPassword, validPass = false;
 
-        let fullName = "";
+        var poolConnection = await sql.connect(config);
 
-        const rowExists = await resultSet.recordset.length !== 0;
+        var sqlQuery = `SELECT * FROM [dbo].[Account] WHERE [Email]=@email`;
 
-        //START DEBUGGING SECTION, FULLNAME ASSIGNMENT NOT INCLUDED
-        // console.log(`Row Exists? - ${rowExists}`);
+        const ps = new sql.PreparedStatement(poolConnection)
+        ps.input('email', sql.VarChar(255))
+        //create prepared statement
+        ps.prepare(sqlQuery, err => {
+            if(err){
+                console.log(err);
+                poolConnection.close();
+                console.log("Connection closed.");
+            }
 
-        // // output column headers
-        // var columns = "";
-        // for (var column in resultSet.recordset.columns) {
-        //     columns += column + ", ";
-        // }
-        // console.log("%s\t", columns.substring(0, columns.length - 2));
+            //execute prepared statement with values entered
+            ps.execute({email: email}, (err, result) => {
+                if(err){
+                    console.log(err);
+                    poolConnection.close();
+                    console.log("Connection closed.");
+                }
+                // console.log(result);
+                rowExists = result.recordset.length !== 0;
+                result.recordset.forEach(row => {
+                    fullName = row.FirstName + " " + row.LastName;
+                });
+                result.recordset.forEach(row => {
+                    storedPassword = row.EncryptedPassword;
+                })
 
-        // // output row contents from default record set and store the user's full name to return
-        resultSet.recordset.forEach(row => {
-            // console.log("%s, %s, %s, %s, %s, %s, %s, %s, %s", 
-            //     row.UserID, row.FirstName, row.LastName, row.Email, row.EncryptedPassword, 
-            //     row.MinTemp, row.MaxTemp, row.Precipitation, row.Humidity);
-            fullName = row.FirstName + " " + row.LastName
-        });
-        //END DEBUGGING SECTION, FULLNAME LEFT IN REGARDLESS
+                // release the connection after queries are executed
+                ps.unprepare(err => {
+                    if(err){
+                        console.log(err);
+                    }
+                    // console.log('re ' + rowExists);
+                    bcrypt.compare(password, storedPassword, (err, result) => {
+                        if (err){
+                            console.log(err)
+                        }
 
-        // close connection only when we're certain application is finished
-        poolConnection.close();
-        console.log("Connection closed.");
+                        //password match
+                        if (result) {
+                            validPass = true;
+                        }
+                    });
+                    // console.log('fn ' + fullName);
+                    poolConnection.close();
+                    console.log("Success. Connection closed.");
 
-        //return true if at least one column matches the email and password, and the user's name to use in the site
-        return [rowExists, fullName];
+                    //return true if at least one column matches the email and password, and the user's name to use in the site
+                    if(rowExists && validPass){
+                        return fullName;
+                    }
+                    else{
+                        return null;
+                    }
+                })
+            })
+        })
+
+        
     }
     catch(err){
         //log error message and close connection
@@ -163,19 +177,46 @@ async function validLogin(email,password){
 
 async function newUser(firstName,lastName,email,password){
     try{
-        var poolConnection = await sql.connect(config);
+        //hashing the password for security
+        const salt = await bcrypt.genSalt();
+        const encryptedPassword = await bcrypt.hash(password, salt);
 
         console.log("Inserting rows into the Table...");
 
-        //insert new user info to the Account table
-        await poolConnection.request().query(
-            `INSERT INTO [dbo].[Account] (FirstName, LastName, Email, EncryptedPassword)
-            VALUES ('${firstName}', '${lastName}', '${email}', ${password})`
-        );
+        var poolConnection = await sql.connect(config);
 
-        // close connection only when we're certain application is finished
-        poolConnection.close();
-        console.log("Connection closed.");
+        var sqlQuery = `INSERT INTO [dbo].[Account] (FirstName, LastName, Email, EncryptedPassword) VALUES (@firstName, @lastName, @email, @encryptedPassword)`;
+        const ps = new sql.PreparedStatement(poolConnection)
+        ps.input('firstName', sql.VarChar(255))
+        ps.input('lastName', sql.VarChar(255))
+        ps.input('email', sql.VarChar(255))
+        ps.input('encryptedPassword', sql.Char(60))
+        //create prepared statement
+        ps.prepare(sqlQuery, err => {
+            if(err){
+                console.log(err);
+                poolConnection.close();
+                console.log("Connection closed.");
+            }
+
+            //execute prepared statement with values entered
+            ps.execute({firstName: firstName, lastName: lastName, email: email, encryptedPassword: encryptedPassword}, (err, result) => {
+                if(err){
+                    console.log(err);
+                    poolConnection.close();
+                    console.log("Connection closed.");
+                }
+
+                // release the connection after queries are executed
+                ps.unprepare(err => {
+                    if(err){
+                        console.log(err);
+                    }
+                    poolConnection.close();
+                    console.log("Success. Connection closed.");
+                })
+            })
+        })
     }
     catch(err){
         //log error message and close connection
@@ -187,18 +228,44 @@ async function newUser(firstName,lastName,email,password){
 
 async function deleteUser(email,password){
     try{
-        var poolConnection = await sql.connect(config);
+        //hashing the password for security
+        const salt = await bcrypt.genSalt();
+        const encryptedPassword = await bcrypt.hash(password, salt);
 
         console.log("Deleting row from the Table...");
 
-        //insert new user info to the Account table
-        await poolConnection.request().query(
-            `DELETE FROM [dbo].[Account] WHERE Email='${email}' AND EncryptedPassword=${password}`
-        );
+        var poolConnection = await sql.connect(config);
 
-        // close connection only when we're certain application is finished
-        poolConnection.close();
-        console.log("Connection closed.");
+        var sqlQuery = `DELETE FROM [dbo].[Account] WHERE Email=@email AND EncryptedPassword=@encryptedPassword`;
+
+        ps.input('email', sql.VarChar(255))
+        ps.input('encryptedPassword', sql.Char(60))
+        //create prepared statement
+        ps.prepare(sqlQuery, err => {
+            if(err){
+                console.log(err);
+                poolConnection.close();
+                console.log("Connection closed.");
+            }
+
+            //execute prepared statement with values entered
+            ps.execute({firstName: firstName, lastName: lastName, email: email, encryptedPassword: encryptedPassword}, (err, result) => {
+                if(err){
+                    console.log(err);
+                    poolConnection.close();
+                    console.log("Connection closed.");
+                }
+
+                // release the connection after queries are executed
+                ps.unprepare(err => {
+                    if(err){
+                        console.log(err);
+                    }
+                    poolConnection.close();
+                    console.log("Success. Connection closed.");
+                })
+            })
+        })
     }
     catch(err){
         //log error message and close connection
@@ -260,4 +327,4 @@ async function connectAndQuery() {
     }
 }
 
-export {emailStored, validLogin, newUser};
+module.exports = {emailStored, validLogin, newUser};
