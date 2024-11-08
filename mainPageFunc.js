@@ -185,6 +185,8 @@ $(document).ready(function() {
         if(prefTab.hasClass('tab')){
             prefTab.toggleClass('tab active');
             settingsTab.toggleClass('tab active');
+            prefTabButton.css('background-color', 'lightgray');
+            settTabButton.css('background-color', 'rgb(160, 154, 154)');
         }
     });
 
@@ -192,6 +194,8 @@ $(document).ready(function() {
         if(settingsTab.hasClass('tab')){
             prefTab.toggleClass('tab active');
             settingsTab.toggleClass('tab active');
+            prefTabButton.css('background-color', 'rgb(160, 154, 154)');
+            settTabButton.css('background-color', 'lightgray');
         }
     });
 

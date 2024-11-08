@@ -10,6 +10,7 @@
 
 main
 {
+    background-color: white;
     display: grid; 
     height: 100vh;
     width: 100vw;
@@ -20,10 +21,12 @@ main
 }
 
 #header {
-    background-color: white; 
-    margin: 5px;
-    border:1px solid rgb(233, 233, 233);
-    border-radius: 5px;
+    position: relative;
+    width: 90%;
+    margin: auto;
+    margin-top: 0;
+    border-bottom:2px solid rgb(86, 82, 82);
+    border-top: none;
     grid-area: 1 / 1 / 2 / 6;
     font:Verdana, sans-serif;
 }
@@ -60,17 +63,7 @@ h1{
     font-size: large;
 }
 .navBarBtn:hover{
-    color: #007bff;
-}
-#darkModeToggle{
-    width: 80%;
-    grid-area: 2 / 2 /3 / 3;
-    margin: 5px; /* Add some spacing */
-    padding: 5px 10px; /* Button padding */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Change cursor on hover */
-    transition: background-color 0.5s, color 0.5s; /* Smooth transitions */
+    border-bottom: 1px solid black;
 }
 
 
@@ -86,36 +79,29 @@ h1{
     border-radius: 5px;
     grid-area: 2 / 4 / 3 / 6;
 }
-
-
-
-
 .dark-mode {
     background-color: rgb(46, 46, 46);
     color: white;
     transition: background-color 0.5s, color 0.5s;
 }
+.dark-mode main{
+    background-color: rgb(31, 31, 31);
+}
 
 .dark-mode #header {
-    background-color: rgb(93, 93, 93); /* Change header background in dark mode */
     transition: background-color 0.5s, color 0.5s;
+    border-color:white;
 }
-
-.dark-mode #login button {
-    background-color: rgb(93, 93, 93); /* Change login button background in dark mode */
-    transition: background-color 0.5s, color 0.5s;
-}
-
-.dark-mode #login {
-    background-color: rgb(93, 93, 93); /* Change login button background in dark mode */
-    transition: background-color 0.5s, color 0.5s;
-}
-
 .dark-mode #map {
     background-color: #333; /* Change map background in dark mode */
     transition: background-color 0.5s, color 0.5s;
 }
-
+.dark-mode .navBarBtn{
+    color:white;
+}
+.dark-mode h1{
+    color:white;
+}
 .dark-mode #pref {
     background-color: rgb(46, 46, 46); /* Keep this as is, or change if desired */
     transition: background-color 0.5s, color 0.5s;
@@ -132,7 +118,7 @@ h1{
 }
 
 /* Dark mode button styles */
-.dark-mode button {
+.dark-mode .active button {
     background-color: #555; /* Dark background for buttons */
     color: white; /* White text color */
 }
@@ -145,8 +131,10 @@ h1{
     background-color: #007bff; /* Light blue background on hover */
     color: white; /* White text on hover */
 }
-
-.dark-mode button:hover {
+.dark-mode .navBarBtn{
+    border-color: white;
+}
+.dark-mode .active button:hover {
     background-color: #333; /* Darker shade on hover in dark mode */
     color: #ddd; /* Lighter text on hover in dark mode */
 }
