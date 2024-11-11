@@ -8,6 +8,8 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 let heatLayer = null;
 let originalData = [];
+let bestPoints =[];
+bestLayerGroup = L.layerGroup()
 
   // Calculate similarity score between point and preferences
   function calculateSimilarity(properties, preferences) {
@@ -17,13 +19,13 @@ let originalData = [];
     const prcpDiff = Math.abs(properties.us_prcp_avg - preferences.avgprcp);
 
         // Normalize differences (assuming max possible difference is 100)
-        //const tmaxScore = 1 - (tmaxDiff / 100);
-        //const tminScore = 1 - (tminDiff / 100);
-        const tavgScore = 1 - (tavgDiff / 100);
+        const tmaxScore = 1 - (tmaxDiff / 100);
+        const tminScore = 1 - (tminDiff / 100);
+        //const tavgScore = 1 - (tavgDiff / 100);
         const prcpScore = 1 - (prcpDiff / 100);
           
         // Average the scores
-        return (tavgScore + prcpScore) / 3;
+        return (tmaxScore + tminScore + prcpScore) / 3;
     }
 
     // Convert GeoJSON to heatmap points
@@ -35,25 +37,27 @@ let originalData = [];
             feature.geometry.coordinates[0], // longitude
             intensity // weight
         ];
-    }).filter(point => point[2] > 0.6); // Only include points with similarity > 0.3
+    }).filter(point => point[2] > 0.9); // Only include points with similarity > 0.3
 }
 
  // Update heatmap with filtered data
  function updateHeatmap(){
   const preferences = {
-       avgTemp: parseFloat(document.getElementById('tempPref').value)
+       tmin: parseFloat(document.getElementById("minTempPref").value)
+      ,tmax: parseFloat(document.getElementById("maxTempPref").value)
       ,avgprcp: parseFloat(document.getElementById('precipPref').value)
   };
   console.log(preferences)
   // Remove existing heatmap layer
   if (heatLayer) {
       map.removeLayer(heatLayer);
+      map.removeLayer(bestLayerGroup);
+      bestLayerGroup = L.layerGroup();
   }
 
   // Create new heatmap points
   const points = createHeatmapPoints(originalData, preferences);
 
-  console.log(points)
 
   // Create and add new heatmap layer
   heatLayer = L.heatLayer(points, {
@@ -70,13 +74,25 @@ let originalData = [];
       }
   }).addTo(map);
 
-  console.log('making new heatmap')
+  findBestPoints(points)
 }
-
+    //gather map information
     fetch('output.geojson')
     .then(response => response.json())
     .then(data => {
         originalData = data;
-        updateHeatmap();
     });
 
+
+function findBestPoints(points)
+{
+  bestPoints = points.sort((a, b) => b[2] - a[2])
+  bestPointsAr = [bestPoints[0], bestPoints[1], bestPoints[2], bestPoints[3], bestPoints[4]]
+  
+  bestLayerGroup.addLayer(L.marker([bestPointsAr[0][0], bestPointsAr[0][1]]))
+  bestLayerGroup.addLayer(L.marker([bestPointsAr[1][0], bestPointsAr[1][1]]))
+  bestLayerGroup.addLayer(L.marker([bestPointsAr[2][0], bestPointsAr[2][1]]))
+  bestLayerGroup.addLayer(L.marker([bestPointsAr[3][0], bestPointsAr[3][1]]))
+  bestLayerGroup.addLayer(L.marker([bestPointsAr[4][0], bestPointsAr[4][1]]))
+  bestLayerGroup.addTo(map)
+}
