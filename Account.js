@@ -43,12 +43,13 @@ validLogin('test user again', '1234567890123456789012345678901234567890123456789
 
 
 async function emailStored(email){
+    let rowExists = false;
     try{
         console.log("Reading rows from the Table...");
 
         var poolConnection = await sql.connect(config);
 
-        var sqlQuery = 'SELECT * FROM [dbo].[Account] WHERE [Email]=@email';
+        var sqlQuery = 'SELECT TOP 1 * FROM [dbo].[Account] WHERE [Email]=@email';
 
         const ps = new sql.PreparedStatement(poolConnection)
         ps.input('email', sql.VarChar(255))
@@ -68,7 +69,7 @@ async function emailStored(email){
                     console.log("Connection closed.");
                 }
 
-                queryResult = result;
+                rowExists = result.recordset.length !== 0;
                 console.log(result);
 
                 // release the connection after queries are executed
@@ -81,11 +82,6 @@ async function emailStored(email){
                 })
             })
         })
-
-        //const rowExists = await queryResult.recordset.length !== 0;
-
-        //return true if at least one column matches the email
-        return true//rowExists;
     }
     catch(err){
         //log error message and close connection
@@ -93,20 +89,23 @@ async function emailStored(email){
         poolConnection.close();
         console.log("Connection closed.");
     }
+    finally{
+        //return true if at least one column matches the email
+        console.log("Row Exists: " + rowExists);
+        return rowExists;
+    }
 }
 
+//TODO: Move password encryption to a preliminary step before calling this function in other files
+//TODO: Still needs a fix to return the correct value, or could be refactored if we want
 async function validLogin(email,password){
+    let rowExists = false, validPass = false, fullName = "", storedPassword = "";
     try{
-        //hashing the password for security
-        const salt = await bcrypt.genSalt();
-        const encryptedPassword = await bcrypt.hash(password, salt);
-
         console.log("Reading rows from the Table...");
-        let rowExists, fullName, storedPassword, validPass = false;
-
+        
         var poolConnection = await sql.connect(config);
 
-        var sqlQuery = `SELECT * FROM [dbo].[Account] WHERE [Email]=@email`;
+        var sqlQuery = `SELECT TOP 1 * FROM [dbo].[Account] WHERE [Email]=@email`;
 
         const ps = new sql.PreparedStatement(poolConnection)
         ps.input('email', sql.VarChar(255))
@@ -125,14 +124,10 @@ async function validLogin(email,password){
                     poolConnection.close();
                     console.log("Connection closed.");
                 }
-                // console.log(result);
+                console.log(result);
                 rowExists = result.recordset.length !== 0;
-                result.recordset.forEach(row => {
-                    fullName = row.FirstName + " " + row.LastName;
-                });
-                result.recordset.forEach(row => {
-                    storedPassword = row.EncryptedPassword;
-                })
+                fullName = result.recordset[0].FirstName + " " + result.recordset[0].LastName;
+                storedPassword = result.recordset[0].EncryptedPassword;
 
                 // release the connection after queries are executed
                 ps.unprepare(err => {
@@ -153,19 +148,9 @@ async function validLogin(email,password){
                     // console.log('fn ' + fullName);
                     poolConnection.close();
                     console.log("Success. Connection closed.");
-
-                    //return true if at least one column matches the email and password, and the user's name to use in the site
-                    if(rowExists && validPass){
-                        return fullName;
-                    }
-                    else{
-                        return null;
-                    }
                 })
             })
         })
-
-        
     }
     catch(err){
         //log error message and close connection
@@ -173,8 +158,23 @@ async function validLogin(email,password){
         poolConnection.close();
         console.log("Connection closed.");
     }
+    finally{
+        //Testing
+        console.log(rowExists);
+        console.log(validPass);
+        console.log(storedPassword);
+        console.log(fullName);
+        //return true if at least one column matches the email and password, and the user's name to use in the site
+        if(rowExists && validPass){
+            return fullName;
+        }
+        else{
+            return null;
+        }
+    }
 }
 
+//TODO: Move password encryption to a preliminary step before calling this function in other files
 async function newUser(firstName,lastName,email,password){
     try{
         //hashing the password for security
@@ -226,6 +226,7 @@ async function newUser(firstName,lastName,email,password){
     }
 }
 
+//TODO: Move password encryption to a preliminary step before calling this function in other files
 async function deleteUser(email,password){
     try{
         //hashing the password for security
