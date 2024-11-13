@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="./prefCss.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script type="module" src="./mainPageFunc.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
         <!--map api links-->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
@@ -19,10 +20,10 @@
         <!--container for the header of the site-->
         <div id="header">
             <div id="navBar">
-              <button id="homeBtn" class="navBarBtn">Home</button>
+              <button id="homeBtn" class="navBarBtn"> Home</button>
               <button id="howToBtn" class="navBarBtn"> How it Works</button>
               <h1>PlaceFindr.com</h1>
-              <button id="savedBtn" class="navBarBtn"> Saved</button>
+              <button id="savedBtn" class="navBarBtn"><i class="fa-regular fa-bookmark" style="color: black;"></i> Saved</button>
               <button id="accountBtn" class="navBarBtn">Account</button>
             </div>
         </div>
@@ -71,6 +72,14 @@
               </div>
               <span id="humidValue" class="value"></span>
             </div>
+
+            <div class="prefRow">
+              <label for="newPref" class="prefLabel">preference:</label>
+              <div class="slider-container">
+                <input type="range" id="newPref" class="singleSlider" name="newPref" min="1" max="10" step="1" value="5">
+              </div>
+              <span id="newValue" class="value"></span>
+            </div>
             
             <p id="buttonRow"><!--Row for the Search and Save Preferences-->
               <button id="saveButton" class="prefButton"><strong>Save Preferences</strong></button>
@@ -93,8 +102,8 @@
             </div>
           </fieldset>
           
-          <button id="darkModeToggle">Toggle Dark Mode</button> <!-- Dark mode toggle button -->
-          <button id="saveSettingButton">Save Settings</button>
+          <button id="darkModeToggle" class="prefSettButton">Toggle Dark Mode</button> <!-- Dark mode toggle button -->
+          <button id="saveSettingButton" class="prefSettButton">Save Settings</button>
         </div>
 
     </main>

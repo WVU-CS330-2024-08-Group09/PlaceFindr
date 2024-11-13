@@ -79,8 +79,11 @@ $(document).ready(function() {
 
     const $humidInput = $('#humidPref'); 
     const $humidValue = $('#humidValue');
+    let humidUnit = '%';
 
-    let humidUnit = '%'
+    const newInput = $('#newPref');
+    const newValue = $('#newValue');
+    let newUnit = '';
 
     $precipInput.on('input', updatePrecip);
     function updatePrecip(){
@@ -92,8 +95,16 @@ $(document).ready(function() {
         $humidValue.text($($humidInput).val() + humidUnit);
     };
 
-    $precipValue.text($($precipInput).val() + precipUnit);
-    $humidValue.text($($humidInput).val() + humidUnit);
+    newInput.on('input', updateNew);
+    function updateNew(){
+        newValue.text($(newInput).val() + newUnit);
+    }
+
+    //$precipValue.text($($precipInput).val() + precipUnit);
+    //$humidValue.text($($humidInput).val() + humidUnit);
+    updatePrecip();
+    updateHumid();
+    updateNew();
 
     const impUnitButton = $('#impUnitButton');
     const metUnitButton = $('#metUnitButton');
@@ -101,25 +112,39 @@ $(document).ready(function() {
 
     saveSettButton.on('click',function(){
         if(impUnitButton.is(':checked')){
+            localStorage.setItem('prefUnits','imp')
+        }
+        else if(metUnitButton.is(':checked')){
+            localStorage.setItem('prefUnits','met')
+        }
+        updateUnits();
+    });
+    function updateUnits(){
+        if(localStorage.getItem('prefUnits')==='imp'){
             tempUnit = '°F';
             precipUnit = ' in';
             precipMultiplier = 1;
             tempAdder = 0;
             tempMultiplier = 1;
+            impUnitButton.prop('checked',true);
         }
-        else if(metUnitButton.is(':checked')){
+        else if(localStorage.getItem('prefUnits')==='met'){
             tempUnit ='°C';
             precipUnit = ' mm'
             precipMultiplier = 25.4;
             tempAdder = 32;
             tempMultiplier = 5/9;
+            metUnitButton.prop('checked',true);
         }
         minSlide();
         maxSlide();
         updateHumid();
         updatePrecip();
+    }
+    updateUnits();
 
-    });
+    
+
 
     // Navigates to the account page
     document.getElementById("accountBtn").addEventListener("click", function() {
