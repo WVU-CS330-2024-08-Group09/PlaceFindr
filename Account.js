@@ -28,7 +28,7 @@ const config = {
 
 console.log("Starting emailStored...");
 emailStored('test user again').then(val => {
-    console.log("PLEASE: " + val);
+    console.log("Return Value: " + val);
 })
 
 
