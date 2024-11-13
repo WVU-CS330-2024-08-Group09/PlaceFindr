@@ -26,11 +26,14 @@ const config = {
 //START TESTING FUNCTIONS:
 //devResetTable();
 
-// console.log("Starting emailStored...");
-// emailStored('test user again');
+console.log("Starting emailStored...");
+emailStored('test user again').then(val => {
+    console.log("PLEASE: " + val);
+})
 
-console.log("Starting validLogin...");
-validLogin('test user again', '123456789012345678901234567890123456789012345678901234567890');
+
+// console.log("Starting validLogin...");
+// validLogin('test user again', '123456789012345678901234567890123456789012345678901234567890');
 
 //console.log("Starting newUser...");
 //newUser('first', 'last', 'test user again', '123456789012345678901234567890123456789012345678901234567890');
@@ -79,6 +82,9 @@ async function emailStored(email){
                     }
                     poolConnection.close();
                     console.log("Success. Connection closed.");
+
+                    console.log("rowExists: " + rowExists);
+                    return rowExists;
                 })
             })
         })
@@ -88,11 +94,6 @@ async function emailStored(email){
         console.log(err.message);
         poolConnection.close();
         console.log("Connection closed.");
-    }
-    finally{
-        //return true if at least one column matches the email
-        console.log("Row Exists: " + rowExists);
-        return rowExists;
     }
 }
 
@@ -148,6 +149,19 @@ async function validLogin(email,password){
                     // console.log('fn ' + fullName);
                     poolConnection.close();
                     console.log("Success. Connection closed.");
+
+                    //Testing
+                    console.log(rowExists);
+                    console.log(validPass);
+                    console.log(storedPassword);
+                    console.log(fullName);
+                    //return true if at least one column matches the email and password, and the user's name to use in the site
+                    if(rowExists && validPass){
+                        return fullName;
+                    }
+                    else{
+                        return null;
+                    }
                 })
             })
         })
@@ -157,20 +171,6 @@ async function validLogin(email,password){
         console.log(err.message);
         poolConnection.close();
         console.log("Connection closed.");
-    }
-    finally{
-        //Testing
-        console.log(rowExists);
-        console.log(validPass);
-        console.log(storedPassword);
-        console.log(fullName);
-        //return true if at least one column matches the email and password, and the user's name to use in the site
-        if(rowExists && validPass){
-            return fullName;
-        }
-        else{
-            return null;
-        }
     }
 }
 
@@ -327,5 +327,3 @@ async function connectAndQuery() {
         console.error(err.message);
     }
 }
-
-module.exports = {emailStored, validLogin, newUser};
