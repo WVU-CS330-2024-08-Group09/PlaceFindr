@@ -87,6 +87,9 @@ h1{
 .dark-mode main{
     background-color: rgb(31, 31, 31);
 }
+.dark-mode #navBar{
+    color:white;
+}
 
 .dark-mode #header {
     transition: background-color 0.5s, color 0.5s;
