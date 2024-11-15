@@ -1,0 +1,214 @@
+
+
+#prefHeader{ 
+    text-align:center;
+}
+.prefRow{
+    display: inline-flex;
+    width:95%;
+    margin:10px;
+}
+.prefLabel
+{
+    display: inline-block;
+    text-align: right;
+    margin:5px;
+    height: 10px;
+    align-self: center;
+    width:25%;
+}
+.doubleSlider-container {
+    position: relative;
+    width:60%;
+    margin:5px;
+    justify-self: center; /* Center horizontally */
+    align-self: center; /* Center vertically */
+}
+
+.doubleSlider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    background: transparent; /* Make the background transparent */
+    position: absolute;
+    top: 0;
+    z-index: 2; /* Stack sliders above the range */
+    cursor: pointer; 
+    pointer-events: none;
+    
+}
+.doubleSlider-range {
+    position: absolute;
+    height: 10px;
+    background: black; /* Fill color */
+    z-index: 1; /* Behind the sliders */
+    width: 100%;
+    border: 1.5px solid gray;
+    border-radius: 50px 50px 50px 50px;
+}
+.doubleSlider-rangeBG {
+    position: absolute;
+    width:100%;
+    height: 10px;
+    background: lightgrey; /* Fill color */
+    z-index: 0; /* Behind the sliders */
+    border: 1.5px solid gray;
+    border-radius: 50px 50px 50px 50px;
+}
+.slider-container{
+    position: relative;
+    width:60%;
+    margin:5px;
+    justify-self: center; /* Center horizontally */
+    align-self: center; /* Center vertically */
+}
+.singleSlider{
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    background: lightgrey; /* Make the background transparent */
+    position: relative;
+    cursor: pointer; 
+    pointer-events: none;
+    border-radius: 50px 50px 50px 50px;
+    border: 1.5px solid gray;
+    top: 6px;
+}
+input[type="range"]:hover {
+    opacity: 1;
+}
+
+input[type="range"]::-webkit-slider-runnable-track{
+    -webkit-appearance: none;
+    pointer-events: none;
+}
+input[type="range"]::-moz-range-track{
+    -moz-appearance: none;
+    pointer-events: none;
+}
+input[type="range"]::-ms-track{
+    appearance: none;
+    pointer-events: none;
+}
+input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    height: 1.7em;
+    width: 1.7em;
+    position: relative;
+    background-color: white;
+    cursor: pointer;
+    pointer-events: auto;
+    border:3.5px solid black;
+    border-radius: 50%;
+    left: -3px;
+}
+input[type="range"]::-moz-range-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    height: 1.7em;
+    width: 1.7em;
+    cursor: pointer;
+    border-radius: 50%;
+    border:3.5px solid black;
+    background-color: white;
+    pointer-events: auto;
+}
+input[type="range"]::-ms-thumb{
+    appearance: none;
+    height: 1.7em;
+    width: 1.7em;
+    cursor: pointer;
+    border-radius: 50%;
+    border:3.5px solid black;
+    background-color: white;
+    pointer-events: auto;
+}
+input[type="range"]:active::-webkit-slider-thumb{
+    border:1px solid black;
+}
+
+.value{
+    display: flex;
+    border: 1.5px solid rgb(126, 175, 194);
+    border-radius: 2px;
+    background-color: white;
+    padding: 2px;
+    width: 12%;
+    justify-content: center;
+    margin:5px;
+    justify-self: center; /* Center horizontally */
+    align-self: center; /* Center vertically */
+}
+.prefButton{
+    width: 200px;
+    cursor: pointer;
+    padding: 15px;
+    margin: 15px 5;
+    border-radius: 4px;
+    border:none;
+}
+#saveButton
+{
+    background-color: #09f;
+    width:40%;
+    margin:5%;
+ }
+ #saveButton:hover
+ {
+    background-color: #07d;
+ }
+#searchButton{
+    background-color:lightgray;
+    width:40%;
+}
+#searchButton:hover{
+    background-color: #07d;
+}
+#prefSettings .active{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    margin: auto;
+    width: 90%;
+    height: 80%;
+}
+#prefSettHeader{
+    text-align: center;
+}
+.prefSettButton{
+    width: 40%;
+    margin: 5px; /* Add some spacing */
+    padding: 5px 10px; /* Button padding */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.5s, color 0.5s; /* Smooth transitions */
+}
+.tab{
+    display:none;
+}
+.tabs{
+    position: relative;
+    display: flex;
+    width:30%;
+    margin:auto;
+    border:none;
+    border-radius: 5px;
+    padding: 1px 0px 5px 5px;
+    background-color: rgb(160, 154, 154);
+    justify-content: center;
+    align-items: center;
+}
+.tabBtn{
+    display:flex;
+    padding: 8px;
+    cursor: pointer;
+    border: none;
+    background-color: rgb(160, 154, 154);
+    justify-content: center;
+}
+#prefTabButton{
+    background-color: lightgray;
+}
