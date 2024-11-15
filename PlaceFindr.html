@@ -20,6 +20,114 @@
         <!--container for the header of the site-->
         <div id="header">
             <div id="navBar">
+              <button id="homeBtn" class="navBarBtn"> About Us</button>
+              <button id="howToBtn" class="navBarBtn"> How it Works</button>
+              <h1>PlaceFindr.com</h1>
+              <button id="savedBtn" class="navBarBtn"><i class="fa-regular fa-bookmark" style="color: black;"></i> Saved</button>
+              <button id="accountBtn" class="navBarBtn">Account</button>
+            </div>
+        </div>
+        
+
+        <!--container for the map-->
+        <div id="map">
+            <!--map script, can be commented out when not needed to reduce calls to the API-->
+            <script src="./map.js"></script>
+        </div>
+        <!--container for the preferences form--->
+        <div id="pref" class="pref active">
+          <div class="tabs">
+            <button id="prefTabButton" class="tabBtn on">Preferences</button>
+            <button id="prefSettTabButton" class="tabBtn">Settings</button>
+          </div>
+          <div id="prefTab">
+            <h2 id="prefHeader">Preferences</h2>
+            <div class="prefRow">
+              <label for="minTempPref" class="prefLabel">Average Temperature:</label>
+              <div class="doubleSlider-container">
+                <div class="doubleSlider-rangeBG" id="slider-rangeBackgound"></div>
+                <div class="doubleSlider-range" id="slider-range"></div>
+                <input type="range" id="minTempPref" class="doubleSlider" min="20" max="80" step="1" value="40">
+                <input type="range" id="maxTempPref" class="doubleSlider" min="20" max="80" step="1" value="60">
+              </div>
+              <div id="tempValueRange" class="value ">
+                <span id="minTempValue"></span>&nbsp;-&nbsp;<span id="maxTempValue"></span>
+              </div>
+            </div>
+
+            <div class="prefRow">
+              <label for="precipPref" class="prefLabel">Average Precipitation:</label>
+              <div class="slider-container"><!--Row for the precipitation preferences-->
+                <input type="range" id="precipPref" class="singleSlider" name="precipPref" min="10" max="60" step="1" value="35" unit=" in">
+              </div>
+              <span id="precipValue" class="value"></span>
+            </div>
+
+            <div class="prefRow">
+              <label for="humidPref" class="prefLabel">Average Humididty:</label>
+              <div class="slider-container"><!--Row for the humidity preferences-->
+                <input type="range" id="humidPref" class="singleSlider" name="humidPref" min="40" max="75" step="1" value="60">
+              </div>
+              <span id="humidValue" class="value"></span>
+            </div>
+
+            <div class="prefRow">
+              <label for="newPref" class="prefLabel">preference:</label>
+              <div class="slider-container">
+                <input type="range" id="newPref" class="singleSlider" name="newPref" min="1" max="10" step="1" value="5">
+              </div>
+              <span id="newValue" class="value"></span>
+            </div>
+            
+            <p id="buttonRow"><!--Row for the Search and Save Preferences-->
+              <button id="saveButton" class="prefButton"><strong>Save Preferences</strong></button>
+              <button id="searchButton" class="prefButton"><Strong>Search</Strong></button>
+            </p>
+        </div>
+
+        <div id="prefSettings" class="tab">
+          <h2 id="prefSettHeader">Prefernce Settings</h2>
+
+          <fieldset>
+            <legend>Units:</legend>
+            <div>
+              <input type="radio" id="impUnitButton" value="impUnit" name="units" checked>
+              <label for="impUnitButton">Imperial</label>
+            </div>
+            <div>
+              <input type="radio" id="metUnitButton" value="metUnit" name="units">
+              <label for="metUnitButton">Metric</label>
+            </div>
+          </fieldset>
+          
+          <button id="darkModeToggle" class="prefSettButton">Toggle Dark Mode</button> <!-- Dark mode toggle button -->
+          <button id="saveSettingButton" class="prefSettButton">Save Settings</button>
+        </div>
+
+    </main>
+</html>
+<!DOCTYPE HTML>
+<html lang="EN">
+    <head> 
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./styles.css">
+        <link rel="stylesheet" href="./prefCss.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="module" src="./mainPageFunc.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+        <!--map api links-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+    </head>
+
+    <main>
+
+        <!--container for the header of the site-->
+        <div id="header">
+            <div id="navBar">
               <button id="homeBtn" class="navBarBtn"><i class="fa-solid fa-house-chimney"></i> Home</button>
               <button id="howToBtn" class="navBarBtn"><i class="fa-solid fa-gears"></i> How it Works</button>
               <h1>PlaceFindr.com</h1>
