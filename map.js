@@ -6,6 +6,12 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
+let savedPreferences = {
+tmin: null,
+tmax: null,
+avgprcp: null
+};
+
 let heatLayer = null;
 let originalData = [];
 let bestPoints =[];
@@ -41,12 +47,13 @@ bestLayerGroup = L.layerGroup()
 }
 
  // Update heatmap with filtered data
- function updateHeatmap(){
-  const preferences = {
-       tmin: parseFloat(document.getElementById("minTempPref").value)
-      ,tmax: parseFloat(document.getElementById("maxTempPref").value)
-      ,avgprcp: parseFloat(document.getElementById('precipPref').value)
-  };
+ function updateHeatmap(preferences = {
+  tmin: parseFloat(document.getElementById("minTempPref").value)
+ ,tmax: parseFloat(document.getElementById("maxTempPref").value)
+ ,avgprcp: parseFloat(document.getElementById('precipPref').value)
+})
+{
+
   console.log(preferences)
   // Remove existing heatmap layer
   if (heatLayer) {
@@ -54,6 +61,7 @@ bestLayerGroup = L.layerGroup()
       map.removeLayer(bestLayerGroup);
       bestLayerGroup = L.layerGroup();
   }
+  
 
   // Create new heatmap points
   const points = createHeatmapPoints(originalData, preferences);
@@ -84,15 +92,41 @@ bestLayerGroup = L.layerGroup()
     });
 
 
+//used to find the points that are the most similar to the users preferences
 function findBestPoints(points)
 {
+  //sort the points array in ascending order based on the "similarity" property then make a new array which takes the first
+  //five values
   bestPoints = points.sort((a, b) => b[2] - a[2])
   bestPointsAr = [bestPoints[0], bestPoints[1], bestPoints[2], bestPoints[3], bestPoints[4]]
   
+  //make a marker at the lat lon of every point in the best points array
   bestLayerGroup.addLayer(L.marker([bestPointsAr[0][0], bestPointsAr[0][1]]))
   bestLayerGroup.addLayer(L.marker([bestPointsAr[1][0], bestPointsAr[1][1]]))
   bestLayerGroup.addLayer(L.marker([bestPointsAr[2][0], bestPointsAr[2][1]]))
   bestLayerGroup.addLayer(L.marker([bestPointsAr[3][0], bestPointsAr[3][1]]))
   bestLayerGroup.addLayer(L.marker([bestPointsAr[4][0], bestPointsAr[4][1]]))
   bestLayerGroup.addTo(map)
+}
+
+//used to save the values of the preference sliders
+function savePreference()
+{
+  savedPreferences.tmin = parseFloat(document.getElementById("minTempPref").value)
+  savedPreferences.tmax = parseFloat(document.getElementById("maxTempPref").value)
+  savedPreferences.avgprcp = parseFloat(document.getElementById('precipPref').value)
+}
+
+//used to update the map with the saved values of the user
+function setPreference()
+{
+  updateHeatmap(savedPreferences)
+  //update the slider locations and values
+  document.getElementById("minTempPref").value = savedPreferences.tmin
+  document.getElementById("maxTempPref").value = savedPreferences.tmax
+  document.getElementById("precipPref").value = savedPreferences.avgprcp
+
+  //calling variables from the "mainPageFunc.js" file that update the coloring on the temp min and max slider
+  window.minSlide()
+  window.maxSlide()
 }

@@ -45,7 +45,7 @@ $(document).ready(function() {
         $minTempValue.text(Math.round(($minTempPref.val()-tempAdder)*tempMultiplier) + tempUnit);
         fillColor();
     }
-
+    window.minSlide = minSlide
 
     function maxSlide(){
         if(parseInt($maxTempPref.val())- parseInt($minTempPref.val()) <= minGap){
@@ -54,6 +54,7 @@ $(document).ready(function() {
         $maxTempValue.text(Math.round(($maxTempPref.val()-tempAdder)*tempMultiplier) + tempUnit);
         fillColor();
     }
+    window.maxSlide = maxSlide
 
     function fillColor(){
         const percentMin = (($minTempPref.val()-minTemp) / (maxTemp-minTemp)) *100;
@@ -126,6 +127,10 @@ $(document).ready(function() {
         window.location.href = "Account.html"; 
     });
 
+    //navigates to the saved page
+    document.getElementById("savedBtn").addEventListener("click", function(){
+        window.location.href = 'saved.html';
+    })
     // Form handling for Login and Register
     $('#loginForm').on('submit', function(event) {
         event.preventDefault(); // Prevent default form submission
@@ -198,9 +203,18 @@ $(document).ready(function() {
             settTabButton.css('background-color', 'lightgray');
         }
     });
-
+    //create a heatmap with the preferences set by the user
     $('#searchButton').on('click', function(){
         updateHeatmap();
+    })
+
+    //save the current heatmap
+    $('#saveButton').on('click', function(){
+        savePreference()
+    })
+
+    $('#loadButton').on('click', function(){
+        setPreference()
     })
 
 });
