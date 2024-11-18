@@ -15,6 +15,7 @@
     margin:5px;
     height: 10px;
     align-self: center;
+    width:25%;
 }
 .doubleSlider-container {
     position: relative;
@@ -176,7 +177,7 @@ input[type="range"]:active::-webkit-slider-thumb{
 #prefSettHeader{
     text-align: center;
 }
-#darkModeToggle{
+.prefSettButton{
     width: 40%;
     margin: 5px; /* Add some spacing */
     padding: 5px 10px; /* Button padding */
