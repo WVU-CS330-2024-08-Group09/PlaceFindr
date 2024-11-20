@@ -148,8 +148,8 @@ $(document).ready(function() {
 
 
     // Navigates to the account page
-    document.getElementById("accountBtn").addEventListener("click", function() {
-        window.location.href = "Account.html"; 
+    document.getElementById("aboutBtn").addEventListener("click", function() {
+        window.location.href = "About.html"; 
     });
 
     //navigates to the saved page
@@ -243,4 +243,3 @@ $(document).ready(function() {
     })
 
 });
-

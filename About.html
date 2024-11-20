@@ -17,13 +17,29 @@
                 }
             });
         </script>
-        <nav>
-            <a href="PlaceFindr.html" class="navBarBtn">Home</a>
-            <a href="About.html" class="navBarBtn active">About</a>
-            <a href="#" class="navBarBtn">How It Works</a>
-            <a href="Account.html" class="navBarBtn">Account</a>
-            <a href="#" class="navBarBtn">Saved</a>
-        </nav>
+        <div id="header">
+          <div id="navBar">
+              <button id="homeBtn" class="navBarBtn" onclick="location.href='PlaceFindr.html'">
+                  <i class="fa-solid fa-house-chimney"></i> Home
+              </button>
+              <button id="howToBtn" class="navBarBtn" onclick="location.href='HowItWorks.html'">
+                  <i class="fa-solid fa-gears"></i> How It Works
+              </button>
+              <a href="PlaceFindr.html" style="text-decoration: none;">
+                <h1>PlaceFindr.com</h1>
+            </a>
+            
+              <button id="savedBtn" class="navBarBtn" onclick="location.href='Saved.html'">
+                  <i class="fa-regular fa-bookmark"></i> Saved
+              </button>
+              <button id="aboutBtn" class="navBarBtn" onclick="location.href='About.html'">
+                  About Us
+              </button>
+              <button id="loadButton" class="navBarBtn" onclick="loadPreferences()">
+                  Load Preferences
+              </button>
+          </div>
+      </div>
     </header>
     <main class="main-container">
         <div class="about-header">

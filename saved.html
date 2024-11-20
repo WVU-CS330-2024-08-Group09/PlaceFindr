@@ -13,15 +13,40 @@
     <a href="PlaceFindr.html" id="backBtn">Back</a>-->
 
 
-<div id="header">
-    <div id="navBar">
-      <button id="homeBtn" class="navBarBtn">Home</button>
-      <button id="howToBtn" class="navBarBtn"> How it Works</button>
-      <h1>PlaceFindr.com</h1>
-      <button id="savedBtn" class="navBarBtn"> Saved</button>
-      <button id="accountBtn" class="navBarBtn">Account</button>
-      <script type="module" src=".\Nav.js"></script>
-    </div>
-</div>
+    <header>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Check if dark mode is enabled in localStorage
+                const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+                if (isDarkMode) {
+                    document.body.classList.add('dark-mode');
+                }
+            });
+        </script>
+        <!-- Header should not be nested within <nav> -->
+            <div id="header">
+                <div id="navBar">
+                    <button id="homeBtn" class="navBarBtn" onclick="location.href='PlaceFindr.html'">
+                        <i class="fa-solid fa-house-chimney"></i> Home
+                    </button>
+                    <button id="howToBtn" class="navBarBtn" onclick="location.href='HowItWorks.html'">
+                        <i class="fa-solid fa-gears"></i> How It Works
+                    </button>
+                    <a href="PlaceFindr.html" style="text-decoration: none;">
+                      <h1>PlaceFindr.com</h1>
+                  </a>
+                  
+                    <button id="savedBtn" class="navBarBtn" onclick="location.href='Saved.html'">
+                        <i class="fa-regular fa-bookmark"></i> Saved
+                    </button>
+                    <button id="aboutBtn" class="navBarBtn" onclick="location.href='About.html'">
+                        About Us
+                    </button>
+                    <button id="loadButton" class="navBarBtn" onclick="loadPreferences()">
+                        Load Preferences
+                    </button>
+                </div>
+            </div>
+    </header>
 
 </html>

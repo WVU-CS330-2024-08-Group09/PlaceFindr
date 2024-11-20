@@ -5,7 +5,7 @@ $(document).ready(function()
     let $homeBtn = $("#homeBtn")
     let $howtoBtn = $("#howToBtn")
     let $savedBtn = $("#savedBtn")
-    let $accountBtn = $("#accountBtn")
+    let $aboutBtn = $("AboutBtn")
 
 
     $homeBtn.on("click", function(){
@@ -20,8 +20,8 @@ $(document).ready(function()
         window.location.href = 'howTo.html'
     })
 
-    $accountBtn.on("click", function(){
-        window.location.href = 'account.html'
+    $aboutBtn.on("click", function(){
+        window.location.href = 'About.html'
     })
 });
 
@@ -32,5 +32,3 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('dark-mode');
     }
 });
-
-
