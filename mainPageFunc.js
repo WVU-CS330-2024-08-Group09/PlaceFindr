@@ -1,6 +1,7 @@
 //CAN'T IMPORT BECAUSE IT USES require WHICH ONLY WORKS THROUGH node.js
 //NEED TO FIGURE SOME SOLUTION OUT
 //import {emailStored, validLogin, newUser} from "./Account.js";
+import { querryPoints } from './map.js';
 
 $(document).ready(function() {
 
@@ -24,25 +25,37 @@ $(document).ready(function() {
     });
 
     // Functions for changing each input for the Preference Sliders
-
     let $minTempPref = $('#minTempPref');
     let $maxTempPref = $('#maxTempPref');
     let $minTempValue = $('#minTempValue');
     let $maxTempValue = $('#maxTempValue');
+    let $avgTempPref = $('#avgTempPref'); 
+    let $avgTempValue = $('#avgTempValue');
+    let $precipPref = $('#precipPref');
+    let $precipValue = $('#precipValue');
     let minGap = 1;
     const sliderRange = $('#slider-range');
     let maxTemp = $maxTempPref.attr('max');
     let minTemp = $minTempPref.attr('min')
-    let tempUnit = '°F';
-    let tempMultiplier = 1;
-    let tempAdder = 0;
 
+    // Display and internal unit variables
+    let displayTempUnit = '°F';  // For display only
+    let internalTempUnit = '°C'; // Always Celsius internally
+    let displayPrecipUnit = ' in';
+    let internalPrecipUnit = ' mm';
+    let displayMultiplier = 1;
+    let displayTempAdder = 0;
+    let displayPrecipMultiplier = 1;
 
     function minSlide(){
         if(parseInt($maxTempPref.val())- parseInt($minTempPref.val()) <= minGap){
             $minTempPref.val(parseInt($maxTempPref.val()));
         }
-        $minTempValue.text(Math.round(($minTempPref.val()-tempAdder)*tempMultiplier) + tempUnit);
+        // Convert for display only, keeping internal value in Celsius
+        let displayValue = localStorage.getItem('prefUnits') === 'imp' 
+            ? (($minTempPref.val() * 9/5) + 32).toFixed(1) 
+            : $minTempPref.val();
+        $minTempValue.text(Math.round(displayValue) + displayTempUnit);
         fillColor();
     }
     window.minSlide = minSlide
@@ -51,61 +64,69 @@ $(document).ready(function() {
         if(parseInt($maxTempPref.val())- parseInt($minTempPref.val()) <= minGap){
             $maxTempPref.val(parseInt($minTempPref.val()));
         }
-        $maxTempValue.text(Math.round(($maxTempPref.val()-tempAdder)*tempMultiplier) + tempUnit);
+        // Convert for display only, keeping internal value in Celsius
+        let displayValue = localStorage.getItem('prefUnits') === 'imp' 
+            ? (($maxTempPref.val() * 9/5) + 32).toFixed(1) 
+            : $maxTempPref.val();
+        $maxTempValue.text(Math.round(displayValue) + displayTempUnit);
         fillColor();
     }
     window.maxSlide = maxSlide
 
-    function fillColor(){
-        const percentMin = (($minTempPref.val()-minTemp) / (maxTemp-minTemp)) *100;
-        const percentMax = (($maxTempPref.val()-minTemp) / (maxTemp-minTemp)) *100;
-        sliderRange.css({
-            left: `${percentMin}%`,
-            width:`${percentMax-percentMin}%`
-        })
+    
+    function fillColor() {
+        let minVal = parseInt($minTempPref.val());
+        let maxVal = parseInt($maxTempPref.val());
         
+        const percentMin = ((minVal - minTemp) / (maxTemp - minTemp)) * 100;
+        const percentMax = ((maxVal - minTemp) / (maxTemp - minTemp)) * 100;
+        
+        sliderRange.css({
+            'left': percentMin + '%',
+            'width': (percentMax - percentMin) + '%'
+        });
     }
-    minSlide();
-    maxSlide();
+
     fillColor();
 
-    $minTempPref.on('input',minSlide);
-    $maxTempPref.on('input',maxSlide);
+
+    // event listeners for preferences
+    $minTempPref.on('change', function() {
+      querryPoints();
+      minSlide();
+    });
+    $maxTempPref.on('change', function() {
+      querryPoints();
+      maxSlide();
+    });
+    $avgTempPref.on('change', function() {
+      querryPoints();
+      updateAvgTemp();
+    });
+    $precipPref.on('change', function() {
+      querryPoints();
+      updatePrecip();
+    });
+    const seasonSelect = document.getElementById('season');
+    seasonSelect.addEventListener('change', function() {
+      querryPoints(); 
+    });
     
-
-    const $precipInput = $('#precipPref');
-    const $precipValue = $('#precipValue');
-    let precipUnit = ' in'
-    let precipMultiplier = 1;
-
-    const $humidInput = $('#humidPref'); 
-    const $humidValue = $('#humidValue');
-    let humidUnit = '%';
-
-    const newInput = $('#newPref');
-    const newValue = $('#newValue');
-    let newUnit = '';
-
-    $precipInput.on('input', updatePrecip);
     function updatePrecip(){
-        $precipValue.text(Math.round(($precipInput).val()*precipMultiplier) + precipUnit);
-    };
-
-    $humidInput.on('input', updateHumid);
-    function updateHumid(){
-        $humidValue.text($($humidInput).val() + humidUnit);
-    };
-
-    newInput.on('input', updateNew);
-    function updateNew(){
-        newValue.text($(newInput).val() + newUnit);
+        // Convert for display only, keeping internal value in mm
+        let displayValue = localStorage.getItem('prefUnits') === 'imp' 
+            ? ($precipPref.val() / 25.4).toFixed(2) 
+            : $precipPref.val();
+        $precipValue.text(Math.round(displayValue * 10) / 10 + displayPrecipUnit);
     }
 
-    //$precipValue.text($($precipInput).val() + precipUnit);
-    //$humidValue.text($($humidInput).val() + humidUnit);
-    updatePrecip();
-    updateHumid();
-    updateNew();
+    function updateAvgTemp(){
+        // Convert for display only, keeping internal value in Celsius
+        let displayValue = localStorage.getItem('prefUnits') === 'imp' 
+            ? (($avgTempPref.val() * 9/5) + 32).toFixed(1) 
+            : $avgTempPref.val();
+        $avgTempValue.text(Math.round(displayValue) + displayTempUnit);
+    }
 
     const impUnitButton = $('#impUnitButton');
     const metUnitButton = $('#metUnitButton');
@@ -120,33 +141,32 @@ $(document).ready(function() {
         }
         updateUnits();
     });
+
     function updateUnits(){
         if(localStorage.getItem('prefUnits')==='imp'){
-            tempUnit = '°F';
-            precipUnit = ' in';
-            precipMultiplier = 1;
-            tempAdder = 0;
-            tempMultiplier = 1;
+            displayTempUnit = '°F';
+            displayPrecipUnit = ' in';
+            displayPrecipMultiplier = 1/25.4;  // Convert mm to inches for display
+            displayTempAdder = 32;
+            displayMultiplier = 9/5;  // Convert Celsius to Fahrenheit for display
             impUnitButton.prop('checked',true);
         }
         else if(localStorage.getItem('prefUnits')==='met'){
-            tempUnit ='°C';
-            precipUnit = ' mm'
-            precipMultiplier = 25.4;
-            tempAdder = 32;
-            tempMultiplier = 5/9;
+            displayTempUnit = '°C';
+            displayPrecipUnit = ' mm';
+            displayPrecipMultiplier = 1;
+            displayTempAdder = 0;
+            displayMultiplier = 1;
             metUnitButton.prop('checked',true);
         }
         minSlide();
         maxSlide();
-        updateHumid();
         updatePrecip();
+        updateAvgTemp();
     }
     updateUnits();
 
-    
-
-
+    /*
     // Navigates to the account page
     document.getElementById("aboutBtn").addEventListener("click", function() {
         window.location.href = "About.html"; 
@@ -204,6 +224,8 @@ $(document).ready(function() {
         }
     });
 
+  */
+
 
     const prefTab = $('#prefTab');
     const settingsTab = $('#prefSettings');
@@ -230,7 +252,7 @@ $(document).ready(function() {
     });
     //create a heatmap with the preferences set by the user
     $('#searchButton').on('click', function(){
-        updateHeatmap();
+        querryPoints();
     })
 
     //save the current heatmap
