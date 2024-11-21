@@ -13,114 +13,102 @@ avgprcp: null
 };
 
 let heatLayer = null;
-let originalData = [];
-let bestPoints =[];
-bestLayerGroup = L.layerGroup()
+let heatmapLayer;
 
-  // Calculate similarity score between point and preferences
-  function calculateSimilarity(properties, preferences) {
-    const tmaxDiff = Math.abs(properties.us_tmax - preferences.tmax);
-    const tminDiff = Math.abs(properties.us_tmin - preferences.tmin);
-    const tavgDiff = Math.abs(properties.us_tavg- preferences.avgTemp);
-    const prcpDiff = Math.abs(properties.us_prcp_avg - preferences.avgprcp);
-
-        // Normalize differences (assuming max possible difference is 100)
-        const tmaxScore = 1 - (tmaxDiff / 100);
-        const tminScore = 1 - (tminDiff / 100);
-        //const tavgScore = 1 - (tavgDiff / 100);
-        const prcpScore = 1 - (prcpDiff / 100);
-          
-        // Average the scores
-        return (tmaxScore + tminScore + prcpScore) / 3;
-    }
-
-    // Convert GeoJSON to heatmap points
-  function createHeatmapPoints(geojsonData, preferences) {
-    return geojsonData.features.map(feature => {
-        const intensity = calculateSimilarity(feature.properties, preferences);
-        return [
-            feature.geometry.coordinates[1], // latitude
-            feature.geometry.coordinates[0], // longitude
-            intensity // weight
-        ];
-    }).filter(point => point[2] > 0.9); // Only include points with similarity > 0.3
-}
-
- // Update heatmap with filtered data
- function updateHeatmap(preferences = {
-  tmin: parseFloat(document.getElementById("minTempPref").value)
- ,tmax: parseFloat(document.getElementById("maxTempPref").value)
- ,avgprcp: parseFloat(document.getElementById('precipPref').value)
-})
-{
-
-  console.log(preferences)
-  // Remove existing heatmap layer
-  if (heatLayer) {
-      map.removeLayer(heatLayer);
-      map.removeLayer(bestLayerGroup);
-      bestLayerGroup = L.layerGroup();
-  }
+// Function to get the season value as a number
+function getSeasonValue() {
+  const season = document.getElementById('season').value;
   
+  // Map the season to its corresponding numerical value
+  const seasonMap = {
+      winter: 1,
+      spring: 2,
+      summer: 3,
+      autumn: 4
+  };
 
-  // Create new heatmap points
-  const points = createHeatmapPoints(originalData, preferences);
-
-
-  // Create and add new heatmap layer
-  heatLayer = L.heatLayer(points, {
-      radius: 25,
-      blur: 15,
-      maxZoom: 10,
-      max: 1.0,
-      gradient: {
-        0.2: '#0000ff', // blue
-        0.4: '#4169e1', // royal blue
-        0.6: '#00ffff', // cyan
-        0.8: '#00ff00', // lime
-        1.0: '#ffff00'  // yellow
-      }
-  }).addTo(map);
-
-  findBestPoints(points)
+  return seasonMap[season] || 0; // Return 0 if season is not found
 }
-    //gather map information
-    fetch('output.geojson')
-    .then(response => response.json())
-    .then(data => {
-        originalData = data;
+
+export async function querryPoints() {
+  // Send the data to the backend using a POST request
+  try {
+    const response = await fetch('/api/data', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(loadPreferences())  // Send as JSON
     });
 
+    if (!response.ok) {
+      throw new Error('HTTP error! status: ${response.status}');
+    }
 
-//used to find the points that are the most similar to the users preferences
-function findBestPoints(points)
-{
-  //sort the points array in ascending order based on the "similarity" property then make a new array which takes the first
-  //five values
-  bestPoints = points.sort((a, b) => b[2] - a[2])
-  bestPointsAr = [bestPoints[0], bestPoints[1], bestPoints[2], bestPoints[3], bestPoints[4]]
-  
-  //make a marker at the lat lon of every point in the best points array
-  bestLayerGroup.addLayer(L.marker([bestPointsAr[0][0], bestPointsAr[0][1]]))
-  bestLayerGroup.addLayer(L.marker([bestPointsAr[1][0], bestPointsAr[1][1]]))
-  bestLayerGroup.addLayer(L.marker([bestPointsAr[2][0], bestPointsAr[2][1]]))
-  bestLayerGroup.addLayer(L.marker([bestPointsAr[3][0], bestPointsAr[3][1]]))
-  bestLayerGroup.addLayer(L.marker([bestPointsAr[4][0], bestPointsAr[4][1]]))
-  bestLayerGroup.addTo(map)
+    const data = await response.json();
+    updateHeatmap(data);
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
 
+function calculateMatchScore(point, preferences) {
+    // Calculate how well the point matches the user preferences
+    const tempMinMatch = 1 - Math.abs(point.tmin - preferences.tmin) / 50; // Normalize by expected temperature range
+    const tempMaxMatch = 1 - Math.abs(point.tmax - preferences.tmax) / 50;
+    const precpMatch = 1 - Math.abs(point.avgprcp - preferences.avgprcp) / 100; // Normalize by expected precipitation range
+    
+    // Combine scores with weights
+    return (tempMinMatch * 0.3 + tempMaxMatch * 0.3 + precpMatch * 0.4) * 100;
+}
+
+function updateHeatmap(responseData) {
+  if (heatmapLayer) {
+    map.removeLayer(heatmapLayer);
+  }
+  
+  const points = responseData.data.map(point => {
+      return [point.lat, point.lon, 1];
+  });
+
+  heatmapLayer = L.heatLayer(points, {
+    radius: 50,           // Much larger radius to ensure points blend together
+    blur: 60,            // Increased blur for smoother blending
+    maxZoom: 19,         // Allow maximum zoom while maintaining blur
+    minOpacity: 0.35,    // Minimum opacity for visibility
+    gradient: {          // Smooth gradient
+      0.0: 'rgba(0, 0, 255, 0.7)',
+      0.5: 'rgba(0, 255, 255, 0.7)',
+      0.7: 'rgba(0, 255, 0, 0.7)',
+      0.9: 'rgba(255, 255, 0, 0.7)',
+      1.0: 'rgba(255, 0, 0, 0.7)'
+    },
+    scaleRadius: true    // Scale the radius based on zoom level
+  }).addTo(map);
+}
+
+// Load preferences function
+function loadPreferences() {
+  return {
+    season: getSeasonValue(),
+    tmin: parseFloat(document.getElementById("minTempPref").value),
+    tmax: parseFloat(document.getElementById("maxTempPref").value),
+    tavg: parseFloat(document.getElementById('avgTempPref').value),
+    avgprcp: parseFloat(document.getElementById('precipPref').value)
+  };
+}
+
+
 //used to save the values of the preference sliders
-function savePreference()
-{
+function savePreference() {
   savedPreferences.tmin = parseFloat(document.getElementById("minTempPref").value)
   savedPreferences.tmax = parseFloat(document.getElementById("maxTempPref").value)
   savedPreferences.avgprcp = parseFloat(document.getElementById('precipPref').value)
 }
 
 //used to update the map with the saved values of the user
-function setPreference()
-{
-  updateHeatmap(savedPreferences)
+function setPreference() {
+  loadPreferences(savedPreferences)
   //update the slider locations and values
   document.getElementById("minTempPref").value = savedPreferences.tmin
   document.getElementById("maxTempPref").value = savedPreferences.tmax
