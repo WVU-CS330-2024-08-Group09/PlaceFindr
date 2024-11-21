@@ -13,7 +13,9 @@ First, clone the repository to your local machine.
 ### 2. Install the Dependencies
 
 In the project's root directory, run the following command to install all the required dependencies:
-
+```bash
+ONLY DO THIS IF YOU DO NOT HAVE A node_modules FOLDER IN YOUR PROJECT
+```
 ```bash
 npm install
 ```
