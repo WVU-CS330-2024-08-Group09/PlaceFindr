@@ -1,0 +1,78 @@
+.dark-mode {
+    background-color: rgb(46, 46, 46);
+    color: white;
+    transition: background-color 0.5s, color 0.5s;
+}
+.dark-mode main{
+    background-color: rgb(31, 31, 31);
+}
+.dark-mode #navBar{
+    color:white;
+}
+
+.dark-mode #header {
+    transition: background-color 0.5s, color 0.5s;
+    border-color:white;
+}
+.dark-mode #map {
+    background-color: #333; /* Change map background in dark mode */
+    transition: background-color 0.5s, color 0.5s;
+}
+.dark-mode .navBarBtn{
+    color:white;
+}
+.dark-mode h1{
+    color:white;
+}
+.dark-mode h2{
+    color:white;
+}
+.dark-mode #pref {
+    background-color: rgb(46, 46, 46); /* Keep this as is, or change if desired */
+    transition: background-color 0.5s, color 0.5s;
+}
+.dark-mode #pref .value{
+    background-color: grey;
+    transition: background-color 0.5s, color 0.5s;
+    border-color: #555;
+}
+
+.dark-mode #output {
+    background-color: rgb(93, 93, 93); /* Change output background in dark mode */
+    transition: background-color 0.5s, color 0.5s;
+}
+
+/* Dark mode button styles */
+.dark-mode .active button {
+    background-color: #555; /* Dark background for buttons */
+    color: white; /* White text color */
+}
+.dark-mode #searchButton{
+    background-color: #555; /* Dark background for buttons */
+    color: white; /* White text color */
+}
+
+#darkModeToggle:hover {
+    background-color: #007bff; /* Light blue background on hover */
+    color: white; /* White text on hover */
+}
+.dark-mode .navBarBtn{
+    border-color: white;
+}
+.dark-mode .active button:hover {
+    background-color: #333; /* Darker shade on hover in dark mode */
+    color: #ddd; /* Lighter text on hover in dark mode */
+}
+.dark-mode #searchButton:hover{
+    background-color: #333; /* Darker shade on hover in dark mode */
+    color: #ddd; /* Lighter text on hover in dark mode */
+}
+/* Dark mode card style */
+.dark-mode .card {
+    background-color: #333;
+    color: white;
+}
+
+.dark-mode .card img {
+    border-color: #444;
+}
