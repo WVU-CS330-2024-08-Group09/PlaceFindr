@@ -3,3 +3,6 @@
 
 #Don't push the output.geosjon file (contains the data we are using until we can put it on the server successfully)
 output.geojson
+
+#dont push the node_modules folder
+node_modules/
