@@ -167,65 +167,6 @@ $(document).ready(function() {
     }
     updateUnits();
 
-    /*
-    // Navigates to the account page
-    document.getElementById("aboutBtn").addEventListener("click", function() {
-        window.location.href = "About.html"; 
-    });
-
-    //navigates to the saved page
-    document.getElementById("savedBtn").addEventListener("click", function(){
-        window.location.href = 'saved.html';
-    })
-    // Form handling for Login and Register
-    $('#loginForm').on('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission
-    
-        // Handle login logic (you can integrate this with backend or display validation)
-        const email = $('#email').val();
-        const password = $('#password').val();
-        $('#loginMessage').text(`Logging in with ${email}...`);
-
-        //TODO: FIX BROKEN, SORRY
-        // //TODO: Add some form of encryption on the password before passing it to the validLogin function
-        // //Check if the login info is valid
-        // var validAndName = validLogin(email, password);
-        // if(validAndName[0]){
-        //     $('#loginMessage').text(`Valid email and password! Hello ${validAndName[1]}`);
-        //     // TODO: Add whatever else should happen after logging in, probably also return preferences somehow?
-        // }
-        // else{
-        //     $('#loginMessage').text(`No account exists with this email and password`);
-        // }
-    });
-
-    $('#registerForm').on('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission
-    
-        const firstName = $('#firstName').val();
-        const lastName = $('#lastName').val();
-        const email = $('#email').val();
-        const password = $('#password').val();
-        const confirmPassword = $('#confirmPassword').val();
-    
-        if (password !== confirmPassword) {
-            $('#registerMessage').text('Passwords do not match!');
-        } else {
-            $('#registerMessage').text(`Registering ${firstName} ${lastName}...`);
-            // Registration logic goes here (e.g., send data to server)
-            //TODO: FIX BROKEN, SORRY
-            // if(emailStored(email)){
-            //     $('#registerMessage').text('This email is already in use.');
-            // }
-            // else{
-            //     //TODO: Add some form of encryption on the password before passing it to the newUser function
-            //     newUser(firstName, lastName, email, password);
-            //     $('#registerMessage').text('Congratulations, your account has been registered! You can now login!');
-            // }
-        }
-    });
-
-  */
 
 
     const prefTab = $('#prefTab');

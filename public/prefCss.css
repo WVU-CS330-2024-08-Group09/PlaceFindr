@@ -195,7 +195,6 @@ input[type="range"]:active::-webkit-slider-thumb{
     border:none;
     border-radius: 5px;
     padding: 1px 0px 5px 5px;
-    background-color: rgb(160, 154, 154);
     justify-content: center;
     align-items: center;
 }
@@ -209,4 +208,8 @@ input[type="range"]:active::-webkit-slider-thumb{
 }
 #prefTabButton{
     background-color: lightgray;
+    border-radius: 5% 0 0 5%;
+}
+#prefSettTabButton{
+    border-radius: 0 5% 5% 0;
 }

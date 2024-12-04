@@ -1,0 +1,59 @@
+* {
+    /*hide scrollbar for IE, Edge, Firefox*/
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+::-webkit-scrollbar {
+    /*hide scrollbar for Chrome, Safari, Opera*/
+    display: none;
+}
+body{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+#header {
+    position: relative;
+    width: 90%;
+    margin: auto;
+    margin-top: 0;
+    border-bottom:2px solid rgb(86, 82, 82);
+    border-top: none;
+    grid-area: 1 / 1 / 2 / 6;
+    font:Verdana, sans-serif;
+}
+h1{
+    text-align: center;
+    color: black;
+    grid-column:3/4;
+}
+#navBar{
+    display: grid;
+    grid-template-columns: 17% 17% 30% 17% 17%;
+}
+#homeBtn{
+    grid-column: 1/2;
+}
+#howToBtn{
+    grid-column: 2/3;
+}
+#savedBtn{
+    grid-column: 4/5;
+}
+#accountBtn{
+    grid-column: 5/6;
+}
+.navBarBtn{
+    margin: auto; /* Add some spacing */
+    padding: 5px 10px; /* Button padding */
+    width: 70%;
+    height: 50%;
+    border:none;
+    cursor: pointer; /* Change cursor on hover */
+    background:transparent;
+    transition: background-color 0.5s, color 0.5s;
+    font-size: large;
+}
+.navBarBtn:hover{
+    border-bottom: 1px solid black;
+}

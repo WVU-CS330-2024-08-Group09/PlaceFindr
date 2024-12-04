@@ -2,10 +2,10 @@
 $(document).ready(function() 
 {
     //create jQuery objects for the 4 nav bar nuttons
-    let $homeBtn = $("#homeBtn")
-    let $howtoBtn = $("#howToBtn")
-    let $savedBtn = $("#savedBtn")
-    let $aboutBtn = $("#aboutBtn")
+    let $homeBtn = $(".homeBtn")
+    let $howtoBtn = $(".howToBtn")
+    let $savedBtn = $(".savedBtn")
+    let $aboutBtn = $(".aboutBtn")
 
 
     $homeBtn.on("click", function(){
