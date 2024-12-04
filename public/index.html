@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./styles.css">
         <link rel="stylesheet" href="./prefCss.css">
+        <link rel="stylesheet" href="./nav.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script type="module" src="./mainPageFunc.js"></script>
         <script type="module" src="./map.js"></script>
@@ -21,24 +22,21 @@
         <!--container for the header of the site-->
         <div id="header">
           <div id="navBar">
-              <button id="homeBtn" class="navBarBtn">
+              <button id="homeBtn" class="navBarBtn homeBtn">
                   <i class="fa-solid fa-house-chimney"></i> Home
               </button>
-              <button id="howToBtn" class="navBarBtn">
+              <button id="howToBtn" class="navBarBtn howToBtn">
                   <i class="fa-solid fa-gears"></i> How It Works
               </button>
               <a href="index.html" style="text-decoration: none;">
                 <h1>PlaceFindr.com</h1>
             </a>
             
-              <button id="savedBtn" class="navBarBtn">
+              <button id="savedBtn" class="navBarBtn savedBtn">
                   <i class="fa-regular fa-bookmark"></i> Saved
               </button>
-              <button id="aboutBtn" class="navBarBtn">
+              <button id="aboutBtn" class="navBarBtn aboutBtn">
                   About Us
-              </button>
-              <button id="loadButton" class="navBarBtn" onclick="loadPreferences()">
-                  Load Preferences
               </button>
           </div>
       </div>
@@ -98,6 +96,9 @@
             <p id="buttonRow"><!--Row for the Search and Save Preferences-->
               <button id="saveButton" class="prefButton"><strong>Save Preferences</strong></button>
               <button id="searchButton" class="prefButton"><Strong>Search</Strong></button>
+              <button id="loadButton" class="navBarBtn" onclick="loadPreferences()">
+                Load Preferences
+            </button>
             </p>
         </div>
 

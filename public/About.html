@@ -1,120 +1,125 @@
 <!DOCTYPE HTML>
 <html lang="EN">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if dark mode is enabled in localStorage
+            const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+            }
+        });
+    </script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./nav.js"></script>
+    <link rel="stylesheet" href="./nav.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>About Group 9</title>
 </head>
+
+<div id="header">
+    <div id="navBar">
+        <button id="homeBtn" class="navBarBtn homeBtn">
+            <i class="fa-solid fa-house-chimney"></i> Home
+        </button>
+        <button id="howToBtn" class="navBarBtn howToBtn">
+            <i class="fa-solid fa-gears"></i> How It Works
+        </button>
+        <a href="index.html" style="text-decoration: none;">
+          <h1>PlaceFindr.com</h1>
+      </a>
+      
+        <button id="savedBtn" class="navBarBtn savedBtn">
+            <i class="fa-regular fa-bookmark"></i> Saved
+        </button>
+        <button id="aboutBtn" class="navBarBtn aboutBtn">
+            About Us
+        </button>
+    </div>
+</div>
+    
+    
 <body>
-    <header>
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                // Check if dark mode is enabled in localStorage
-                const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
-                if (isDarkMode) {
-                    document.body.classList.add('dark-mode');
-                }
-            });
-        </script>
-        <div id="header">
-          <div id="navBar">
-              <button id="homeBtn" class="navBarBtn">
-                  <i class="fa-solid fa-house-chimney"></i> Home
-              </button>
-              <button id="howToBtn" class="navBarBtn">
-                  <i class="fa-solid fa-gears"></i> How It Works
-              </button>
-              <a href="index.html" style="text-decoration: none;">
-                <h1>PlaceFindr.com</h1>
-            </a>
-            
-              <button id="savedBtn" class="navBarBtn">
-                  <i class="fa-regular fa-bookmark"></i> Saved
-              </button>
-              <button id="aboutBtn" class="navBarBtn">
-                  About Us
-              </button>
-              <button id="loadButton" class="navBarBtn" onclick="loadPreferences()">
-                  Load Preferences
-              </button>
-          </div>
-      </div>
-    </header>
-    <main class="main-container">
-        <div class="about-header">
-            <img src="images/logo512.png" alt="Group Logo" class="logo-photo large-logo">
-            <h1>PlaceFindr.com</h1>
-        </div>
-        <div class="row">
-            <div class="column">
-                <div class="card">
-                    <img src="images/IMG_6242.jpg" alt="Member 1" style="width:100%">
-                    <div class="container">
-                        <h2>Vicenzo Linares</h2>
-                        <p>Role/Description</p>
-                    </div>
-                </div>
-            </div>
-            <div class="column">
-                <div class="card">
-                    <img src="images/IMG_6695.JPG" alt="Member 2" style="width:100%">
-                    <div class="container">
-                        <h2>Kaden Spencer</h2>
-                        <p>Role/Description</p>
-                    </div>
-                </div>
-            </div>
-            <div class="column">
-                <div class="card">
-                    <img src="images/IMG_6696.JPG" alt="Member 3" style="width:100%">
-                    <div class="container">
-                        <h2>Ryan Ritossa</h2>
-                        <p>Role/Description</p>
-                    </div>
-                </div>
-            </div>
-            <div class="column">
-                <div class="card">
-                    <img src="images/IMG_6693.JPG" alt=" Member 4" style="width:100%">
-                    <div class="container">
-                        <h2>Shane Thomas</h2>
-                        <p>Role/Description</p>
-                    </div>
-                </div>
-            </div>
-            <div class="column">
-                <div class="card">
-                    <img src="images/IMG_6694.JPG" alt="Member 5" style="width:100%">
-                    <div class="container">
-                        <h2>Conor</h2>
-                        <p>Role/Description</p>
-                    </div>
-                </div>
-            </div>
-            <div class="column">
-                <div class="card">
-                    <img src="images/placeholder.jpg" alt="Future Member 1" style="width:100%">
-                    <div class="container">
-                        <h2>Future Member 1</h2>
-                        <p>Role/Description</p>
-                    </div>
-                </div>
-            </div>
-            <div class="column">
-                <div class="card">
-                    <img src="images/placeholder.jpg" alt="Future Member 2" style="width:100%">
-                    <div class="container">
-                        <h2>Future Member 2</h2>
-                        <p>Role/Description</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         
-    </main>
-    <footer>
-        <p>© 2024 PlaceFindr. All rights reserved.</p>
-    </footer>
-</body>
+        <main class="main-container">
+            <div class="about-header">
+                <img src="images/logo512.png" alt="Group Logo" class="logo-photo large-logo">
+                <h1>PlaceFindr.com</h1>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <div class="card">
+                        <img src="images/IMG_6242.jpg" alt="Member 1" style="width:100%">
+                        <div class="container">
+                            <h2>Vicenzo Linares</h2>
+                            <p>Role/Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card">
+                        <img src="images/IMG_6695.JPG" alt="Member 2" style="width:100%">
+                        <div class="container">
+                            <h2>Kaden Spencer</h2>
+                            <p>Role/Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card">
+                        <img src="images/IMG_6696.JPG" alt="Member 3" style="width:100%">
+                        <div class="container">
+                            <h2>Ryan Ritossa</h2>
+                            <p>Role/Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card">
+                        <img src="images/IMG_6693.JPG" alt=" Member 4" style="width:100%">
+                        <div class="container">
+                            <h2>Shane Thomas</h2>
+                            <p>Role/Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card">
+                        <img src="images/IMG_6694.JPG" alt="Member 5" style="width:100%">
+                        <div class="container">
+                            <h2>Conor</h2>
+                            <p>Role/Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card">
+                        <img src="images/placeholder.jpg" alt="Future Member 1" style="width:100%">
+                        <div class="container">
+                            <h2>Future Member 1</h2>
+                            <p>Role/Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card">
+                        <img src="images/placeholder.jpg" alt="Future Member 2" style="width:100%">
+                        <div class="container">
+                            <h2>Future Member 2</h2>
+                            <p>Role/Description</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+        <footer>
+            <p>© 2024 PlaceFindr. All rights reserved.</p>
+        </footer>
+    </body>
+
+
 </html>
