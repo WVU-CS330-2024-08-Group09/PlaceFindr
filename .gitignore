@@ -3,3 +3,5 @@
 
 #Don't push the output.geosjon file (contains the data we are using until we can put it on the server successfully)
 output.geojson
+
+C:\Users\Cosmi\OneDrive\Desktop\PlaceFindr\PlaceFindr\node_modules

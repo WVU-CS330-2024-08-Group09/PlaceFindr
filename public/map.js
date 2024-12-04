@@ -6,12 +6,17 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
-let savedPreferences = {
-tmin: null,
-tmax: null,
-avgprcp: null
+function savedPreferences(prefName, season, tmin, tmax, tempavg, avgprcp)
+{
+  this.prefName = prefName;
+  this.season = season;  
+  this.tmin = tmin;  
+  this.tmax = tmax;
+  this.tempavg = tempavg;
+  this.avgprcp = avgprcp;
 };
 
+let savedPrefAr = []
 let heatLayer = null;
 let heatmapLayer;
 
@@ -28,6 +33,21 @@ function getSeasonValue() {
   };
 
   return seasonMap[season] || 0; // Return 0 if season is not found
+}
+
+function getSeasonString(num)
+{
+  switch(num)
+  {
+    case 1:
+      return "winter";
+    case 2:
+      return "spring";
+    case 3:
+      return "summer";
+    case 4:
+      return "autumn";
+  }
 }
 
 export async function querryPoints() {
@@ -88,7 +108,7 @@ function updateHeatmap(responseData) {
 }
 
 // Load preferences function
-function loadPreferences() {
+export function loadPreferences() {
   return {
     season: getSeasonValue(),
     tmin: parseFloat(document.getElementById("minTempPref").value),
@@ -100,21 +120,38 @@ function loadPreferences() {
 
 
 //used to save the values of the preference sliders
-function savePreference() {
-  savedPreferences.tmin = parseFloat(document.getElementById("minTempPref").value)
-  savedPreferences.tmax = parseFloat(document.getElementById("maxTempPref").value)
-  savedPreferences.avgprcp = parseFloat(document.getElementById('precipPref').value)
+export function savePreference() 
+{
+  //save all pertinent preference data
+    savedPrefAr.push(new savedPreferences(
+    prompt("Please enter a name for your preference set"),
+    getSeasonString(getSeasonValue()),
+    parseFloat(document.getElementById("minTempPref").value),
+    parseFloat(document.getElementById("maxTempPref").value),
+    parseFloat(document.getElementById("avgTempPref").value),
+    parseFloat(document.getElementById('precipPref').value)
+  ))
 }
 
 //used to update the map with the saved values of the user
-function setPreference() {
-  loadPreferences(savedPreferences)
+export function setPreference(i=0) {
+
   //update the slider locations and values
-  document.getElementById("minTempPref").value = savedPreferences.tmin
-  document.getElementById("maxTempPref").value = savedPreferences.tmax
-  document.getElementById("precipPref").value = savedPreferences.avgprcp
+  document.getElementById("season").value = savedPrefAr[i].season
+  document.getElementById("minTempPref").value = savedPrefAr[i].tmin
+  document.getElementById("maxTempPref").value = savedPrefAr[i].tmax
+  document.getElementById("precipPref").value = savedPrefAr[i].avgprcp
+  document.getElementById("avgTempPref").value = savedPrefAr[i].tempAvg
 
   //calling variables from the "mainPageFunc.js" file that update the coloring on the temp min and max slider
   window.minSlide()
   window.maxSlide()
+
+  //recalculates the saved heatmap
+  querryPoints();
+}
+
+export function returnPref()
+{
+  return savedPrefAr;
 }
