@@ -16,9 +16,27 @@ function savedPreferences(prefName, season, tmin, tmax, tempavg, avgprcp)
   this.avgprcp = avgprcp;
 };
 
-let savedPrefAr = []
+let userPrefs = null;
 let heatLayer = null;
 let heatmapLayer;
+let savedPrefAr = [];
+
+if(sessionStorage.getItem("prefToLoad"))
+{
+  setPrefToLoad();
+}
+
+
+if(localStorage.getItem("userPrefs") === null)
+{
+   savedPrefAr = [];
+}
+else
+{
+   savedPrefAr = JSON.parse(localStorage.getItem("userPrefs"));
+
+}
+
 
 // Function to get the season value as a number
 function getSeasonValue() {
@@ -79,7 +97,7 @@ function calculateMatchScore(point, preferences) {
     const precpMatch = 1 - Math.abs(point.avgprcp - preferences.avgprcp) / 100; // Normalize by expected precipitation range
     
     // Combine scores with weights
-    return (tempMinMatch * 0.3 + tempMaxMatch * 0.3 + precpMatch * 0.4) * 100;
+    return (tempMinMatch * 0.3 + tempMaxMatch * 0.3 + precpMatch * 0.3) * 100;
 }
 
 function updateHeatmap(responseData) {
@@ -131,6 +149,15 @@ export function savePreference()
     parseFloat(document.getElementById("avgTempPref").value),
     parseFloat(document.getElementById('precipPref').value)
   ))
+
+  if(localStorage.getItem("userPrefs") === null)
+    {
+      localStorage.removeItem("userPrefs")
+      console.log("removed userPrefs")
+    }
+
+   userPrefs = JSON.stringify(savedPrefAr);
+   localStorage.setItem("userPrefs", userPrefs);
 }
 
 //used to update the map with the saved values of the user
@@ -151,7 +178,26 @@ export function setPreference(i=0) {
   querryPoints();
 }
 
-export function returnPref()
+function setPrefToLoad()
+{
+  let prefToLoad = JSON.parse(sessionStorage.getItem("prefToLoad"))
+
+  document.getElementById("season").value = prefToLoad.season;
+  document.getElementById("minTempPref").value = prefToLoad.tmin
+  document.getElementById("maxTempPref").value =  prefToLoad.tmax
+  document.getElementById("precipPref").value = prefToLoad.avgprcp
+  document.getElementById("avgTempPref").value = prefToLoad.tempavg
+  
+  //calling variables from the "mainPageFunc.js" file that update the coloring on the temp min and max slider
+ // window.minSlide()
+  //window.maxSlide()
+  
+  //recalculates the saved heatmap
+  querryPoints();
+}
+
+function returnPref()
 {
   return savedPrefAr;
 }
+
