@@ -1,40 +1,48 @@
-.about-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
 
 .row {
+    flex: 1; /* Takes up space on the right */
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start; /* Aligns the columns to the left within their section */
     gap: 20px;
-    margin: 20px;
 }
 
 /* Styling each column and card */
 .column {
+    display: flex;
+    justify-content: center;
     flex: 1 1 300px;
     max-width: 300px;
 }
 
 .card {
-    background-color: #f8f8f8;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 250px; /* Slightly larger width for a modern look */
+    height: 350px; /* Adjusted height for better proportions */
+    margin: 20px; /* More spacing between cards */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(145deg, #444, #222); /* Gradient background for a premium feel */
+    border-radius: 15px; /* Softer, larger rounded corners */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* Elegant shadow for a lifting effect */
     overflow: hidden;
-    text-align: center;
-    transition: transform 0.2s;
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effects */
 }
-
 .card:hover {
-    transform: scale(1.05);
+    transform: translateY(-10px); /* Subtle lift on hover */
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.7); /* Stronger shadow on hover */
 }
 
+/* Ensure images fit perfectly */
 .card img {
+    width: 100%; /* Image spans full width */
+    height: 60%; /* Image takes 60% of the card height */
+    object-fit: cover; /* Ensures proper image scaling */
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1); /* Thin separator */
+    filter: brightness(90%); /* Dim image slightly for a professional look */
+    transition: filter 0.3s; /* Smooth hover effect for image */
     border-radius: 50%; /* Make images circular */
-    height: 150px;
-    width: 150px;
-    object-fit: cover;
     margin-top: 15px;
 }
 
@@ -48,14 +56,6 @@ h2 {
     margin-top: 10px;
 }
 
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end; /* Moves the columns to the right */
-    gap: 20px;
-    margin: 20px;
-}
 .main-container {
     display: flex;
     justify-content: space-between; /* Spaces elements within the container */
@@ -79,51 +79,6 @@ h2 {
     width: 120px;
     height: auto;
     margin-bottom: 20px;
-}
-
-.row {
-    flex: 1; /* Takes up space on the right */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start; /* Aligns the columns to the left within their section */
-    gap: 20px;
-}
-
-/* Adjust the card styling as needed */
-.column {
-    flex: 1 1 300px;
-    max-width: 300px;
-}
-/* Style for the overall card layout */
-.card {
-    width: 250px; /* Slightly larger width for a modern look */
-    height: 350px; /* Adjusted height for better proportions */
-    margin: 20px; /* More spacing between cards */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background: linear-gradient(145deg, #444, #222); /* Gradient background for a premium feel */
-    border-radius: 15px; /* Softer, larger rounded corners */
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* Elegant shadow for a lifting effect */
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effects */
-}
-
-/* Hover effect for the card */
-.card:hover {
-    transform: translateY(-10px); /* Subtle lift on hover */
-    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.7); /* Stronger shadow on hover */
-}
-
-/* Ensure images fit perfectly */
-.card img {
-    width: 100%; /* Image spans full width */
-    height: 60%; /* Image takes 60% of the card height */
-    object-fit: cover; /* Ensures proper image scaling */
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1); /* Thin separator */
-    filter: brightness(90%); /* Dim image slightly for a professional look */
-    transition: filter 0.3s; /* Smooth hover effect for image */
 }
 
 /* Image hover effect */
@@ -154,20 +109,6 @@ h2 {
     color: #bbb; /* Softer gray for descriptions */
     margin: 0;
 }
-
-/* Columns and Rows for Responsive Design */
-.column {
-    display: flex;
-    justify-content: center;
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px; /* Increased spacing between cards */
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .card {

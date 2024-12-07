@@ -3,51 +3,77 @@
 //import {emailStored, validLogin, newUser} from "./Account.js";
 import { querryPoints, savePreference, setPreference} from './map.js';
 
-
 $(document).ready(function() {
 
-    // Function for toggling Dark/Light Mode
-    const darkToggle = document.getElementById('darkModeToggle');
+//**** All Variable Declarations ****//
 
-    // Check localStorage for dark mode setting on page load
-    if (localStorage.getItem('darkMode') === 'enabled') {
-        document.body.classList.add('dark-mode');
-    }
-
-    darkToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        
-        // Save dark mode preference in localStorage
-        if (document.body.classList.contains('dark-mode')) {
-            localStorage.setItem('darkMode', 'enabled');
-        } else {
-            localStorage.setItem('darkMode', 'disabled');
-        }
-    });
-
-    // Functions for changing each input for the Preference Sliders
-    let $minTempPref = $('#minTempPref');
-    let $maxTempPref = $('#maxTempPref');
-    let $minTempValue = $('#minTempValue');
-    let $maxTempValue = $('#maxTempValue');
-    let $avgTempPref = $('#avgTempPref'); 
-    let $avgTempValue = $('#avgTempValue');
-    let $precipPref = $('#precipPref');
-    let $precipValue = $('#precipValue');
-    let minGap = 1;
+    // dark mode toggle declaration
+    const darkToggle = $('#darkModeToggle');
+    //for season selection
+    const seasonSelect = $('#season');
+    //double slider min/max temp
+    const $minTempPref = $('#minTempPref');
+    const $maxTempPref = $('#maxTempPref');
+    const $minTempValue = $('#minTempValue');
+    const $maxTempValue = $('#maxTempValue');
     const sliderRange = $('#slider-range');
-    let maxTemp = $maxTempPref.attr('max');
-    let minTemp = $minTempPref.attr('min')
-
-    // Display and internal unit variables
-    let displayTempUnit = '°F';  // For display only
-    let internalTempUnit = '°C'; // Always Celsius internally
+    //attributes for the double slider
+    const minGap = 1;
+    const maxTemp = $maxTempPref.attr('max');
+    const minTemp = $minTempPref.attr('min');
+    //avg temp
+    const $avgTempPref = $('#avgTempPref'); 
+    const $avgTempValue = $('#avgTempValue');
+    //precipitation
+    const $precipPref = $('#precipPref');
+    const $precipValue = $('#precipValue');
+    //for Unit display
+    let displayTempUnit = '°F';  
     let displayPrecipUnit = ' in';
-    let internalPrecipUnit = ' mm';
-    let displayMultiplier = 1;
-    let displayTempAdder = 0;
-    let displayPrecipMultiplier = 1;
+    //for Unit Conversion Radio Buttons
+    const impUnitButton = $('#impUnitButton');
+    const metUnitButton = $('#metUnitButton');
+    //Save settings Button
+    const saveSettButton = $('#saveSettingButton');
+    //for tabs in prefernces section
+    const prefTab = $('#prefTab');
+    const settingsTab = $('#prefSettings');
+    const prefTabButton = $('#prefTabButton');
+    const settTabButton = $('#prefSettTabButton');
+    //Buttons in pref Section
+    const searchButton = $('#searchButton');
+    const loadButton = $('#loadButton');
+    const saveButton = $('#saveButton');
 
+    //creates global variables for the map.js file
+    window.minSlide = minSlide;
+    window.maxSlide = maxSlide;
+
+    //initialize all event handlers
+    darkToggle.on('click', toggleDarkMode);
+    $minTempPref.on('input', minSlide);
+    $maxTempPref.on('input', maxSlide);
+    $avgTempPref.on('input',updateAvgTemp);
+    $precipPref.on('input',updatePrecip);
+    seasonSelect.on('change',querryPoints);
+    prefTabButton.on('click', toggleTabs(prefTab,settingsTab,prefTabButton,settTabButton));
+    settTabButton.on('click', toggleTabs(settingsTab,prefTab,settTabButton,prefTabButton));
+    saveSettButton.on('click',updateSettings);
+    searchButton.on('click', querryPoints);
+    saveButton.on('click', savePreference);
+    loadButton.on('click', setPreference);
+    
+    
+    ///*** All function declarations ***///
+
+    //dark mode toggling function
+    function toggleDarkMode() {
+        const isDarkMode = document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+    }
+    
+    //functions for updating the double sliders
+    //min Slider
     function minSlide(){
         if(parseInt($maxTempPref.val())- parseInt($minTempPref.val()) <= minGap){
             $minTempPref.val(parseInt($maxTempPref.val()));
@@ -59,8 +85,7 @@ $(document).ready(function() {
         $minTempValue.text(Math.round(displayValue) + displayTempUnit);
         fillColor();
     }
-    window.minSlide = minSlide
-
+    //max Slider
     function maxSlide(){
         if(parseInt($maxTempPref.val())- parseInt($minTempPref.val()) <= minGap){
             $maxTempPref.val(parseInt($minTempPref.val()));
@@ -72,9 +97,7 @@ $(document).ready(function() {
         $maxTempValue.text(Math.round(displayValue) + displayTempUnit);
         fillColor();
     }
-    window.maxSlide = maxSlide
-
-    
+    //updating the fill between thumbs for double sliders
     function fillColor() {
         let minVal = parseInt($minTempPref.val());
         let maxVal = parseInt($maxTempPref.val());
@@ -87,32 +110,8 @@ $(document).ready(function() {
             'width': (percentMax - percentMin) + '%'
         });
     }
-
-    fillColor();
-
-
-    // event listeners for preferences
-    $minTempPref.on('change', function() {
-      querryPoints();
-      minSlide();
-    });
-    $maxTempPref.on('change', function() {
-      querryPoints();
-      maxSlide();
-    });
-    $avgTempPref.on('change', function() {
-      querryPoints();
-      updateAvgTemp();
-    });
-    $precipPref.on('change', function() {
-      querryPoints();
-      updatePrecip();
-    });
-    const seasonSelect = document.getElementById('season');
-    seasonSelect.addEventListener('change', function() {
-      querryPoints(); 
-    });
     
+    //function for updating precipitation
     function updatePrecip(){
         // Convert for display only, keeping internal value in mm
         let displayValue = localStorage.getItem('prefUnits') === 'imp' 
@@ -121,6 +120,7 @@ $(document).ready(function() {
         $precipValue.text(Math.round(displayValue * 10) / 10 + displayPrecipUnit);
     }
 
+    //function for updating Avg Temp
     function updateAvgTemp(){
         // Convert for display only, keeping internal value in Celsius
         let displayValue = localStorage.getItem('prefUnits') === 'imp' 
@@ -129,11 +129,8 @@ $(document).ready(function() {
         $avgTempValue.text(Math.round(displayValue) + displayTempUnit);
     }
 
-    const impUnitButton = $('#impUnitButton');
-    const metUnitButton = $('#metUnitButton');
-    const saveSettButton = $('#saveSettingButton')
-
-    saveSettButton.on('click',function(){
+    //function to update the settings
+    function updateSettings(){
         if(impUnitButton.is(':checked')){
             localStorage.setItem('prefUnits','imp')
         }
@@ -141,69 +138,32 @@ $(document).ready(function() {
             localStorage.setItem('prefUnits','met')
         }
         updateUnits();
-    });
+    }
 
+    //function to update units
     function updateUnits(){
-        if(localStorage.getItem('prefUnits')==='imp'){
-            displayTempUnit = '°F';
-            displayPrecipUnit = ' in';
-            displayPrecipMultiplier = 1/25.4;  // Convert mm to inches for display
-            displayTempAdder = 32;
-            displayMultiplier = 9/5;  // Convert Celsius to Fahrenheit for display
-            impUnitButton.prop('checked',true);
-        }
-        else if(localStorage.getItem('prefUnits')==='met'){
-            displayTempUnit = '°C';
-            displayPrecipUnit = ' mm';
-            displayPrecipMultiplier = 1;
-            displayTempAdder = 0;
-            displayMultiplier = 1;
-            metUnitButton.prop('checked',true);
-        }
+        const unit = localStorage.getItem('prefUnits');
+        displayTempUnit = unit === 'imp' ? '°F' : '°C';
+        displayPrecipUnit = unit === 'imp' ? ' in' : ' mm';
+        
+        impUnitButton.prop('checked', unit === 'imp');
+        metUnitButton.prop('checked', unit === 'met');
+
         minSlide();
         maxSlide();
         updatePrecip();
         updateAvgTemp();
     }
-    updateUnits();
+    
+    //function to toggle the tabs in the preference section
+    function toggleTabs(activeTab, inactiveTab, activeButton, inactiveButton) {
+        activeTab.toggleClass('tab active');
+        inactiveTab.toggleClass('tab active');
+        activeButton.css('background-color', 'lightgray');
+        inactiveButton.css('background-color', 'rgb(160, 154, 154)');
+    }
 
-
-
-    const prefTab = $('#prefTab');
-    const settingsTab = $('#prefSettings');
-    const prefTabButton = $('#prefTabButton');
-    const settTabButton = $('#prefSettTabButton');
-
-
-    prefTabButton.on('click', function(){
-        if(prefTab.hasClass('tab')){
-            prefTab.toggleClass('tab active');
-            settingsTab.toggleClass('tab active');
-            prefTabButton.css('background-color', 'lightgray');
-            settTabButton.css('background-color', 'rgb(160, 154, 154)');
-        }
-    });
-
-    settTabButton.on('click', function(){
-        if(settingsTab.hasClass('tab')){
-            prefTab.toggleClass('tab active');
-            settingsTab.toggleClass('tab active');
-            prefTabButton.css('background-color', 'rgb(160, 154, 154)');
-            settTabButton.css('background-color', 'lightgray');
-        }
-    });
-    //create a heatmap with the preferences set by the user
-    $('#searchButton').on('click', function(){
-        querryPoints();
-    })
-
-    //save the current heatmap
-    $('#saveButton').on('click', function(){
-        savePreference()
-    })
-
-    $('#loadButton').on('click', function(){
-        setPreference()
-    })
-
+    //calling functions to update before inputs
+    //fillColor();
+    //updateUnits();
 });
