@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .large-logo {
+            width: 100px;
+            /* Adjust for a larger logo */
+            height: auto;
+            margin: 50px auto;
+            display: block;
+        }
+
+        .main-container {
+            max-width: 15000px;
+            /* Make the container wider */
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .column {
+                max-width: 100%;
+                /* Make cards stack for smaller screens */
+                margin: 10px 0;
+            }
+        }
+
+        .about-header {
+            text-align: left;
+            /* Align the content to the left */
+            padding-left: 20px;
+            /* Add padding to move it slightly from the left edge */
+        }
+
+        .about-header img,
+        .about-header h1 {
+            margin: 10px 0;
+            /* Ensure consistent spacing between elements */
+        }
+
+        /* Row styling */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            /* Add spacing between columns */
+            margin-top: 20px;
+        }
+
+        /* Column styling */
+        /* Column styling */
+        .column {
+            width: 100%;
+            /* Make the columns take the full width of the container */
+            max-width: 1200px;
+            /* Set a fixed larger maximum width for horizontal expansion */
+            margin: 0 auto;
+            /* Center the column horizontally */
+        }
+
+        /* Card styling */
+        .card {
+            border-radius: 12px;
+            /* Smooth rounded corners */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            /* Add a stronger shadow */
+            padding: 30px;
+            /* Increase padding inside the card */
+            font-size: 1.2em;
+            /* Scale up the font size */
+            width: 100%;
+            /* Make the card fill the column */
+            height: 350px;
+            /* Keep the height fixed */
+            max-width: 1000px;
+            /* Set a fixed horizontal size */
+            margin: 0 auto;
+            /* Center the card within the column */
+        }
+
+
+        /* Container inside cards */
+        .container h2 {
+            font-size: 2em;
+            /* Larger heading */
+            margin-bottom: 15px;
+        }
+
+        .container p {
+            font-size: 1.1em;
+            /* Slightly larger text for descriptions */
+            line-height: 1.6;
+            /* Improve readability */
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+            }
+        });
+    </script>
+    <title>How It Works - PlaceFindr</title>
+</head>
+
+<body>
+    <header>
+        <div id="header">
+            <div id="navBar">
+                <button id="homeBtn" class="navBarBtn" onclick="location.href='PlaceFindr.html'">
+                    <i class="fa-solid fa-house-chimney"></i> Home
+                </button>
+                <button id="howToBtn" class="navBarBtn" onclick="location.href='HowItWorks.html'">
+                    <i class="fa-solid fa-gears"></i> How It Works
+                </button>
+                <a href="PlaceFindr.html" style="text-decoration: none;">
+                    <h1>PlaceFindr.com</h1>
+                </a>
+                <button id="savedBtn" class="navBarBtn" onclick="location.href='Saved.html'">
+                    <i class="fa-regular fa-bookmark"></i> Saved
+                </button>
+                <button id="aboutBtn" class="navBarBtn" onclick="location.href='About.html'">
+                    About Us
+                </button>
+                <button id="loadButton" class="navBarBtn" onclick="loadPreferences()">
+                    Load Preferences
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="about-header">
+            <img src="images/logo512.png" alt="PlaceFindr Logo" class="logo-photo large-logo"
+            style="width: 35%; margin-top: 10px; border-radius: 10px;">
+            <h1 style="text-align: left; margin-left: 0;">How It Works</h1>
+            <img src="images/Screenshot 2024-12-04 111826.png" alt="Team Image"
+                style="width: 80%; margin-top: 10px; border-radius: 10px;">
+        </div>
+        <div class="row">
+            <div class="column" style="width: 950px; margin: 0 auto;">
+                <div class="card" style="width: 100%; height: 450px;">
+                    <div class="container">
+                        <h2>How It Works</h2>
+                        <p>Describe</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="column" style="width: 950px; margin: 0 auto;">
+                <div class="card" style="width: 100%; height: 450px;">
+                    <div class="container">
+                        <h2>Why To Use Us</h2>
+                        <p>Describe</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+
+    </main>
+
+    <footer>
+        <p>© 2024 PlaceFindr. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
