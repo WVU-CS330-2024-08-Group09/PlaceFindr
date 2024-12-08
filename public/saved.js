@@ -22,19 +22,19 @@ for(let i =0; i < userPrefs.length; i++)
         <div class ="textbox" style="text-align: center;">
             ${userPrefs[i].prefName}
             <div>
-                <span class="prefValue" display="block" style="text-align: left; padding-left=15px">
+                <span id="maxTempLoad" class="prefValue" display="block" style="text-align: left; padding-left=15px">
                     <p> Max Temperature:    ${userPrefs[i].tmax}</p>
                 </span>
 
-                <span class="prefValue" display="block" style="text-align: left;">
+                <span id="minTempLoad" class="prefValue" display="block" style="text-align: left;">
                     <p> Min Temperature:    ${userPrefs[i].tmin}</p>
                 </span>
 
-                <span class="prefValue" display="block" style="text-align: left; justify-content: left;">
+                <span id="avgTempLoad" class="prefValue" display="block" style="text-align: left; justify-content: left;">
                     <p> Average Temperature:     ${userPrefs[i].tempavg}</p>
                 </span>
 
-                <span class="prefValue" display="block" style="text-align: left;">
+                <span id="precipLoad" class="prefValue" display="block" style="text-align: left;">
                     <p> Average Precipitation:    ${userPrefs[i].avgprcp}</p>
                 </span>
                 <div id=button-container${i}>

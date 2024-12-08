@@ -14,7 +14,7 @@ function savedPreferences(prefName, season, tmin, tmax, tempavg, avgprcp)
   this.tmax = tmax;
   this.tempavg = tempavg;
   this.avgprcp = avgprcp;
-};
+}
 
 let userPrefs = null;
 let heatLayer = null;

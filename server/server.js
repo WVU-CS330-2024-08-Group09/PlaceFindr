@@ -82,7 +82,7 @@ app.post('/api/data', validateInputs, async (req, res) => {
 
     // Query the database with parameterized input to prevent SQL injection
     const result = await queryDatabase(query, params);
-    //res.json(result);  // Send the query result as JSON
+    // Send the query result as JSON
     if (result.length === 0) {
       return res.json({ 
         message: 'No locations found matching these criteria',

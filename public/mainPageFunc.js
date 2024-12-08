@@ -18,7 +18,7 @@ $(document).ready(function() {
     const $maxTempValue = $('#maxTempValue');
     const sliderRange = $('#slider-range');
     //attributes for the double slider
-    const minGap = 1;
+    const minGap = 7.5;
     const maxTemp = $maxTempPref.attr('max');
     const minTemp = $minTempPref.attr('min');
     //avg temp
@@ -51,14 +51,14 @@ $(document).ready(function() {
 
     //initialize all event handlers
     darkToggle.on('click', toggleDarkMode);
+    seasonSelect.on('change',querryPoints);
     $minTempPref.on('input', minSlide);
     $maxTempPref.on('input', maxSlide);
     $avgTempPref.on('input',updateAvgTemp);
     $precipPref.on('input',updatePrecip);
-    seasonSelect.on('change',querryPoints);
-    prefTabButton.on('click', toggleTabs(prefTab,settingsTab,prefTabButton,settTabButton));
-    settTabButton.on('click', toggleTabs(settingsTab,prefTab,settTabButton,prefTabButton));
     saveSettButton.on('click',updateSettings);
+    prefTabButton.on('click', function(){toggleTabs(prefTab,settingsTab,prefTabButton,settTabButton)});
+    settTabButton.on('click', function(){toggleTabs(settingsTab,prefTab,settTabButton,prefTabButton)});
     searchButton.on('click', querryPoints);
     saveButton.on('click', savePreference);
     loadButton.on('click', setPreference);
@@ -76,7 +76,7 @@ $(document).ready(function() {
     //min Slider
     function minSlide(){
         if(parseInt($maxTempPref.val())- parseInt($minTempPref.val()) <= minGap){
-            $minTempPref.val(parseInt($maxTempPref.val()));
+            $minTempPref.val(parseInt($maxTempPref.val()) - minGap);
         }
         // Convert for display only, keeping internal value in Celsius
         let displayValue = localStorage.getItem('prefUnits') === 'imp' 
@@ -84,11 +84,12 @@ $(document).ready(function() {
             : $minTempPref.val();
         $minTempValue.text(Math.round(displayValue) + displayTempUnit);
         fillColor();
+        updateAvgTemp();
     }
     //max Slider
     function maxSlide(){
         if(parseInt($maxTempPref.val())- parseInt($minTempPref.val()) <= minGap){
-            $maxTempPref.val(parseInt($minTempPref.val()));
+            $maxTempPref.val(parseInt($minTempPref.val()) + minGap);
         }
         // Convert for display only, keeping internal value in Celsius
         let displayValue = localStorage.getItem('prefUnits') === 'imp' 
@@ -96,6 +97,7 @@ $(document).ready(function() {
             : $maxTempPref.val();
         $maxTempValue.text(Math.round(displayValue) + displayTempUnit);
         fillColor();
+        updateAvgTemp();
     }
     //updating the fill between thumbs for double sliders
     function fillColor() {
@@ -110,7 +112,21 @@ $(document).ready(function() {
             'width': (percentMax - percentMin) + '%'
         });
     }
-    
+
+    //function for updating Avg Temp
+    function updateAvgTemp(){
+        // Convert for display only, keeping internal value in Celsius
+        if(parseInt($avgTempPref.val()) > parseInt($maxTempPref.val())){
+            $avgTempPref.val(parseInt($maxTempPref.val()));
+        } else if(parseInt($avgTempPref.val()) < parseInt($minTempPref.val())){
+            $avgTempPref.val(parseInt($minTempPref.val()));
+        }
+        let displayValue = localStorage.getItem('prefUnits') === 'imp' 
+            ? (($avgTempPref.val() * 9/5) + 32).toFixed(1) 
+            : $avgTempPref.val();
+        $avgTempValue.text(Math.round(displayValue) + displayTempUnit);
+    }
+
     //function for updating precipitation
     function updatePrecip(){
         // Convert for display only, keeping internal value in mm
@@ -118,26 +134,6 @@ $(document).ready(function() {
             ? ($precipPref.val() / 25.4).toFixed(2) 
             : $precipPref.val();
         $precipValue.text(Math.round(displayValue * 10) / 10 + displayPrecipUnit);
-    }
-
-    //function for updating Avg Temp
-    function updateAvgTemp(){
-        // Convert for display only, keeping internal value in Celsius
-        let displayValue = localStorage.getItem('prefUnits') === 'imp' 
-            ? (($avgTempPref.val() * 9/5) + 32).toFixed(1) 
-            : $avgTempPref.val();
-        $avgTempValue.text(Math.round(displayValue) + displayTempUnit);
-    }
-
-    //function to update the settings
-    function updateSettings(){
-        if(impUnitButton.is(':checked')){
-            localStorage.setItem('prefUnits','imp')
-        }
-        else if(metUnitButton.is(':checked')){
-            localStorage.setItem('prefUnits','met')
-        }
-        updateUnits();
     }
 
     //function to update units
@@ -154,6 +150,17 @@ $(document).ready(function() {
         updatePrecip();
         updateAvgTemp();
     }
+
+    //function to update the settings
+    function updateSettings(){
+        if(impUnitButton.is(':checked')){
+            localStorage.setItem('prefUnits','imp')
+        }
+        else if(metUnitButton.is(':checked')){
+            localStorage.setItem('prefUnits','met')
+        }
+        updateUnits();
+    }
     
     //function to toggle the tabs in the preference section
     function toggleTabs(activeTab, inactiveTab, activeButton, inactiveButton) {
@@ -164,6 +171,6 @@ $(document).ready(function() {
     }
 
     //calling functions to update before inputs
-    //fillColor();
-    //updateUnits();
+    fillColor();
+    updateUnits();
 });

@@ -150,7 +150,7 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
             offsetY = panePos.y % cellSize,
             i, len, p, cell, x, y, j, len2, k;
 
-        // console.time('process');
+        
         for (i = 0, len = this._latlngs.length; i < len; i++) {
             p = this._map.latLngToContainerPoint(this._latlngs[i]);
             if (bounds.contains(p)) {
@@ -190,11 +190,11 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
                 }
             }
         }
-        // console.timeEnd('process');
+        
 
-        // console.time('draw ' + data.length);
+        
         this._heat.data(data).draw(this.options.minOpacity);
-        // console.timeEnd('draw ' + data.length);
+        
 
         this._frame = null;
     },
