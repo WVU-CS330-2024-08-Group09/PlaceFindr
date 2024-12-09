@@ -1,4 +1,3 @@
-
 .row {
     flex: 1; /* Takes up space on the right */
     display: flex;
@@ -54,13 +53,6 @@ h2 {
     font-size: 1.5em;
     color: #333;
     margin-top: 10px;
-}
-
-.main-container {
-    display: flex;
-    justify-content: space-between; /* Spaces elements within the container */
-    align-items: flex-start; /* Aligns items at the top */
-    margin: 20px;
 }
 
 .about-header {
