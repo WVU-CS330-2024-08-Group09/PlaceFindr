@@ -1,10 +1,12 @@
 var map = L.map('map').setView([39.828, -98.579], 4);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19,
+  maxZoom: 10,
+  minZoom: 4,
   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
+map.setMaxBounds(map.getBounds());
 
 function savedPreferences(prefName, season, tmin, tmax, tempavg, avgprcp)
 {
