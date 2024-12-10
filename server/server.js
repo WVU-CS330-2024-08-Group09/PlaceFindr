@@ -1,12 +1,12 @@
 const express = require('express');
 const { queryDatabase } = require('./database');
 const app = express();
-const port = 3000;
+const cors = require('cors');
+const port = 5000;
 
 app.use(express.json()); // Parse incoming JSON requests
+app.use(cors());
 
-// Set up a basic route to serve the frontend (index.html)
-app.use(express.static('public'));
 //-------------------------------------------
 
 // Input validation middleware
