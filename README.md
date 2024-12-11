@@ -19,7 +19,17 @@ npm install
 
 This will create a `node_modules` folder and install all the packages specified in the `package.json` file.
 
-### 3. Start the Server
+### 3. Start the Frontend
+
+Once the dependencies are installed, you can start the server by running:
+
+```bash
+node /public/frontend.js
+```
+
+This will start the frontend and make it available at http://localhost:3000.
+
+### 4. Start the Server
 
 Once the dependencies are installed, you can start the server by running:
 
@@ -27,11 +37,19 @@ Once the dependencies are installed, you can start the server by running:
 node /server/server.js
 ```
 
-This will start the server and make it available at http://localhost:3000.
+This will start the server and make it available at http://localhost:5000.
 
-### 4. Connect to the Application
+### 5. Add Your IP Address to Azure SQL Server
 
-After the server is running, open your browser and navigate to:
+- Open the connected SQL Server Azure (not available for use outside of this project).
+- Go to Security > Networking
+- Add your client IPv4 address to the firewall rules and save this change.
+
+This will allow your local machine to access the SQL database.
+
+### 6. Connect to the Application
+
+After the frontend and backend servers are running, open your browser and navigate to:
 
 http://localhost:3000
 
