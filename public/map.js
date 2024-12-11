@@ -73,7 +73,7 @@ function getSeasonString(num)
 export async function querryPoints() {
   // Send the data to the backend using a POST request
   try {
-    const response = await fetch('http://40.90.225.131:5000/api/data', {
+    const response = await fetch('http://localhost:5000/api/data', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
