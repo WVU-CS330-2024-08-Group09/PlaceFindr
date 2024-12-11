@@ -3,52 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./about.css">
+    <link rel="stylesheet" href="./nav.css">
+    <link rel="stylesheet" href="./darkMode.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="module" src="./nav.js"></script>
+    <script type="module" src="./about.js"></script>
     <title>About Group 9</title>
 </head>
-<style>
-    .main-container {
-            max-width: 15000px; /* Make the container wider */
-            margin: 0 auto;
-            padding: 20px;
-        }
-</style>
+
+<div id="header">
+    <div id="navBar">
+        <button id="homeBtn" class="navBarBtn homeBtn"><em class="fa-solid fa-house-chimney"></em> Home</button>
+        <button id="howToBtn" class="navBarBtn howToBtn"><em class="fa-solid fa-gears"></em> How It Works</button>
+        <h1>PlaceFindr.com</h1>
+        <button id="savedBtn" class="navBarBtn savedBtn"><em class="fa-regular fa-bookmark"></em> Saved</button>
+        <button id="aboutBtn" class="navBarBtn aboutBtn"><em class="fa-solid fa-question"></em> About Us</button>
+    </div>
+</div>   
 <body>
-    <header>
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                // Check if dark mode is enabled in localStorage
-                const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
-                if (isDarkMode) {
-                    document.body.classList.add('dark-mode');
-                }
-            });
-        </script>
-        <div id="header">
-          <div id="navBar">
-              <button id="homeBtn" class="navBarBtn" onclick="location.href='index.html'">
-                  <i class="fa-solid fa-house-chimney"></i> Home
-              </button>
-              <button id="howToBtn" class="navBarBtn" onclick="location.href='HowItWorks.html'">
-                  <i class="fa-solid fa-gears"></i> How It Works
-              </button>
-              <a href="index.html" style="text-decoration: none;">
-                <h1>PlaceFindr.com</h1>
-            </a>
-              <button id="savedBtn" class="navBarBtn" onclick="location.href='Saved.html'">
-                  <i class="fa-regular fa-bookmark"></i> Saved
-              </button>
-              <button id="aboutBtn" class="navBarBtn" onclick="location.href='About.html'">
-                  About Us
-              </button>
-          </div>
-      </div>
-    </header>
+    
     <main class="main-container">
         <div class="about-header">
-            <img src="images/logo512.png" alt="Group Logo" class="logo-photo large-logo">
-            <h1>PlaceFindr.com</h1>
+            <div id="logoHeader">
+                <img src="images/logo512.png" alt="Group Logo" class="logo-photo large-logo">
+                <h1>PlaceFindr</h1>
+            </div>
         </div>
         <div class="row">
             <div class="column">

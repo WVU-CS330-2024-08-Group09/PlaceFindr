@@ -18,7 +18,7 @@ $(document).ready(function() {
     const $maxTempValue = $('#maxTempValue');
     const sliderRange = $('#slider-range');
     //attributes for the double slider
-    const minGap = 7.5;
+    const minGap = 7.5
     const maxTemp = $maxTempPref.attr('max');
     const minTemp = $minTempPref.attr('min');
     //avg temp

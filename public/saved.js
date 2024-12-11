@@ -6,6 +6,8 @@ let userPrefs = JSON.parse(prefString);
 
 let olDiv = document.getElementById("prefList")
 
+
+
 for(let i =0; i < userPrefs.length; i++)
 {
     let li = document.createElement("li")
@@ -23,19 +25,19 @@ for(let i =0; i < userPrefs.length; i++)
             ${userPrefs[i].prefName}
             <div>
                 <span id="maxTempLoad" class="prefValue" display="block" style="text-align: left; padding-left=15px">
-                    <p> Max Temperature:    ${userPrefs[i].tmax}</p>
+                    <p> Max Temperature:    ${maxTempDisplay(i)} ${findMetOrImp("t")}</p>
                 </span>
 
                 <span id="minTempLoad" class="prefValue" display="block" style="text-align: left;">
-                    <p> Min Temperature:    ${userPrefs[i].tmin}</p>
+                    <p> Min Temperature:    ${minTempDisplay(i)} ${findMetOrImp("t")}</p>
                 </span>
 
                 <span id="avgTempLoad" class="prefValue" display="block" style="text-align: left; justify-content: left;">
-                    <p> Average Temperature:     ${userPrefs[i].tempavg}</p>
+                    <p> Average Temperature:     ${avgTempDisplay(i)} ${findMetOrImp("t")}</p>
                 </span>
 
                 <span id="precipLoad" class="prefValue" display="block" style="text-align: left;">
-                    <p> Average Precipitation:    ${userPrefs[i].avgprcp}</p>
+                    <p> Average Precipitation:    ${avgPrcpDisplay(i)} ${findMetOrImp("p")}</p>
                 </span>
                 <div id=button-container${i}>
 
@@ -124,4 +126,98 @@ function loadPreferences(i)
     let prefToLoad = userPrefs[i];
     sessionStorage.setItem("prefToLoad", JSON.stringify(prefToLoad))
     window.location.href = "./index.html"
+}
+
+
+function findMetOrImp(torp)
+{
+    let pref = localStorage.getItem("prefUnits")
+    if(torp == "t")
+    {
+        if(pref == "imp")
+            {
+                return "F"
+            }
+            
+            else
+            {
+                return "C"
+            }
+    }
+    else
+    {
+        if(pref == "imp")
+        {
+                return "in.";
+        }
+        else
+        {
+                return "mm"
+        }
+    }
+
+}
+
+function minTempDisplay(i)
+{
+    let pref = localStorage.getItem("prefUnits")
+    let temp = JSON.parse(userPrefs[i].tmin)
+    if(pref == "imp")
+    {
+        return Math.floor((temp* 9 / 5) + 32)
+    }
+    else if(pref =="met")
+    {
+        return temp
+    }
+}
+
+function maxTempDisplay(i)
+{
+    let pref = localStorage.getItem("prefUnits")
+    let temp = JSON.parse(userPrefs[i].tmax)
+    if(pref == "imp")
+    {
+        return Math.floor((temp* 9 / 5) + 32)
+    }
+    else if(pref =="met")
+    {
+        return temp
+    }
+}
+
+function avgTempDisplay(i)
+{
+    let pref = localStorage.getItem("prefUnits")
+    let temp = JSON.parse(userPrefs[i].tempavg)
+    if(pref == "imp")
+    {
+        return Math.floor((temp* 9 / 5) + 32)
+    }
+    else if(pref =="met")
+    {
+        return temp
+    }
+}
+
+function avgPrcpDisplay(i)
+{
+    let pref = localStorage.getItem("prefUnits")
+    let temp = JSON.parse(userPrefs[i].avgprcp)
+    if(pref == "imp")
+    {
+        return Math.round((temp/25.4)*10)/10
+    }
+    else if(pref =="met")
+    {
+        return temp
+    }
+}
+
+
+
+
+function precipDisplay()
+{
+
 }
