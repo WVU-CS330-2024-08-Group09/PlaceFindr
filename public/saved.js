@@ -164,7 +164,7 @@ function minTempDisplay(i)
     let temp = JSON.parse(userPrefs[i].tmin)
     if(pref == "imp")
     {
-        return (temp* 9 / 5) + 32
+        return Math.floor((temp* 9 / 5) + 32)
     }
     else if(pref =="met")
     {
@@ -178,7 +178,7 @@ function maxTempDisplay(i)
     let temp = JSON.parse(userPrefs[i].tmax)
     if(pref == "imp")
     {
-        return (temp* 9 / 5) + 32
+        return Math.floor((temp* 9 / 5) + 32)
     }
     else if(pref =="met")
     {
@@ -192,7 +192,7 @@ function avgTempDisplay(i)
     let temp = JSON.parse(userPrefs[i].tempavg)
     if(pref == "imp")
     {
-        return (temp* 9 / 5) + 32
+        return Math.floor((temp* 9 / 5) + 32)
     }
     else if(pref =="met")
     {
