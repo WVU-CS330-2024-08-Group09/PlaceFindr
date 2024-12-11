@@ -16,16 +16,26 @@ public/
 ├── leaflet-heat.js        # Setup for heat layer use
 ├── mainPageFunc.js        # Home/index page functionality
 ├── map.js                 # Map functionality
-├── nav...                 # Navbar styles, and functionality
+├── nav...                 # Nav bar styles, and functionality
 ├── prefCss.css            # About page content, styles, and functionality
 ├── README.md              # Documentation for the frontend public folder
 └── saved...               # Saved page content, styles, and functionality
 ```
 
-### `about` (.html, .css, .js)
+## Key Components of the Frontend
 
-These files handle the About page of our site.
+### `about`, `index`, `howItWorks`, `saved`
 
-### ``
+These files handle the content, styles, and functionality of the different pages of the site.
 
-This file handles input validation, routing to get weather data, and starting the backend server.
+### `frontend.js`
+
+This file handles starting the frontend server.
+
+### `map.js`
+
+This file handles the functionality of the map and any calculations related to updating the map.
+
+### `nav`
+
+These files handle the style and functionality of the nav bar.
