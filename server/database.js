@@ -1,3 +1,9 @@
+/**
+ * database.js
+ * 
+ * This file handles configuring and connecting to the SQL database.
+ */
+
 require('dotenv').config();
 const sql = require('mssql');
 
@@ -12,6 +18,14 @@ const config = {
   }
 };
 
+/**
+ * Connects to the database and sends the provided query.
+ * @param {string} query - Outline of query to send to the database, with placeholders for parameters to replace.
+ * @param {Object[]} params - Parameters to enter into the query outline as actual values.
+ * @param {string} params.name - The name of the parameter to replace in the query outline.
+ * @param {*} params.value - The value of the parameter to enter into the query.
+ * @returns {Array} An array of data obtained by the query to the database.
+ */
 async function queryDatabase(query, params = []) {
   try {
     // Create a new connection pool

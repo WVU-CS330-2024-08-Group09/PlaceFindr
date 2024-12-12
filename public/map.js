@@ -1,3 +1,9 @@
+/**
+ * map.js
+ * 
+ * This file controls initializing and updating the map based on user inputs.
+ */
+
 var map = L.map('map').setView([39.828, -98.579], 4);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -8,6 +14,16 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 map.setMaxBounds(map.getBounds());
 
+/**
+ * Constructor for saving a set of input preferences to store.
+ * @param {string} prefName - Name of the set of saved preference inputs.
+ * @param {number} season - Season represented by a number 1-4, inclusive.
+ * @param {number} tmin - Minimum temperature (must be between -30 and 50, inclusive).
+ * @param {number} tmax - Maximum temperature (must be between -30 and 50, inclusive).
+ * @param {number} tempavg - Average temperature (must be between -30 and 50, inclusive).
+ * @param {number} avgprcp - Average precipitation (must be between 0 and 2400, inclusive).
+ * @returns {savedPreferences}
+ */
 function savedPreferences(prefName, season, tmin, tmax, tempavg, avgprcp)
 {
   this.prefName = prefName;
@@ -31,30 +47,36 @@ if(sessionStorage.getItem("prefToLoad"))
 
 if(localStorage.getItem("userPrefs") === null)
 {
-   savedPrefAr = [];
+  savedPrefAr = [];
 }
 else
 {
-   savedPrefAr = JSON.parse(localStorage.getItem("userPrefs"));
-
+  savedPrefAr = JSON.parse(localStorage.getItem("userPrefs"));
 }
 
-
-// Function to get the season value as a number
+/**
+ * Maps the season name chosen on the home page to a number.
+ * @returns {number} Number representing the season chosen, or 0 if the season is not found.
+ */
 function getSeasonValue() {
   const season = document.getElementById('season').value;
   
   // Map the season to its corresponding numerical value
   const seasonMap = {
-      winter: 1,
-      spring: 2,
-      summer: 3,
-      autumn: 4
+    winter: 1,
+    spring: 2,
+    summer: 3,
+    autumn: 4
   };
 
   return seasonMap[season] || 0; // Return 0 if season is not found
 }
 
+/**
+ * Maps a number to a season name.
+ * @param {number} num - Number representing a season.
+ * @returns {string|undefined} Season name represented by the number entered, or undefined if the number is invalid. 
+ */
 function getSeasonString(num)
 {
   switch(num)
@@ -70,6 +92,9 @@ function getSeasonString(num)
   }
 }
 
+/**
+ * Makes a query to the SQL database through the site's backend.
+ */
 export async function querryPoints() {
   // Send the data to the backend using a POST request
   try {
@@ -93,23 +118,39 @@ export async function querryPoints() {
   }
 }
 
+/**
+ * Calculates how well a point matches the input preferences.
+ * @param {Object} point - The point being compared.
+ * @param {number} point.tmin - The minimum temperature of the point.
+ * @param {number} point.tmax - The maximum temperature of the point.
+ * @param {number} point.avgprcp - The average precipitation of the point.
+ * @param {Object} preferences - The user input preferences being compared.
+ * @param {number} preferences.tmin - The minimum temperature input by the user.
+ * @param {number} preferences.tmax - The maximum temperature input by the user.
+ * @param {number} preferences.avgprcp - The average precipitation input by the user.
+ * @returns {number} A score representing how well the point matches the user preferences.
+ */
 function calculateMatchScore(point, preferences) {
-    // Calculate how well the point matches the user preferences
-    const tempMinMatch = 1 - Math.abs(point.tmin - preferences.tmin) / 50; // Normalize by expected temperature range
-    const tempMaxMatch = 1 - Math.abs(point.tmax - preferences.tmax) / 50;
-    const precpMatch = 1 - Math.abs(point.avgprcp - preferences.avgprcp) / 100; // Normalize by expected precipitation range
-    
-    // Combine scores with weights
-    return (tempMinMatch * 0.3 + tempMaxMatch * 0.3 + precpMatch * 0.3) * 100;
+  // Calculate how well the point matches the user preferences
+  const tempMinMatch = 1 - Math.abs(point.tmin - preferences.tmin) / 50; // Normalize by expected temperature range
+  const tempMaxMatch = 1 - Math.abs(point.tmax - preferences.tmax) / 50;
+  const precpMatch = 1 - Math.abs(point.avgprcp - preferences.avgprcp) / 100; // Normalize by expected precipitation range
+
+  // Combine scores with weights
+  return (tempMinMatch * 0.3 + tempMaxMatch * 0.3 + precpMatch * 0.3) * 100;
 }
 
+/**
+ * Updates the heatmap on the home page.
+ * @param {JSON} responseData - Data retrieved from a SQL query to the database.
+ */
 function updateHeatmap(responseData) {
   if (heatmapLayer) {
     map.removeLayer(heatmapLayer);
   }
   
   const points = responseData.data.map(point => {
-      return [point.lat, point.lon, 1];
+    return [point.lat, point.lon, 1];
   });
 
   heatmapLayer = L.heatLayer(points, {
@@ -128,7 +169,10 @@ function updateHeatmap(responseData) {
   }).addTo(map);
 }
 
-// Load preferences function
+/**
+ * Gets values of user input preferences.
+ * @returns {Object} An Object containing the values season, tmin, tmax, tavg, avgpcrp.
+ */
 export function loadPreferences() {
   return {
     season: getSeasonValue(),
@@ -139,12 +183,13 @@ export function loadPreferences() {
   };
 }
 
-
-//used to save the values of the preference sliders
+/**
+ * Saves the values of the user input preferences to localStorage.
+ */
 export function savePreference() 
 {
   //save all pertinent preference data
-    savedPrefAr.push(new savedPreferences(
+  savedPrefAr.push(new savedPreferences(
     prompt("Please enter a name for your preference set"),
     getSeasonString(getSeasonValue()),
     parseFloat(document.getElementById("minTempPref").value),
@@ -159,11 +204,14 @@ export function savePreference()
       console.log("removed userPrefs")
     }
 
-   userPrefs = JSON.stringify(savedPrefAr);
-   localStorage.setItem("userPrefs", userPrefs);
+  userPrefs = JSON.stringify(savedPrefAr);
+  localStorage.setItem("userPrefs", userPrefs);
 }
 
-//used to update the map with the saved values of the user
+/**
+ * Updates the map with values loaded from an array of saved preference inputs.
+ * @param {number} [i=0] - A number representing the savedPrefAr index to load preferences from.
+ */
 export function setPreference(i=0) {
 
   //update the slider locations and values
@@ -181,6 +229,9 @@ export function setPreference(i=0) {
   querryPoints();
 }
 
+/**
+ * Updates the map using the values stored in the sessionStorage item prefToLoad.
+ */
 function setPrefToLoad()
 {
   let prefToLoad = JSON.parse(sessionStorage.getItem("prefToLoad"))
@@ -192,13 +243,17 @@ function setPrefToLoad()
   document.getElementById("avgTempPref").value = prefToLoad.tempavg
   
   //calling variables from the "mainPageFunc.js" file that update the coloring on the temp min and max slider
- // window.minSlide()
+  //window.minSlide()
   //window.maxSlide()
   
   //recalculates the saved heatmap
   querryPoints();
 }
 
+/**
+ * Getter method for savedPrefAr.
+ * @returns {Array} An array of saved preference inputs.
+ */
 function returnPref()
 {
   return savedPrefAr;

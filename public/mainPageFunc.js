@@ -1,6 +1,9 @@
-//CAN'T IMPORT BECAUSE IT USES require WHICH ONLY WORKS THROUGH node.js
-//NEED TO FIGURE SOME SOLUTION OUT
-//import {emailStored, validLogin, newUser} from "./Account.js";
+/**
+ * mainPageFunc.js
+ * 
+ * This file handles functionality for the home/index page.
+ */
+
 import { querryPoints, savePreference, setPreference} from './map.js';
 
 $(document).ready(function() {
@@ -66,14 +69,18 @@ $(document).ready(function() {
     
     ///*** All function declarations ***///
 
-    //dark mode toggling function
+    /**
+     * Toggles dark mode on or off and saves its state to localStorage.
+     */
     function toggleDarkMode() {
         const isDarkMode = document.body.classList.toggle('dark-mode');
         localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
     }
     
     //functions for updating the double sliders
-    //min Slider
+    /**
+     * Updates minimum slider of the double slider and the displayed value.
+     */
     function minSlide(){
         if(parseInt($maxTempPref.val())- parseInt($minTempPref.val()) <= minGap){
             $minTempPref.val(parseInt($maxTempPref.val()) - minGap);
@@ -86,7 +93,9 @@ $(document).ready(function() {
         fillColor();
         updateAvgTemp();
     }
-    //max Slider
+    /**
+     * Updates maximum slider of the double slider and the displayed value.
+     */
     function maxSlide(){
         if(parseInt($maxTempPref.val())- parseInt($minTempPref.val()) <= minGap){
             $maxTempPref.val(parseInt($minTempPref.val()) + minGap);
@@ -99,7 +108,10 @@ $(document).ready(function() {
         fillColor();
         updateAvgTemp();
     }
-    //updating the fill between thumbs for double sliders
+
+    /**
+     * Updates the fill between the selections of the double slider.
+     */
     function fillColor() {
         let minVal = parseInt($minTempPref.val());
         let maxVal = parseInt($maxTempPref.val());
@@ -113,7 +125,9 @@ $(document).ready(function() {
         });
     }
 
-    //function for updating Avg Temp
+    /**
+     * Updates the average temperature slider and the displayed value.
+     */
     function updateAvgTemp(){
         // Convert for display only, keeping internal value in Celsius
         if(parseInt($avgTempPref.val()) > parseInt($maxTempPref.val())){
@@ -127,7 +141,9 @@ $(document).ready(function() {
         $avgTempValue.text(Math.round(displayValue) + displayTempUnit);
     }
 
-    //function for updating precipitation
+    /**
+     * Updates the average precipitation and the displayed value.
+     */
     function updatePrecip(){
         // Convert for display only, keeping internal value in mm
         let displayValue = localStorage.getItem('prefUnits') === 'imp' 
@@ -136,7 +152,9 @@ $(document).ready(function() {
         $precipValue.text(Math.round(displayValue * 10) / 10 + displayPrecipUnit);
     }
 
-    //function to update units
+    /**
+     * Updates the units shown next to the display values based on selected measurement system (imperial or metric).
+     */
     function updateUnits(){
         const unit = localStorage.getItem('prefUnits');
         displayTempUnit = unit === 'imp' ? '°F' : '°C';
@@ -151,7 +169,9 @@ $(document).ready(function() {
         updateAvgTemp();
     }
 
-    //function to update the settings
+    /**
+     * Updates the unit setting (imperial or metric).
+     */
     function updateSettings(){
         if(impUnitButton.is(':checked')){
             localStorage.setItem('prefUnits','imp')
@@ -162,7 +182,13 @@ $(document).ready(function() {
         updateUnits();
     }
     
-    //function to toggle the tabs in the preference section
+    /**
+     * Toggles the tabs in the preference section.
+     * @param {jQuery} activeTab - The tab being activated, either prefTab or settingsTab.
+     * @param {jQuery} inactiveTab - The tab beind deactivated, either prefTab or settingsTab.
+     * @param {jQuery} activeButton - The button being shown as selected, either prefTabButton or settTabButton.
+     * @param {jQuery} inactiveButton - The button being shown as not actively selected, either prefTabButton or settTabButton.
+     */
     function toggleTabs(activeTab, inactiveTab, activeButton, inactiveButton) {
         activeTab.toggleClass('tab active');
         inactiveTab.toggleClass('tab active');

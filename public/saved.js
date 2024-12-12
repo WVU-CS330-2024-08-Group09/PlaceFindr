@@ -1,6 +1,13 @@
+/**
+ * saved.js
+ * 
+ * This file handles saving and deleting preferences to storage for future access, 
+ * as well as setting up the saved page for user interaction.
+ */
+
 // Get the JSON string from local storage 
 let prefString = localStorage.getItem('userPrefs');
- // Convert the JSON string back to an array of objects 
+// Convert the JSON string back to an array of objects 
 let userPrefs = JSON.parse(prefString);
 
 
@@ -51,7 +58,11 @@ for(let i =0; i < userPrefs.length; i++)
     createLoadButton(i)
 }
 
-
+/**
+ * Creates a "Delete Preference" button.
+ * @param {number} [i=0] - The index of the associated saved preferences. 
+ * @returns {void|null} If everything works properly, nothing is returned. If there is no button container available, returns null.
+ */
 function createDeleteButton(i=0)
 {
     //define the button we want
@@ -81,6 +92,11 @@ function createDeleteButton(i=0)
     
 }
 
+/**
+ * Creates a "Load Preference" button.
+ * @param {number} [i=0] - The index of the associated saved preferences.
+ * @returns {void|null} If everything works properly, nothing is returned. If there is no button container available, returns null.
+ */
 function createLoadButton(i=0)
 {
     //define the button we want created
@@ -109,8 +125,10 @@ function createLoadButton(i=0)
     
 }
 
-
-
+/**
+ * Deletes the chosen preference.
+ * @param {number} i - The index of the saved preference to delete.
+ */
 function deletePreference(i)
 {
     //remove the specified index from the local copy of userPrefs 
@@ -121,6 +139,10 @@ function deletePreference(i)
     location.reload();
 }
 
+/**
+ * Loads the chosen preference on the home page.
+ * @param {*} i - The index of the saved preference to load.
+ */
 function loadPreferences(i)
 {
     let prefToLoad = userPrefs[i];
@@ -128,7 +150,11 @@ function loadPreferences(i)
     window.location.href = "./index.html"
 }
 
-
+/**
+ * Returns the units to be displayed depending on metric vs imperial setting.
+ * @param {"t"|"p"} torp - "t" for temperature or "p" for precipitation
+ * @returns {"F"|"C"|"in."|"mm"} Unit to be displayed.
+ */
 function findMetOrImp(torp)
 {
     let pref = localStorage.getItem("prefUnits")
@@ -158,6 +184,11 @@ function findMetOrImp(torp)
 
 }
 
+/**
+ * Displays the saved minimum temperature in the chosen measurement system.
+ * @param {number} i - The index of the associated saved preferences.
+ * @returns {number} The saved minimum temperature at index `i` in degrees Fahrenheit or Celsius.
+ */
 function minTempDisplay(i)
 {
     let pref = localStorage.getItem("prefUnits")
@@ -172,6 +203,11 @@ function minTempDisplay(i)
     }
 }
 
+/**
+ * Displays the saved maximum temperature in the chosen measurement system.
+ * @param {number} i - The index of the associated saved preferences.
+ * @returns {number} The saved maximum temperature at index `i` in degrees Fahrenheit or Celsius.
+ */
 function maxTempDisplay(i)
 {
     let pref = localStorage.getItem("prefUnits")
@@ -186,6 +222,11 @@ function maxTempDisplay(i)
     }
 }
 
+/**
+ * Displays the saved average temperature in the chosen measurement system.
+ * @param {number} i - The index of the associated saved preferences.
+ * @returns {number} The saved average temperature at index `i` in degrees Fahrenheit or Celsius.
+ */
 function avgTempDisplay(i)
 {
     let pref = localStorage.getItem("prefUnits")
@@ -200,6 +241,11 @@ function avgTempDisplay(i)
     }
 }
 
+/**
+ * Displays the saved average precipitation in the correct measurement system.
+ * @param {number} i - The index of the associated saved preferences.
+ * @returns {number} The saved average precipitation at index `i` in in. or mm.
+ */
 function avgPrcpDisplay(i)
 {
     let pref = localStorage.getItem("prefUnits")
@@ -214,9 +260,9 @@ function avgPrcpDisplay(i)
     }
 }
 
-
-
-
+/**
+ * ???
+ */
 function precipDisplay()
 {
 

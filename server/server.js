@@ -1,3 +1,9 @@
+/**
+ * server.js
+ * 
+ * This file handles running the backend on port 5000 using Node.js and accessing SQL database data. 
+ */
+
 const express = require('express');
 const { queryDatabase } = require('./database');
 const app = express();
@@ -9,7 +15,15 @@ app.use(cors());
 
 //-------------------------------------------
 
-// Input validation middleware
+/**
+ * Input validation middleware.
+ * @param {number} season - Season represented by a number 1-4, inclusive.
+ * @param {number} tmax - Maximum temperature (must be between -30 and 50, inclusive).
+ * @param {number} tmin - Minimum temperature (must be between -30 and 50, inclusive).
+ * @param {number} tavg - Average temperature (must be between -30 and 50, inclusive).
+ * @param {number} avgprcp - Average precipitation (must be between 0 and 2400, inclusive).
+ * @returns {void|JSON} If input validation is successful, the middleware proceeds to the next function. Otherwise, an error message is returned in JSON.
+ */
 const validateInputs = (req, res, next) => {
   const { season, tmax, tmin, tavg, avgprcp } = req.body;
   
@@ -46,7 +60,19 @@ const validateInputs = (req, res, next) => {
 };
 
 //----------------------------------------------
-// Route to handle custom data queries based on user input
+
+/**
+ * Route to handle custom data queries based on user input. 
+ * Searches for locations matching the parameters entered.
+ * @route POST /api/data
+ * @param {number} season - Season represented by a number 1-4, inclusive.
+ * @param {number} tmax - Maximum temperature (must be between -30 and 50, inclusive).
+ * @param {number} tmin - Minimum temperature (must be between -30 and 50, inclusive).
+ * @param {number} tavg - Average temperature (must be between -30 and 50, inclusive).
+ * @param {number} avgprcp - Average precipitation (must be between 0 and 2400, inclusive).
+ * @returns {JSON} Returns a message telling how many matching locations have been found and an array 
+ * of the locations' associated data. If there is an error, an error message is returned in JSON.
+ */
 app.post('/api/data', validateInputs, async (req, res) => {
   const { season, tmax, tmin, tavg, avgprcp } = req.body;
 
@@ -102,7 +128,7 @@ app.post('/api/data', validateInputs, async (req, res) => {
   }
 });
 
-// Start the server
+//Starts the backend server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
