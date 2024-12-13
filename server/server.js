@@ -13,6 +13,8 @@ const port = 5000;
 app.use(express.json()); // Parse incoming JSON requests
 app.use(cors());
 
+app.use(express.static('public'))
+
 //-------------------------------------------
 
 /**

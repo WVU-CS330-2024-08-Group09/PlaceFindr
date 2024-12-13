@@ -112,7 +112,45 @@ export async function querryPoints() {
     }
 
     const data = await response.json();
+
+    // Remove any existing no results message
+    const existingNoResultsMessage = document.getElementById('no-results-message');
+    if (existingNoResultsMessage) {
+      existingNoResultsMessage.remove();
+    }
+
+    // Check if the data array is empty
+    if (!data.data || data.data.length === 0) {
+      // Create a new div for the no results message
+      const noResultsDiv = document.createElement('div');
+      noResultsDiv.id = 'no-results-message';
+      noResultsDiv.textContent = 'No matching locations found. Try adjusting your preferences.';
+      noResultsDiv.style.color = 'red';
+      noResultsDiv.style.textAlign = 'center';
+      noResultsDiv.style.margin = 'auto';
+      noResultsDiv.style.maxWidth = '70%';
+      noResultsDiv.style.fontWeight = 'bold';
+      noResultsDiv.style.fontSize = '18px'; // makes the text a bit larger
+      noResultsDiv.style.padding = '10px';
+      noResultsDiv.style.border = '2px solid red'; // adds a border for emphasis
+      noResultsDiv.style.borderRadius = '8px'; // rounds the corners of the border
+      noResultsDiv.style.backgroundColor = '#fff0f0'; // light red background for contrast
+      noResultsDiv.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.1)'; // subtle shadow for depth
+      noResultsDiv.style.fontFamily = 'Arial, sans-serif'; // sets a clean, readable font
+      
+      // Insert the message right after the search button
+      const searchButton = document.getElementById('searchButton');
+      searchButton.parentNode.insertBefore(noResultsDiv, searchButton.nextSibling);
+      
+      // Remove any existing heatmap
+      if (heatmapLayer) {
+        map.removeLayer(heatmapLayer);
+      }
+      return;
+    }
+
     updateHeatmap(data);
+
   } catch (error) {
     console.error('Error:', error);
   }
