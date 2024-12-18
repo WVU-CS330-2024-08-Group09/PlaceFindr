@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+
 * {
     /*hide scrollbar for IE, Edge, Firefox*/
     -ms-overflow-style: none;
     scrollbar-width: none;
+    font-family: 'Poppins', sans-serif;
 }
 ::-webkit-scrollbar {
     /*hide scrollbar for Chrome, Safari, Opera*/
@@ -20,16 +23,18 @@ body{
     border-bottom:2px solid rgb(86, 82, 82);
     border-top: none;
     grid-area: 1 / 1 / 2 / 6;
-    font:Verdana, sans-serif;
+    justify-content: center;
 }
 h1{
     text-align: center;
     color: black;
     grid-column:3/4;
+    font-weight: normal;
 }
 #navBar{
     display: grid;
     grid-template-columns: 17% 17% 30% 17% 17%;
+    width: 100%;
 }
 #homeBtn{
     grid-column: 1/2;

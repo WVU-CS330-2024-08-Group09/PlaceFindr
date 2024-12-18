@@ -129,14 +129,12 @@ export async function querryPoints() {
       noResultsDiv.style.textAlign = 'center';
       noResultsDiv.style.margin = 'auto';
       noResultsDiv.style.maxWidth = '70%';
-      noResultsDiv.style.fontWeight = 'bold';
-      noResultsDiv.style.fontSize = '18px'; // makes the text a bit larger
+      noResultsDiv.style.fontSize = '18px';
       noResultsDiv.style.padding = '10px';
-      noResultsDiv.style.border = '2px solid red'; // adds a border for emphasis
-      noResultsDiv.style.borderRadius = '8px'; // rounds the corners of the border
-      noResultsDiv.style.backgroundColor = '#fff0f0'; // light red background for contrast
-      noResultsDiv.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.1)'; // subtle shadow for depth
-      noResultsDiv.style.fontFamily = 'Arial, sans-serif'; // sets a clean, readable font
+      noResultsDiv.style.border = '2px solid red';
+      noResultsDiv.style.borderRadius = '8px'; 
+      noResultsDiv.style.backgroundColor = '#fff0f0';
+      noResultsDiv.style.boxShadow = '4px 4px 8px rgba(0, 0, 0, 0.1)';
       
       // Insert the message right after the search button
       const searchButton = document.getElementById('searchButton');

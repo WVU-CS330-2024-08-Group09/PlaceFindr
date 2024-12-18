@@ -222,10 +222,13 @@ $(document).ready(function() {
      * @param {jQuery} inactiveButton - The button being shown as not actively selected, either prefTabButton or settTabButton.
      */
     function toggleTabs(activeTab, inactiveTab, activeButton, inactiveButton) {
-        activeTab.toggleClass('tab active');
-        inactiveTab.toggleClass('tab active');
-        activeButton.css('background-color', 'lightgray');
-        inactiveButton.css('background-color', 'rgb(160, 154, 154)');
+      // Check if the active button is already selected
+      if (activeButton.css('background-color') === 'rgb(160, 154, 154)') {
+          activeTab.toggleClass('tab active');
+          inactiveTab.toggleClass('tab active');
+          activeButton.css('background-color', 'lightgray');
+          inactiveButton.css('background-color', 'rgb(160, 154, 154)');
+      }
     }
 
     //calling functions to update before inputs
