@@ -213,8 +213,8 @@ $(document).ready(function() {
         }
         updateUnits();
     }
-    
-    /**
+   
+        /**
      * Toggles the tabs in the preference section.
      * @param {jQuery} activeTab - The tab being activated, either prefTab or settingsTab.
      * @param {jQuery} inactiveTab - The tab being deactivated, either prefTab or settingsTab.
@@ -222,16 +222,16 @@ $(document).ready(function() {
      * @param {jQuery} inactiveButton - The button being shown as not actively selected, either prefTabButton or settTabButton.
      */
     function toggleTabs(activeTab, inactiveTab, activeButton, inactiveButton) {
-      // Check if the active button is already selected
-      if (activeButton.css('background-color') === 'rgb(160, 154, 154)') {
-          activeTab.toggleClass('tab active');
-          inactiveTab.toggleClass('tab active');
-          activeButton.css('background-color', 'lightgray');
-          inactiveButton.css('background-color', 'rgb(160, 154, 154)');
+      if (activeTab.hasClass('tab')) {
+        activeTab.toggleClass('tab active');
+        inactiveTab.toggleClass('tab active');
+        activeButton.css('background-color', 'rgb(160, 154, 154)');
+        inactiveButton.css('background-color', '#f4f4f4');
       }
     }
 
     //calling functions to update before inputs
     fillColor();
     updateUnits();
+
 });

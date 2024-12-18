@@ -106,3 +106,11 @@ main
     padding: 15px;
     background-color: #f4f4f4;
 }
+
+#prefTabButton.on {
+  background-color: rgb(160, 154, 154);
+}
+
+#prefSettTabButton {
+  background-color: #f4f4f4;
+}
