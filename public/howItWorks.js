@@ -10,6 +10,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
     if (isDarkMode) {
+        document.body.classList.add('no-transition');
         document.body.classList.add('dark-mode');
+
+        setTimeout(() => {
+            document.body.classList.remove('no-transition');
+        }, 10);
     }
 });

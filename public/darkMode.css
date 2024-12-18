@@ -1,3 +1,6 @@
+.no-transition {
+    transition: none !important;
+  }
 .dark-mode {
     background-color: rgb(46, 46, 46);
     color: white;
@@ -74,4 +77,39 @@
 
 .dark-mode .card img {
     border-color: #444;
+}
+/* Dark mode card styling */
+.dark-mode .card {
+    background: linear-gradient(145deg, #333, #222); 
+    color: white; 
+}
+
+.dark-mode .card img {
+    filter: brightness(100%);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+
+.dark-mode .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.7);
+}
+
+
+.dark-mode .card .container {
+    color: #ddd; 
+}
+
+.dark-mode .card .container h2 {
+    color: #fff;
+}
+
+.dark-mode .card .container p {
+    color: #bbb;
+}
+
+.dark-mode .card {
+    background: linear-gradient(145deg, #333, #222);
+    border-radius: 15px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); 
 }

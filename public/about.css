@@ -1,69 +1,13 @@
-.row {
-    flex: 1; /* Takes up space on the right */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start; /* Aligns the columns to the left within their section */
-    gap: 20px;
-}
-
-/* Styling each column and card */
-.column {
-    display: flex;
-    justify-content: center;
-    flex: 1 1 300px;
-    max-width: 300px;
-}
-
-.card {
-    width: 250px; /* Slightly larger width for a modern look */
-    height: 350px; /* Adjusted height for better proportions */
-    margin: 20px; /* More spacing between cards */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background: linear-gradient(145deg, #444, #222); /* Gradient background for a premium feel */
-    border-radius: 15px; /* Softer, larger rounded corners */
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* Elegant shadow for a lifting effect */
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effects */
-}
-.card:hover {
-    transform: translateY(-10px); /* Subtle lift on hover */
-    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.7); /* Stronger shadow on hover */
-}
-
-/* Ensure images fit perfectly */
-.card img {
-    width: 100%; /* Image spans full width */
-    height: 60%; /* Image takes 60% of the card height */
-    object-fit: cover; /* Ensures proper image scaling */
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1); /* Thin separator */
-    filter: brightness(90%); /* Dim image slightly for a professional look */
-    transition: filter 0.3s; /* Smooth hover effect for image */
-    border-radius: 50%; /* Make images circular */
-    margin-top: 15px;
-}
-
-.container {
-    padding: 15px;
-}
-
-h2 {
-    font-size: 1.5em;
-    color: #333;
-    margin-top: 10px;
-}
-
+/* About Section Styling */
 .about-header {
     display: flex;
     justify-content: center;
 }
-#logoHeader{
+
+#logoHeader {
     text-align: center;
     margin-bottom: 30px;
-    display:inline-flex;
-    margin-bottom: 20px;
+    display: inline-flex;
     align-self: center;
 }
 
@@ -77,20 +21,60 @@ h2 {
 .about-header img {
     width: 120px;
     height: auto;
-    margin:auto;
+    margin: auto;
+}
+
+.about-header h1, .card .container h2, .card .container p {
+    color: #444;
+}
+
+.card {
+    width: 250px; 
+    height: 350px; 
+    margin: 20px 0; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(145deg, #f0f0f0, #dcdcdc);
+    border-radius: 15px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1); 
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s; 
+}
+
+.card:hover {
+    transform: translateY(-10px); 
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2); 
+}
+
+/* Ensure images fit perfectly */
+.card img {
+    width: 100%; 
+    height: 60%;
+    object-fit: cover; 
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3); 
+    filter: brightness(90%); 
+    transition: filter 0.3s; 
+    border-radius: 50%;
+    margin-top: 15px;
+}
+
+.container {
+    padding: 15px;
 }
 
 /* Image hover effect */
 .card img:hover {
-    filter: brightness(100%); /* Brighten image on hover */
+    filter: brightness(100%);
 }
 
 /* Styling for card content */
 .card .container {
     text-align: center;
     padding: 15px;
-    color: #eee; /* Slightly off-white text for better readability */
-    font-family: 'Roboto', sans-serif; /* Modern font style */
+    color: #eee;
+    font-family: 'Roboto', sans-serif; 
     font-size: 1rem;
 }
 
@@ -99,19 +83,53 @@ h2 {
     margin: 10px 0 5px;
     font-size: 1.2rem;
     font-weight: bold;
-    color: #fff;
+    color: #333;
 }
 
 /* Card description styling */
 .card .container p {
     font-size: 0.9rem;
-    color: #bbb; /* Softer gray for descriptions */
+    color: #777;
     margin: 0;
 }
-/* Responsive Design */
-@media (max-width: 768px) {
-    .card {
-        width: 200px; /* Adjust size for smaller screens */
-        height: 300px;
-    }
+
+/* Row container for the cards */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    gap: 20px;
+    width: 100%; 
 }
+
+/* Individual columns (card containers) */
+.column {
+    display: flex;
+    justify-content: center;
+    flex: 1 1 calc(25% - 20px); 
+    max-width: calc(25% - 20px); 
+    box-sizing: border-box;
+}
+
+/* Adjust the 4th card to make sure it only shows 4 cards in the first row */
+.row .column:nth-child(4) {
+    flex: 1 1 calc(25% - 20px);
+}
+
+/* Row for the second set of cards */
+.row-bottom {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    gap: 20px; 
+    width: 100%;
+}
+
+.column-bottom {
+    display: flex;
+    justify-content: center;
+    flex: 1 1 calc(33.33% - 20px); 
+    max-width: calc(33.33% - 20px); 
+    box-sizing: border-box;
+}
+

@@ -4,7 +4,33 @@
  * This file handles functionality for the home/index page.
  */
 
+
 import { querryPoints, savePreference, setPreference} from './map.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+    const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+    document.body.classList.add('no-transition');
+
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+    }
+
+    setTimeout(() => {
+        document.body.classList.remove('no-transition');
+    }, 10);
+
+    const toggleButton = document.getElementById('toggleDarkMode');
+    toggleButton.addEventListener('click', () => {
+        document.body.classList.add('no-transition'); 
+
+        const isDarkMode = document.body.classList.toggle('dark-mode'); 
+        localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+        
+        setTimeout(() => {
+            document.body.classList.remove('no-transition');
+        }, 10);
+    });
+});
 
 $(document).ready(function() {
 
@@ -73,8 +99,14 @@ $(document).ready(function() {
      * Toggles dark mode on or off and saves its state to localStorage.
      */
     function toggleDarkMode() {
-        const isDarkMode = document.body.classList.toggle('dark-mode');
+        document.body.classList.add('no-transition'); 
+        
+        const isDarkMode = document.body.classList.toggle('dark-mode'); // Toggle dark mode
         localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+        
+        setTimeout(() => {
+            document.body.classList.remove('no-transition');
+        }, 10); 
     }
     
     //functions for updating the double sliders
@@ -185,7 +217,7 @@ $(document).ready(function() {
     /**
      * Toggles the tabs in the preference section.
      * @param {jQuery} activeTab - The tab being activated, either prefTab or settingsTab.
-     * @param {jQuery} inactiveTab - The tab beind deactivated, either prefTab or settingsTab.
+     * @param {jQuery} inactiveTab - The tab being deactivated, either prefTab or settingsTab.
      * @param {jQuery} activeButton - The button being shown as selected, either prefTabButton or settTabButton.
      * @param {jQuery} inactiveButton - The button being shown as not actively selected, either prefTabButton or settTabButton.
      */
