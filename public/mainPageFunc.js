@@ -214,7 +214,7 @@ $(document).ready(function() {
         updateUnits();
     }
    
-        /**
+    /**
      * Toggles the tabs in the preference section.
      * @param {jQuery} activeTab - The tab being activated, either prefTab or settingsTab.
      * @param {jQuery} inactiveTab - The tab being deactivated, either prefTab or settingsTab.
