@@ -37,9 +37,7 @@ for(let i =0; i < userPrefs.length; i++)
     li.innerHTML = 
     `
     <div class="container">
-        <div class="picbox">
-            <img src="https://th.bing.com/th/id/OIP.gaONo-dcX0Z0cUNsTAHWMgHaHa?rs=1&pid=ImgDetMain">
-        </div>
+        
 
         <div class ="textbox" style="text-align: center;">
             ${userPrefs[i].prefName}

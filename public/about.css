@@ -59,8 +59,8 @@ body {
 /* Ensure images fit perfectly */
 .card img {
     width: 100%; 
-    height: 60%;
-    object-fit: cover; 
+    height: 70%;
+    object-fit:cover; 
     border-bottom: 2px solid rgba(255, 255, 255, 0.3); 
     filter: brightness(90%); 
     transition: filter 0.3s; 
