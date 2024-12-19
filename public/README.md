@@ -17,7 +17,7 @@ public/
 ├── mainPageFunc.js        # Home/index page functionality
 ├── map.js                 # Map functionality
 ├── nav...                 # Nav bar styles, and functionality
-├── prefCss.css            # About page content, styles, and functionality
+├── prefCss.css            # Preference input styles
 ├── README.md              # Documentation for the frontend public folder
 └── saved...               # Saved page content, styles, and functionality
 ```
