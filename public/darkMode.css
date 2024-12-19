@@ -1,107 +1,111 @@
 .no-transition {
     transition: none !important;
-  }
+}
+
 .dark-mode {
     background-color: rgb(46, 46, 46);
     color: white;
     transition: background-color 0.5s, color 0.5s;
 }
-.dark-mode main{
-    background-color: rgb(31, 31, 31);
+
+.dark-mode main {
+    background-color: rgb(46, 46, 46); /* Consistent dark background */
 }
-.dark-mode #navBar{
-    color:white;
+
+.dark-mode #navBar {
+    color: white;
+    background-color: rgb(46, 46, 46); /* Ensure navbar also has consistent dark background */
 }
 
 .dark-mode #header {
     transition: background-color 0.5s, color 0.5s;
-    border-color:white;
+    border-color: white;
+    background-color: rgb(46, 46, 46); /* Match header background */
 }
+
 .dark-mode #map {
-    background-color: #333; /* Change map background in dark mode */
+    background-color: rgb(46, 46, 46); /* Uniform dark background for map */
     transition: background-color 0.5s, color 0.5s;
 }
-.dark-mode .navBarBtn{
-    color:white;
+
+.dark-mode .navBarBtn {
+    color: white;
     border-color: white;
 }
-.dark-mode h1{
-    color:white;
+
+.dark-mode h1 {
+    color: white;
 }
-.dark-mode h2{
-    color:white;
+
+.dark-mode h2 {
+    color: white;
 }
+
 .dark-mode #pref {
-    background-color: rgb(46, 46, 46); /* Keep this as is, or change if desired */
+    background-color: rgb(46, 46, 46);
     transition: background-color 0.5s, color 0.5s;
 }
-.dark-mode #pref .value{
-    background-color: grey;
-    transition: background-color 0.5s, color 0.5s;
+
+.dark-mode #pref .value {
+    background-color: rgb(50, 50, 50);
     border-color: #555;
+    color: white; 
+    transition: background-color 0.5s, color 0.5s;
 }
 
-.dark-mode #container
-{
+.dark-mode #container {
     background-color: rgb(46, 46, 46);
     color: white;
-
 }
 
-.dark-mode #paragraph_1
-{
-    background-color: rgb(46, 46, 46);
+.dark-mode #paragraph_1 {
+    background-color: rgb(46, 46, 46); 
     color: white;
-
 }
 
-.dark-mode #prefSettings
-{
-    background-color: rgb(46, 46, 46);
+.dark-mode #prefSettings {
+    background-color: rgb(46, 46, 46); 
     color: white;
 }
 
 .dark-mode #output {
-    background-color: rgb(93, 93, 93); /* Change output background in dark mode */
+    background-color: rgb(46, 46, 46); 
     transition: background-color 0.5s, color 0.5s;
 }
 
-/* Dark mode button styles */
+
 .dark-mode .active button {
-    background-color: #555; /* Dark background for buttons */
-    color: white; /* White text color */
+    background-color: #555; 
+    color: white; 
 }
-.dark-mode #searchButton{
-    background-color: #555; /* Dark background for buttons */
-    color: white; /* White text color */
+
+.dark-mode #searchButton {
+    background-color: #555; 
+    color: white; 
 }
 
 #darkModeToggle:hover {
-    background-color: #007bff; /* Light blue background on hover */
-    color: white; /* White text on hover */
+    background-color: #007bff; 
+    color: white; 
 }
 
 .dark-mode .active button:hover {
     background-color: #333; /* Darker shade on hover in dark mode */
     color: #ddd; /* Lighter text on hover in dark mode */
 }
-.dark-mode #searchButton:hover{
-    background-color: #333; /* Darker shade on hover in dark mode */
-    color: #ddd; /* Lighter text on hover in dark mode */
-}
-/* Dark mode card style */
-.dark-mode .card {
-    background-color: #333;
-    color: white;
+
+.dark-mode #searchButton:hover {
+    background-color: #333; 
+    color: #ddd; 
 }
 
-.dark-mode .card img {
-    border-color: #444;
-}
-/* Dark mode card styling */
+/* Dark mode card style */
 .dark-mode .card {
-    background: linear-gradient(145deg, #333, #222); 
-    color: white; 
+    background: linear-gradient(145deg, rgb(46, 46, 46), rgb(46, 46, 46));
+    background-color: rgb(46, 46, 46); 
+    color: white;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
 }
 
 .dark-mode .card img {
@@ -109,12 +113,10 @@
     border-bottom: 2px solid rgba(255, 255, 255, 0.3);
 }
 
-
 .dark-mode .card:hover {
     transform: translateY(-10px);
     box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.7);
 }
-
 
 .dark-mode .card .container {
     color: #ddd; 
@@ -128,11 +130,6 @@
     color: #bbb;
 }
 
-.dark-mode .card {
-    background: linear-gradient(145deg, #333, #222);
-    border-radius: 15px;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); 
-}
-.dark-mode .container{
-    background-color: rgb(46, 46, 46);
+.dark-mode .container {
+    background-color: rgb(46, 46, 46); /* Ensure main container follows same color scheme */
 }
