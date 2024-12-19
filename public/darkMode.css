@@ -41,6 +41,26 @@
     border-color: #555;
 }
 
+.dark-mode #container
+{
+    background-color: rgb(46, 46, 46);
+    color: white;
+
+}
+
+.dark-mode #paragraph_1
+{
+    background-color: rgb(46, 46, 46);
+    color: white;
+
+}
+
+.dark-mode #prefSettings
+{
+    background-color: rgb(46, 46, 46);
+    color: white;
+}
+
 .dark-mode #output {
     background-color: rgb(93, 93, 93); /* Change output background in dark mode */
     transition: background-color 0.5s, color 0.5s;

@@ -110,8 +110,10 @@ main
 
 #prefTabButton.on {
   background-color: rgb(160, 154, 154);
+  color: white
 }
 
 #prefSettTabButton {
   background-color: #f4f4f4;
+  color: grey
 }

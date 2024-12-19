@@ -227,6 +227,8 @@ $(document).ready(function() {
         inactiveTab.toggleClass('tab active');
         activeButton.css('background-color', 'rgb(160, 154, 154)');
         inactiveButton.css('background-color', '#f4f4f4');
+        activeButton.css('color', 'rgb(255,255,255)')
+        inactiveButton.css('color', 'rgb(160, 154, 154)')
       }
     }
 
